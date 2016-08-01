@@ -1,0 +1,1640 @@
+
+<?xml version="1.0"?>
+<?mso-application progid="Excel.Sheet"?>
+
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:o="urn:schemas-microsoft-com:office:office"
+ xmlns:x="urn:schemas-microsoft-com:office:excel"
+ xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+ xmlns:html="http://www.w3.org/TR/REC-html40">
+
+ <Styles>
+	<Style ss:ID="percentStyle" ss:Name="Normal">
+		<NumberFormat ss:Format="Percent"/>
+	</Style>
+	<Style ss:ID="shortDate01">
+		<NumberFormat ss:Format="Short Date"/>
+		<Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+	</Style>
+	<Style ss:ID="header01">
+		<Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+		<Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000" ss:Bold="1"/>
+		<Interior ss:Color="#CCCCCC" ss:Pattern="Solid"/>
+	</Style>
+	<Style ss:ID="header02">
+		<Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+		<Font x:Family="Swiss" ss:Bold="1"/>
+	</Style>
+	<Style ss:ID="aRight01">
+		<Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
+	</Style>
+	<Style ss:ID="centerBottom">
+        <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+    </Style>
+    <Style ss:ID="numberStyle">
+        <NumberFormat ss:Format="#,##0.00"/>
+    </Style>
+    <Style ss:ID="percentCommaStyle">
+        <NumberFormat ss:Format="#,##0.00%"/>
+    </Style>
+
+</Styles>
+
+
+    <script>alert("1.1.8");</script>
+
+
+
+
+
+    <Worksheet xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" ss:Name="Current Formula Results">
+        <Table ss:DefaultRowHeight="15">
+
+
+            <Column ss:AutoFitWidth="0" ss:Width="100"/>
+            <Column ss:AutoFitWidth="0" ss:Width="250"/>
+            <Column ss:AutoFitWidth="0" ss:Width="200"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+                <Column ss:AutoFitWidth="0" ss:Width="100"/>
+
+            <Row ss:AutoFitHeight="0">
+                <Cell ss:StyleID="header01"><Data ss:Type="String">ASX Code</Data></Cell>
+                <Cell ss:StyleID="header01"><Data ss:Type="String">Company Name</Data></Cell>
+                <Cell ss:StyleID="header01"><Data ss:Type="String">Item</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">1990</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">1991</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">1992</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">1993</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">1994</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">1995</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">1996</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">1997</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">1998</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">1999</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">2000</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">2001</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">2002</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">2003</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">2004</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">2005</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">2006</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">2007</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">2008</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">2009</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">2010</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">2011</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">2012</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">2013</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">2014</Data></Cell>
+                    <Cell ss:StyleID="header01"><Data ss:Type="String">2015</Data></Cell>
+            </Row>
+
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">AHY</Data></Cell>
+                            <Cell><Data ss:Type="String">Asaleo Care Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Ratio Analysis - ROE</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.0276</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.2287</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">AHY</Data></Cell>
+                            <Cell><Data ss:Type="String">Asaleo Care Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Profit and Loss - Operating Revenue</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                            <Cell><Data ss:Type="String">--</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">629,886,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">622,216,000</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">AHY</Data></Cell>
+                            <Cell><Data ss:Type="String">Asaleo Care Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Profit and Loss - Reported NPAT After Abnorma</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                                <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">0</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">2,986,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">75,626,000</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">AHY</Data></Cell>
+                            <Cell><Data ss:Type="String">Asaleo Care Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Balance Sheet - Total Equity</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">467,500,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">387,833,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">337,167,000</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">AHY</Data></Cell>
+                            <Cell><Data ss:Type="String">Asaleo Care Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Balance Sheet - Total Assets</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">816,800,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">773,421,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">775,297,000</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">BKL</Data></Cell>
+                            <Cell><Data ss:Type="String">Blackmores Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Ratio Analysis - ROE</Data>
+                            </Cell>
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.0975</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.1506</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.1986</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.1822</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.1705</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.1326</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.1294</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.1733</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.204</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.168</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.3091</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.2944</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.272</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.2732</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.3378</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.3839</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.3701</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.3834</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.3791</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.3549</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.3384</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.3451</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.3223</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.2547</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.244</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.3503</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">BKL</Data></Cell>
+                            <Cell><Data ss:Type="String">Blackmores Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Profit and Loss - Operating Revenue</Data>
+                            </Cell>
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">43,700,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">50,735,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">53,479,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">56,984,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">60,726,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">62,198,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">61,062,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">61,719,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">68,711,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">68,453,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">79,598,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">76,497,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">81,435,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">94,656,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">115,724,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">134,449,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">147,988,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">171,653,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">178,833,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">200,314,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">214,934,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">234,423,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">260,886,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">326,603,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">346,760,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">471,615,000</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">BKL</Data></Cell>
+                            <Cell><Data ss:Type="String">Blackmores Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Profit and Loss - Reported NPAT After Abnorma</Data>
+                            </Cell>
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">1,147,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">2,060,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">3,472,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">3,557,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">3,160,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">2,515,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">2,928,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">3,784,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">4,438,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">3,766,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">5,383,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">5,489,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">5,102,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">6,201,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">9,307,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">11,736,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">14,451,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">16,671,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">19,086,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">20,782,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">24,297,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">27,305,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">27,806,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">24,976,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">25,429,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">46,556,000</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">BKL</Data></Cell>
+                            <Cell><Data ss:Type="String">Blackmores Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Balance Sheet - Total Equity</Data>
+                            </Cell>
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">11,762,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">13,679,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">17,480,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">19,525,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">22,164,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">21,509,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">22,630,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">21,837,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">21,751,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">22,411,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">17,416,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">18,646,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">18,755,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">22,695,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">27,552,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">30,567,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">36,786,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">43,486,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">50,351,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">58,563,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">71,790,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">79,112,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">86,280,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">98,051,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">104,226,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">132,915,000</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">BKL</Data></Cell>
+                            <Cell><Data ss:Type="String">Blackmores Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Balance Sheet - Total Assets</Data>
+                            </Cell>
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">30,185,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">30,944,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">30,447,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">36,149,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">37,763,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">38,650,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">36,714,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">35,813,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">39,369,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">34,943,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">41,175,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">42,370,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">45,822,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">57,527,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">50,892,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">59,274,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">68,284,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">83,164,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">116,874,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">138,572,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">154,349,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">153,130,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">174,771,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">231,477,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">236,594,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">293,407,000</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">BWX</Data></Cell>
+                            <Cell><Data ss:Type="String">BWX Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Ratio Analysis - ROE</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">BWX</Data></Cell>
+                            <Cell><Data ss:Type="String">BWX Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Profit and Loss - Operating Revenue</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                            <Cell><Data ss:Type="String">--</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">BWX</Data></Cell>
+                            <Cell><Data ss:Type="String">BWX Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Profit and Loss - Reported NPAT After Abnorma</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                                <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">0</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">BWX</Data></Cell>
+                            <Cell><Data ss:Type="String">BWX Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Balance Sheet - Total Equity</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">74,900,000</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">BWX</Data></Cell>
+                            <Cell><Data ss:Type="String">BWX Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Balance Sheet - Total Assets</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">91,200,000</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">HCT</Data></Cell>
+                            <Cell><Data ss:Type="String">Holista Colltech Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Ratio Analysis - ROE</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                            <Cell><Data ss:Type="String">--</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">-0.1107</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">-0.5132</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">-0.6349</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">-0.8343</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">-0.5438</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">-0.8854</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">-0.3386</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">-0.1603</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">-0.1638</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">-0.8251</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">-2.0153</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.0135</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">HCT</Data></Cell>
+                            <Cell><Data ss:Type="String">Holista Colltech Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Profit and Loss - Operating Revenue</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">148,213</Data></Cell>
+
+                                                <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">0</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">21,114</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">1,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">28,170</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">37,553</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">9,200</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">6,250,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">6,021,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">5,439,652</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">5,199,005</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">6,178,404</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">6,771,672</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">HCT</Data></Cell>
+                            <Cell><Data ss:Type="String">Holista Colltech Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Profit and Loss - Reported NPAT After Abnorma</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">-140,372</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">-948,264</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">-1,525,900</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">-2,087,921</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">-2,788,392</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">-1,884,598</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">-1,919,671</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">-1,573,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">-614,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">-541,829</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">-1,700,700</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">-3,373,731</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">-42,985</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">HCT</Data></Cell>
+                            <Cell><Data ss:Type="String">Holista Colltech Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Balance Sheet - Total Equity</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                            <Cell><Data ss:Type="String">--</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">4,499,134</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">2,973,234</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">3,288,817</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">3,342,345</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">3,465,738</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">2,168,053</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">4,646,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">3,831,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">3,307,678</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">2,061,297</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">1,529,392</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">2,291,204</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">HCT</Data></Cell>
+                            <Cell><Data ss:Type="String">Holista Colltech Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Balance Sheet - Total Assets</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                            <Cell><Data ss:Type="String">--</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">4,724,312</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">4,327,228</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">4,372,435</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">4,369,154</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">4,259,469</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">2,577,148</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">10,591,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">8,329,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">8,348,966</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">8,106,259</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">5,243,581</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">4,981,291</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">PTL</Data></Cell>
+                            <Cell><Data ss:Type="String">Pental Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Ratio Analysis - ROE</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                            <Cell><Data ss:Type="String">--</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">-0.1626</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">-1.7857</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">-1.3858</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.3871</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.2273</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.2008</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.2179</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.2524</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.1588</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.0026</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.1195</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.1269</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.1163</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.0911</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">-0.0357</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.0375</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.0676</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.0743</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">PTL</Data></Cell>
+                            <Cell><Data ss:Type="String">Pental Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Profit and Loss - Operating Revenue</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">59,708,000</Data></Cell>
+
+                                            <Cell><Data ss:Type="String">--</Data></Cell>
+
+                                            <Cell><Data ss:Type="String">--</Data></Cell>
+
+                                                <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">0</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">38,923,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">75,804,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">88,507,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">118,402,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">125,331,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">113,371,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">131,263,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">160,649,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">149,646,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">147,183,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">166,397,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">161,511,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">108,273,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">109,376,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">81,163,000</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">PTL</Data></Cell>
+                            <Cell><Data ss:Type="String">Pental Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Profit and Loss - Reported NPAT After Abnorma</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                                <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">0</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">-862,511</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">-3,401,356</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">-3,861,575</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">5,760,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">7,005,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">7,313,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">9,051,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">12,260,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">7,735,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">131,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">8,023,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">9,444,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">9,666,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">5,455,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">-60,669,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">1,893,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">5,336,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">5,087,000</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">PTL</Data></Cell>
+                            <Cell><Data ss:Type="String">Pental Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Balance Sheet - Total Equity</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                            <Cell><Data ss:Type="String">--</Data></Cell>
+
+                                            <Cell><Data ss:Type="String">--</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">1,904,763</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">2,786,588</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">29,760,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">32,391,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">38,082,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">41,542,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">48,569,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">45,083,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">49,568,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">67,132,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">74,405,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">83,131,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">107,667,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">44,991,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">62,082,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">73,015,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">81,734,000</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">PTL</Data></Cell>
+                            <Cell><Data ss:Type="String">Pental Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Balance Sheet - Total Assets</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                            <Cell><Data ss:Type="String">--</Data></Cell>
+
+                                            <Cell><Data ss:Type="String">--</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">2,094,384</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">3,186,931</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">54,237,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">73,672,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">104,568,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">112,248,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">115,338,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">130,471,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">142,686,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">142,682,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">139,057,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">141,320,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">204,031,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">136,461,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">93,004,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">90,271,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">98,819,000</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">SBE</Data></Cell>
+                            <Cell><Data ss:Type="String">Sabre Group Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Ratio Analysis - ROE</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                            <Cell><Data ss:Type="String">--</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.1628</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.116</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.2239</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.235</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.2378</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.2193</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.2214</Data></Cell>
+
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0.2504</Data></Cell>
+
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">SBE</Data></Cell>
+                            <Cell><Data ss:Type="String">Sabre Group Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Profit and Loss - Operating Revenue</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                            <Cell><Data ss:Type="String">--</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">21,937,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">25,384,990</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">32,063,676</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">36,437,664</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">46,808,877</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">51,918,227</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">61,462,662</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">58,848,000</Data></Cell>
+
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">SBE</Data></Cell>
+                            <Cell><Data ss:Type="String">Sabre Group Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Profit and Loss - Reported NPAT After Abnorma</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                                <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">0</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">1,689,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">1,233,115</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">2,789,573</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">3,260,688</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">4,673,565</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">4,709,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">5,273,056</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">4,036,000</Data></Cell>
+
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">SBE</Data></Cell>
+                            <Cell><Data ss:Type="String">Sabre Group Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Balance Sheet - Total Equity</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                            <Cell><Data ss:Type="String">--</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">10,377,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">10,864,649</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">12,458,409</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">13,874,663</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">19,655,103</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">21,531,117</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">24,016,172</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">24,541,000</Data></Cell>
+
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">SBE</Data></Cell>
+                            <Cell><Data ss:Type="String">Sabre Group Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Balance Sheet - Total Assets</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">3,797,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">14,693,000</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">15,606,783</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">18,139,792</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">21,834,453</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">31,175,039</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">35,465,217</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">39,666,249</Data></Cell>
+
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">38,449,000</Data></Cell>
+
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">VIT</Data></Cell>
+                            <Cell><Data ss:Type="String">Vitaco Holdings Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Ratio Analysis - ROE</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                                <Cell ss:StyleID="percentCommaStyle"><Data ss:Type="Number">0</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">VIT</Data></Cell>
+                            <Cell><Data ss:Type="String">Vitaco Holdings Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Profit and Loss - Operating Revenue</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                            <Cell><Data ss:Type="String">--</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">VIT</Data></Cell>
+                            <Cell><Data ss:Type="String">Vitaco Holdings Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Profit and Loss - Reported NPAT After Abnorma</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                                <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">0</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">VIT</Data></Cell>
+                            <Cell><Data ss:Type="String">Vitaco Holdings Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Balance Sheet - Total Equity</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">133,900,000</Data></Cell>
+
+                        </Row>
+                        <Row ss:AutoFitHeight="0">
+                            <Cell><Data ss:Type="String">VIT</Data></Cell>
+                            <Cell><Data ss:Type="String">Vitaco Holdings Limited</Data></Cell>
+                            <Cell>
+                                <Data ss:Type="String">Annual Balance Sheet - Total Assets</Data>
+                            </Cell>
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                    <Cell><Data ss:Type="String">&nbsp;</Data></Cell> <!-- blank from error -->
+                                                    <Cell ss:StyleID="numberStyle"><Data ss:Type="Number">203,800,000</Data></Cell>
+
+                        </Row>
+
+
+
+             
+
+        </Table>
+    </Worksheet>
+
+
+</Workbook>
