@@ -34,12 +34,22 @@ clean.data <- list.files(path = "./Morningstar/GICS Sector/",  pattern = "^MS.Se
   mutate(market_share_equity = `Annual Balance Sheet - Total Equity`/sum(`Annual Balance Sheet - Total Equity`,na.rm=TRUE),
          market_share_assets = `Annual Balance Sheet - Total Assets`/sum(`Annual Balance Sheet - Total Assets`,na.rm=TRUE),
          market_share_revenue = `Annual Profit and Loss - Operating Revenue`/sum(`Annual Profit and Loss - Operating Revenue`,na.rm=TRUE))
+
 group_by(clean.data,sector,year) %>% 
 summarize(roe = sum(`Annual Ratio Analysis - ROE`*`Annual Balance Sheet - Total Equity`,na.rm = TRUE)/sum(`Annual Balance Sheet - Total Equity`,na.rm = TRUE)) %>%
   spread(year,roe)
-group_by(clean.data,sector,year) %>% 
+ROE <- group_by(clean.data,sector,year) %>% 
   summarize(roe2 = sum(`Annual Profit and Loss - Reported NPAT After Abnorma`,na.rm = TRUE)/sum(`Annual Balance Sheet - Total Equity`,na.rm = TRUE)) %>%
   spread(year,roe2)
-group_by(clean.data,sector,year) %>% 
+HH_Equity <- group_by(clean.data,sector,year) %>% 
   summarize(HH_equity = 10000*sum(`market_share_equity`*`market_share_equity`,na.rm = TRUE)) %>%
   spread(year,HH_equity)
+HH_Assets <- group_by(clean.data,sector,year) %>%
+  summarize(HH_assets = 10000*sum(`market_share_assets`*`market_share_assets`,na.rm = TRUE)) %>%
+  spread(year,HH_assets)
+HH_Rev <- group_by(clean.data,sector,year) %>%
+  summarize(HH_revenue = 10000*sum(`market_share_revenue`*`market_share_revenue`,na.rm = TRUE)) %>%
+  spread(year,HH_revenue)
+Equity <- group_by(clean.data,sector,year) %>%
+  summarize(year,total_equity = sum(`Annual Balance Sheet - Total Equity`,na.rm = TRUE)) %>%
+  spread(year,total_equity)
