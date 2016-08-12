@@ -1,0 +1,5389 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><?mso-application progid="Excel.Sheet"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet" xmlns:html="http://www.w3.org/TR/REC-html40">
+   <DocumentProperties xmlns="urn:schemas-microsoft-com:office:office">
+      <Author>Morningstar</Author>
+      <LastAuthor>Morningstar</LastAuthor>
+      <Company>Morningstar Research (Thailand)</Company>
+      <Version>11.6568</Version>
+   </DocumentProperties>
+   <ExcelWorkbook xmlns="urn:schemas-microsoft-com:office:excel">
+      <WindowHeight>7935</WindowHeight>
+      <WindowWidth>15195</WindowWidth>
+      <WindowTopX>0</WindowTopX>
+      <WindowTopY>75</WindowTopY>
+      <ProtectStructure>False</ProtectStructure>
+      <ProtectWindows>False</ProtectWindows>
+   </ExcelWorkbook>
+   <Styles>
+      <Style ss:ID="Default" ss:Name="Normal">
+         <Alignment ss:Vertical="Bottom"/>
+         <Borders/>
+         <Font/>
+         <Interior/>
+         <NumberFormat/>
+         <Protection/>
+      </Style>
+      <Style ss:ID="shortDate01">
+         <NumberFormat ss:Format="Short Date"/>
+         <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      </Style>
+      <Style ss:ID="header01">
+         <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+         <Font ss:FontName="Calibri" x:Family="Swiss" ss:Size="11" ss:Color="#000000" ss:Bold="1"/>
+         <Interior ss:Color="#CCCCCC" ss:Pattern="Solid"/>
+      </Style>
+      <Style ss:ID="header02">
+         <Alignment ss:Horizontal="Left" ss:Vertical="Bottom"/>
+         <Font x:Family="Swiss" ss:Bold="1"/>
+      </Style>
+      <Style ss:ID="aRight01">
+         <Alignment ss:Horizontal="Right" ss:Vertical="Bottom"/>
+      </Style>
+      <Style ss:ID="centerBottom">
+         <Alignment ss:Horizontal="Center" ss:Vertical="Bottom"/>
+      </Style>
+      <Style ss:ID="numberStyle">
+         <NumberFormat ss:Format="#,##0.00##"/>
+      </Style>
+      <Style ss:ID="percentCommaStyle">
+         <NumberFormat ss:Format="#,##0.00%"/>
+      </Style>
+      <Style ss:ID="percentNoDivStyle">
+         <NumberFormat ss:Format="#,##0.0000"/>
+      </Style>
+   </Styles>
+   <Worksheet ss:Name="Advanced Search Result">
+      <Table ss:DefaultRowHeight="15" ss:ExpandedColumnCount="6">
+         <Column ss:AutoFitWidth="0" ss:Width="150"/>
+         <Column ss:AutoFitWidth="0" ss:Width="150"/>
+         <Column ss:AutoFitWidth="0" ss:Width="150"/>
+         <Column ss:AutoFitWidth="0" ss:Width="150"/>
+         <Column ss:AutoFitWidth="0" ss:Width="150"/>
+         <Column ss:AutoFitWidth="0" ss:Width="150"/>
+         <Row ss:AutoFitHeight="0">
+            <Cell ss:StyleID="header01">
+               <Data ss:Type="String">ASX Code</Data>
+            </Cell>
+            <Cell ss:StyleID="header01">
+               <Data ss:Type="String">Company Name</Data>
+            </Cell>
+            <Cell ss:StyleID="header01">
+               <Data ss:Type="String">Status</Data>
+            </Cell>
+            <Cell ss:StyleID="header01">
+               <Data ss:Type="String">GICS Sector</Data>
+            </Cell>
+            <Cell ss:StyleID="header01">
+               <Data ss:Type="String">GICS Industry Group</Data>
+            </Cell>
+            <Cell ss:StyleID="header01">
+               <Data ss:Type="String">GICS Industry</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">1PG</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">1-Page Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">4DS</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">4DS Memory Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Semiconductors &amp; Semiconductor Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Semiconductors &amp; Semiconductor Equipment</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">8CO</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">8Common Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">9SP</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">9 Spokes International Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">AAS</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Asian Pacific Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">AAT</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">AAT Corporation Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">AB1</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Animoca Brands Corporation Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ACU</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Activistic Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ACX</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Aconex Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">AD1</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">ApplyDirect Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ADA</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Adacel Technologies Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ADJ</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Adslot Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">AER</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Aeeris Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">AFY</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Afterpay Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">AHL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">AHAlife Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ALU</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Altium Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ALW</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Alphawest Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">AMO</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Ambertech Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">APX</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Appen Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ASU</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Alpha Technologies Corporation Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ASZ</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">ASG Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">AYG</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Axxis Technology Group Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">AZU</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Azurn International Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">BCT</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Bluechiip Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">BHG</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Beauty Health Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">BIG</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Big Un Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">BIQ</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">BuildingIQ, Inc</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">BLG</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Bluglass Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Semiconductors &amp; Semiconductor Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Semiconductors &amp; Semiconductor Equipment</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">BMB</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Balamara Resources Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Communications Equipment</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">BPF</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Bulletproof Group Limited </Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">BPS</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">BPS Technology Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">BRN</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Brainchip Holdings Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">BUD</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Buddy Platform Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">BVA</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Bravura Solutions Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">BXP</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Bill Express Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CAR</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Carsales.com Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CAT</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Catapult Group International Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CAT1</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Catuity Inc.</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CBK</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">CB Australia Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CCA</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">ChimpChange Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CCK</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">CCK Financial Solutions Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CDA</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Codan Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CDR</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Commander Communications Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Communications Equipment</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CGL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">The Citadel Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CGO</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">CPT Global Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CL1</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Class Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CL8</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Collaborate Corporation Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CLA1</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Clarity International Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CLT</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Cellnet Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CNW</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Cirrus Networks Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">COM</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Comops Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">COO</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Corum Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CPS</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Computronics Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CPU</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Computershare Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CSV</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">CSG Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CSX</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Citadel Securix Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CTI</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Chariot Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CTL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Citect Corporation Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CUS</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Customers Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CV1</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">CV Check Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CVT</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Covata Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">CYO</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Clarity Oss Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Suspended</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">DAT</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Didasko Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Withdrawn Float</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">DBS</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Dark Blue Sea Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">DCC</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">DigitalX Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">DDR</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Dicker Data Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">DMC</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Digimatic Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">DSQ</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">DSQ Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">DSX</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Decimal Software Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">DTI</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">DTI Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">DTL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Data3 Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">DTX</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Datetix Group Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">DUB</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Dubber Corporation Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">DWS</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">DWS Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">DYE</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Dyesol Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Semiconductors &amp; Semiconductor Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Semiconductors &amp; Semiconductor Equipment</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ECI</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">EC-Asia International Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Communications Equipment</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">EMO</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">EnterMo Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Withdrawn Float</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ENZ</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Enzumo Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">EOL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Energy One Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">EPD</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Empired Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">EPY</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">E-pay Asia Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ESK</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Etherstack PLC</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ESV</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Eservglobal Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">FAC</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Facilitate Digital Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">FCT</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Firstwave Cloud Technology Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">FFT</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Future Fibre Technologies Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">FLN</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Freelancer Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">G8C</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">G8 Communications Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Communications Equipment</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">GBT</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">GBST Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">GCN</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">GoConnect Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">GEE1</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">GES International Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware, Storage &amp; Peripherals</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">GEG</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Grays eCommerce Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">GTK</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Gentrack Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">GUI</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Guilford Investments Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">HIL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Hills Limited </Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">HPX</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">HPAL Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">HSN</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Hansen Technologies Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">HWG</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Hostworks Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ICI</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">iCandy Interactive Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ICU</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Isentric Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">IDE</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IDEAS International Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">IFM</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Infomedia Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">IGG</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Ingena Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">INO</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Innovonics Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">IOT</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IOT Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">IPP</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">iProperty Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">IRE</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IRESS Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">IRI</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Integrated Research Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ISD</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">iSentia Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ISS</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">ISS Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ISX</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">iSIGNTHIS LTD</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ITN</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Intercard Wireless Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ITP</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Capital Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ITX</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">itX Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">IUL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Imagine Un Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">IVO</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Invigor Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">IWG</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Iwebgate Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">IXL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IXLA Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">JCS</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Jcurve Solutions Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">KAZ</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">KAZ Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">KBU</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Kabuni Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">KKL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Kollakorn Corporation Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">KLM</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">KLM Group Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Communications Equipment</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">KMA</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Koolsee New Media Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Withdrawn Float</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">KNM</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Kneomedia Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">KNO</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Knosys Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">KYC</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Keycorp Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">LAA</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Latam Autos Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">LAK</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Lake Technology Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">LGD</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Legend Corporation Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Communications Equipment</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">LIB</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">LibertyOne Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">LMC</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Lemarne Corporation Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">LMS</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Luminus Systems Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">LNK</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Link Administration Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">LNU</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Linius Technologies Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">LOK</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">LookSmart Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">LRX</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Longreach Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">LVH</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">LiveHire Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">LVT</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Livetiles Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MBE</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Mobile Embrace Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MBO</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Mobilarm Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MIG</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Migme Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Suspended</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MKB</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Moko Social Media Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MLB</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Melbourne IT Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MMZ</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Mooter Media Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MNW</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Mint Payments Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MOQ</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">MOQ Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MOT</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Motopia Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MP1</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Megaport Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MSM</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">MSM Corporation International Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MSP</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Maxsec Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MTL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Manalto Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MUA</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Mitula Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MVU</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Matrix View</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MWC</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Media World Communications Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MWR</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">MGM Wireless Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MYO</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">MYOB Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MYO1</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">MYOB Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">MYQ</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Myfiziq Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">NEA</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Nearmap Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">NOP</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">New Opportunity Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">NOR</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Norwood Systems Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">NOV</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Novatti Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">NTC</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">NetComm Wireless Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Communications Equipment</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">NTG</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">National Telecoms Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Communications Equipment</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">NUH</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Nuheara Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware, Storage &amp; Peripherals</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">NVO</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Nvoi Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">NXT</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">NEXTDC Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">OCL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Objective Corporation Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">OKN</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Oakton Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">OLV</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Otherlevels Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">OMT</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Omni Market Tide Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">OOK</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Ookami Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">OTH</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Onthehouse Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">OTT</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Open Telecommunications Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">OTW</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Over The Wire Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">PCH</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Property Connect Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">PEG</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Pixie Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">PIL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Peppermint Innovation Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">POP</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Primary Opinion Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">PPL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Pureprofile Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">PPS</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Praemium Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">PRO</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Prophecy International Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">PSY</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Panorama Synergy Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">PTX1</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Pacific Matrix Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">--</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">QIL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Quoin (Int) Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">QML</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">QMASTOR Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">QMT</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">QM Technologies Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">QTG</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Q Technology Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">RBL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Redbubble Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">RCA</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Raw Capital Partners Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">RDF</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Redflex Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">REV</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Real Estate Investar Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">RFL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Rubik Financial Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">RFN</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Reffind Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">RHP</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Rhipe Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">RIL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Riddock International Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">RKN</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Reckon Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">RNT</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Rent.com.au Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">RPD</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">RP Data Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">RPX</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">RP Data Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">RTN</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Rattoon Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">RTS</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Retail Technology &amp; Services Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">RUL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Runge Pincock Minarco Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">RXH</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Rewardle Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">RXP</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">RXP Services Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">RZR</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Razor Risk Technologies Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SCD</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Scantech Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SCG1</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Smart Communications Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SEN</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Senetas Corporation Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Communications Equipment</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SFI</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Spookfish Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SGO</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Stream Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Suspended</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SIL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Scholaris International Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Withdrawn Float</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SKF</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Skyfii Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SLC1</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">SoftLaw Corporation Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SLX</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Silex Systems Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Semiconductors &amp; Semiconductor Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Semiconductors &amp; Semiconductor Equipment</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SM8</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Shark Mitigation Systems Pty Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware, Storage &amp; Peripherals</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SMA</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">SmartTrans Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SMN</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Structural Monitoring Systems Plc</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SMP</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Smartpay Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SMX</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">SMS Management and Technology Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SNN</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Sonnet Corporation Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SNR</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Synergy Plus Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SNX</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">SecureNet Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SOF</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Sofcom Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SOH</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Solution 6 Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SP1</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Search Party Group Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Suspended</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SPZ</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Smart Parking Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">SRO</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">ShareRoot Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">STL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">StarGroup Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware, Storage &amp; Peripherals</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">STR</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Service Stream Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Communications Equipment</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">TCH</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Touchcorp Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">THD</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Thred Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">TKF</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">TikForce Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">TMN</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Telemedia Networks International Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Communications Equipment</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">TNE</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology One Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">TNT</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Tesserent Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">TOM</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Tomizone Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">TQH</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">3Q Holdings Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">TSN</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Transaction Solutions International Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">TUP</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">TTG Fintech Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">TV2</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">TV2U International Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">TZL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">TZ Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">UBN</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Urbanise.Com Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ULT</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Ultrapay Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">UPD</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Updater Inc</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">USC</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Utility Services Corporation Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">UXC</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">UXC Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">VCM</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">VeCommerce Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">VEA</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Veda Advantage Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">VGL</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Vista Group International Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">VGL1</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Volante Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">IT Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">VID</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Videlli Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Electronic Equipment, Instruments &amp; Components</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">VIP</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Voltage IP Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">VPC</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Velpic Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">VXS</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Voxson Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Communications Equipment</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">WCG</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Webcentral Group Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Delisted</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">WMC</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Wonhe Multimedia Commerce Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Communications Equipment</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">WNS</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">World.Net Services Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">WRR</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">World Reach Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Technology Hardware &amp; Equipment</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Communications Equipment</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">WTC</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Wisetech Global Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">XF1</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Xref Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">XPE</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Xped Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">XRO</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Xero Limited</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software</Data>
+            </Cell>
+         </Row>
+         <Row ss:AutoFitHeight="0">
+            <Cell>
+               <Data ss:Type="String">ZYB</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Zyber Holdings Ltd</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Trading</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Information Technology</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Software &amp; Services</Data>
+            </Cell>
+            <Cell>
+               <Data ss:Type="String">Internet Software &amp; Services</Data>
+            </Cell>
+         </Row>
+      </Table>
+      <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">
+         <ProtectObjects>False</ProtectObjects>
+         <ProtectScenarios>False</ProtectScenarios>
+      </WorksheetOptions>
+   </Worksheet>
+</Workbook>
