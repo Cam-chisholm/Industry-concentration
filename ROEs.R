@@ -21,6 +21,16 @@ read_and_clean <- function(filename){
     as.data.table
 }
 
+read_and_clean2 <- function(filename){
+  # Captures any numbers between Sector and .csv in the filename
+  group2 <- gsub("^.*Classification([0-9]+)\\.csv$", "\\1", filename)
+  #  group2 <- gsub("^.*MS.Sector([0-9]+)\\.csv$", "\\1", filename)
+  fread(filename, na.strings = c("", "NA", " "), header = TRUE) %>%
+    # record the group
+    mutate(sector = group2) %>%
+    as.data.table
+}
+
 industry <- data.table(c("Consumer Discretionary",
                        "Consumer Staples",
                        "Energy",
@@ -32,7 +42,7 @@ industry <- data.table(c("Consumer Discretionary",
                        "Telecommunications",
                        "Utilities"))
 
-clean.data <- list.files(path = "./Morningstar/GICS Sector/",  pattern = "^MS.Sector([0-9]+)\\.csv$", 
+new.data <- list.files(path = "./Morningstar/GICS Sector/",  pattern = "^MS.Sector([0-9]+)\\.csv$", 
                          full.names = TRUE) %>%
   lapply(read_and_clean) %>%
   rbindlist(use.names = TRUE, fill = TRUE) %>%
@@ -43,8 +53,17 @@ clean.data <- list.files(path = "./Morningstar/GICS Sector/",  pattern = "^MS.Se
                             as.numeric(gsub(",", "", value, fixed = TRUE)))) %>% 
   filter(complete.cases(.)) %>%
   select(-value) %>%
-  spread(Item, value_num) %>%
-  group_by(sector,year) %>%
+  spread(Item, value_num)
+
+sector.data <- list.files(path = "./Morningstar/Classifications/", pattern = "^Classification([0-9]+)\\.csv$",
+                          full.names = TRUE) %>%
+  lapply(read_and_clean2) %>%
+  rbindlist(use.names = TRUE, fill = TRUE)
+
+clean.data <- merge(new.data,sector.data, by= c("ASX Code", "Company Name", "sector"), all.x = FALSE, all.y = TRUE)
+
+
+  group_by(clean.data,sector,year) %>%
   mutate(market_share_equity = `Annual Balance Sheet - Total Equity`/sum(`Annual Balance Sheet - Total Equity`,na.rm=TRUE),
          market_share_assets = `Annual Balance Sheet - Total Assets`/sum(`Annual Balance Sheet - Total Assets`,na.rm=TRUE),
          market_share_revenue = `Annual Profit and Loss - Operating Revenue`/sum(`Annual Profit and Loss - Operating Revenue`,na.rm=TRUE))
