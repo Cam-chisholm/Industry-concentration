@@ -187,3 +187,6 @@ TSWLatexianTemp*
 *.xls
 *.xlsx
 *.csv
+
+# Stata data files
+*.dta
