@@ -104,11 +104,26 @@ end
 
 getmata roe_5yr npat_5yr equity_5yr, replace
 
+replace company = "IBM A/NZ Holdings" if company=="IBM A/NZ Holdings "
+replace company = "Caterpillar Financial" if company=="Caterpillar Financial "
+
 save CompanyTimeSeries, replace
 
 keep if year==2015 | yearsincecurrent==0
-keep if accountingperiod==12
-drop if year==2016
+drop if accountingperiod<6
+sort company
+by company: gen n = _N
+drop if year==2016 & n==2
+drop n
+drop if accountingperiod<12 & company=="Freshmax"
+local financials "totalrevenue npbt npat totalassets totalliabilities totalshareholderequity"
+
+foreach x of local financials {
+replace `x' = `x'*12/accountingperiod if accountingperiod~=12
+}
+
+
+
 
 save CompanyROE2015, replace
 
@@ -162,7 +177,11 @@ keep anzsic profit_share wages_share company market_share
 
 save MarketShares, replace
 
-* Mergers (and acquisitions...)
+* MERGERS
+
+* using industry data as anchor
+use MarketShares, clear
+
 merge m:1 anzsic using FiveYearIndustry
 drop _merge
 
@@ -194,15 +213,6 @@ gen MS_`j'firm = MS_`i'firm + market_share`j' if market_share`j'~=.
 replace MS_`j'firm = MS_`i'firm if MS_`j'firm==.
 }
 
-/*
-forvalues i=1(1)7 {
-gen weight`i' = 0
-forvalues j=`i'(1)7 {
-replace weight`i' = market_share`i'/MS_`j'firm if no_firm==`j'
-}
-}
-*/
-
 gen ind_profit = 0
 gen ind_profit_5yr = 0
 gen ind_equity = 0
@@ -226,6 +236,114 @@ gen ind_roe = ind_profit/ind_equity
 gen ind_roe_5yr = ind_profit_5yr/ind_equity_5yr
 
 
+keep anzsic MS_4firm ind_roe ind_roe_5yr
 
-*merge 1:m anzsic company using CompanySegment
+save FourFirmMS, replace
 
+
+
+* using segment data as anchor
+use CompanySegment, clear
+
+egen rank = group(revenuerank company)
+drop revenuerank
+
+egen firm_seg = group(rank segmentcode)
+
+sort firm_seg
+by firm_seg: gen ind_no = _n
+by firm_seg: gen no_ind = _N
+
+sort rank segmentcode ind_no
+by rank: egen no_seg_firm = max(segmentcode)
+gen unallocated = segmentname=="Unallocated"
+
+
+
+putmata rank revenue profits assets no_segments unallocated firm_seg ind_no no_ind, replace
+
+mata
+firm_rev = J(rows(revenue),1,.)
+firm_profits = J(rows(revenue),1,.)
+firm_assets = J(rows(revenue),1,.)
+missing_seg_rev = J(rows(revenue),1,0)
+missing_seg_prof = J(rows(revenue),1,0)
+missing_seg_ast = J(rows(revenue),1,0)
+rank = rank\0
+a=0
+while (a<rows(revenue)) {
+b=a+1
+b
+rev = 0
+prof = 0
+ast = 0
+while (rank[a+1]==rank[b]) {
+if (ind_no[a+1]==1 & revenue[a+1]~=. & unallocated[a+1]==0) {
+rev = rev + revenue[a+1]
+}
+if (ind_no[a+1]==1 & profits[a+1]~=. & unallocated[a+1]==0) {
+prof = prof + profits[a+1]
+}
+if (ind_no[a+1]==1 & assets[a+1]~=. & unallocated[a+1]==0) {
+ast = ast + assets[a+1]
+}
+a=a+1
+}
+if (rev~=0) {
+firm_rev[b..a] = J(a-b+1,1,rev)
+}
+else {
+firm_rev[b..a] = J(a-b+1,1,revenue[a])
+missing_seg_rev[b..a] = J(a-b+1,1,1)
+}
+if (prof~=0) {
+firm_profits[b..a] = J(a-b+1,1,prof)
+}
+else {
+firm_profits[b..a] = J(a-b+1,1,profits[a])
+missing_seg_prof[b..a] = J(a-b+1,1,1)
+}
+if (ast~=0) {
+firm_assets[b..a] = J(a-b+1,1,ast)
+}
+else {
+firm_assets[b..a] = J(a-b+1,1,assets[a])
+missing_seg_ast[b..a] = J(a-b+1,1,1)
+}
+}
+end
+
+getmata firm_rev firm_profits firm_assets missing_seg_rev missing_seg_prof missing_seg_ast, replace
+
+gen revenue_share = revenue/firm_rev
+gen profit_share = profits/firm_profits
+gen assets_share = assets/firm_assets
+
+merge m:1 company using CompanyROE2015
+drop _merge
+
+sort firm_seg
+
+gen equity = assets_share*totalshareholderequity
+gen segment_roe = profit_share*npat/equity
+
+merge m:1 anzsic company using MarketShares
+drop if _merge==2
+drop _merge
+merge m:1 anzsic using FiveYearIndustry
+drop if _merge==2
+drop _merge
+keep id-market_share ind_rev_2015 ind_value_added_2015 no_of_businesses_2015 ind_wages_2015 anzsic1-major_industry
+
+sort firm_seg
+
+gen firm_ind_rev = market_share*ind_rev_2015
+
+merge m:1 anzsic using FourFirmMS
+drop if _merge==2
+drop _merge
+
+sort firm_seg
+
+
+reshape wide anzsic major_player no_segments, i(firm_seg) j(ind_no)
