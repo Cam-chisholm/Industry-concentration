@@ -207,10 +207,12 @@ reshape wide profit_share-market_share firm_ind_rev_2015-firm_share, i(anzsic) j
 move title profit_share1
 
 gen MS_1firm = market_share1
+gen HH = market_share1^2
 forvalues i=1(1)6 {
 local j =`i'+1
 gen MS_`j'firm = MS_`i'firm + market_share`j' if market_share`j'~=.
 replace MS_`j'firm = MS_`i'firm if MS_`j'firm==.
+replace HH = HH + market_share`j'^2 if market_share`j'~=.
 }
 
 gen ind_profit = 0
@@ -236,7 +238,7 @@ gen ind_roe = ind_profit/ind_equity
 gen ind_roe_5yr = ind_profit_5yr/ind_equity_5yr
 
 
-keep anzsic MS_4firm ind_roe ind_roe_5yr
+keep anzsic MS_2firm MS_3firm MS_4firm HH ind_roe ind_roe_5yr
 
 save FourFirmMS, replace
 
@@ -326,6 +328,8 @@ sort firm_seg
 
 gen equity = assets_share*totalshareholderequity
 gen segment_roe = profit_share*npat/equity
+replace segment_roe = . if unallocated==1
+replace equity = . if unallocated==1
 
 merge m:1 anzsic company using MarketShares
 drop if _merge==2
@@ -337,7 +341,7 @@ keep id-market_share ind_rev_2015 ind_value_added_2015 no_of_businesses_2015 ind
 
 sort firm_seg
 
-gen firm_ind_rev = market_share*ind_rev_2015
+gen firm_ind_rev = market_share*ind_rev_2015/100
 
 merge m:1 anzsic using FourFirmMS
 drop if _merge==2
@@ -345,5 +349,24 @@ drop _merge
 
 sort firm_seg
 
+save Company_merged_Industry, replace
 
-reshape wide anzsic major_player no_segments, i(firm_seg) j(ind_no)
+* Calculate firm's exposure to each industry
+
+use Company_merged_Industry, clear
+
+* Simple approach: ignore segment information
+
+sort no_segments anzsic company
+
+gen t = _n
+tsset t
+encode anzsic, gen(A)
+gen drop = A==l.A & rank==l.rank
+drop if drop==1
+drop drop t
+
+sort rank A
+
+gen lower_bound = firm_ind_rev
+gen upper_bound = firm_ind_rev
