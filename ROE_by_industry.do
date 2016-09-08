@@ -368,5 +368,56 @@ drop drop t
 
 sort rank A
 
-gen lower_bound = firm_ind_rev
-gen upper_bound = firm_ind_rev
+by rank: egen count_ind = count(rank) if firm_ind_rev==.
+
+replace firm_ind_rev = totalrevenue if count_ind==1
+
+
+by rank: egen cumulative_firm_revenue = sum(firm_ind_rev) if major_industry==0
+gen firm_rev_remaining = max(0,totalrevenue - cumulative_firm_revenue)
+
+sort A
+by A: egen cumulative_ind_revenue = sum(firm_ind_rev)
+gen ind_rev_remaining = max(0,ind_rev_2015 - cumulative_ind_revenue)
+
+sort rank A
+
+gen est_firm_ind_rev = ind_rev_remaining if firm_ind_rev==.
+by rank: egen scale = sum(ind_rev_remaining) if firm_ind_rev==.
+replace est_firm_ind_rev = est_firm_ind_rev*firm_rev_remaining/scale
+replace est_firm_ind_rev = firm_ind_rev if est_firm_ind_rev==.
+drop scale
+
+by rank: egen total_firm_ind_rev = sum(est_firm_ind_rev) if major_industry==0
+gen share_firm_ind_rev = est_firm_ind_rev/total_firm_ind_rev
+
+keep id company rank anzsic* A totalrevenue share_firm_ind_rev roe roe_5yr MS_3firm MS_4firm HH
+drop anzsic
+
+drop if A==.
+
+* exposure to concentrated industries
+gen weight_conc = HH*share_firm_ind_rev
+
+by rank: egen exposure = sum(weight_conc)
+
+by rank: gen t = _n
+keep if t==1
+drop t
+
+reg roe_5yr exposure if roe_5yr>-.3 & roe_5yr<.5 & exposure<500 [aweight=totalrevenue]
+lpoly roe_5yr exposure if roe_5yr>-.3 & roe_5yr<.5 &  exposure<4500 [aweight=totalrevenue], ci bw(200) nosc
+lpoly roe exposure if roe>-.3 & roe<.5 &  exposure<4500 [aweight=totalrevenue], ci bw(500) nosc
+
+/*
+reshape wide anzsic1-anzsic3 share_firm_ind_rev, i(rank) j(A)
+
+forvalues i=1(1)470 {
+replace share_firm_ind_rev`i' = 0 if share_firm_ind_rev`i'==.
+}
+
+reg roe_5yr share_firm_ind_rev* if roe_5yr>-.3 & roe_5yr<.5 [aweight=totalrevenue]
+*/
+
+
+
