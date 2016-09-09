@@ -392,32 +392,92 @@ by rank: egen total_firm_ind_rev = sum(est_firm_ind_rev) if major_industry==0
 gen share_firm_ind_rev = est_firm_ind_rev/total_firm_ind_rev
 
 keep id company rank anzsic* A totalrevenue share_firm_ind_rev roe roe_5yr MS_3firm MS_4firm HH
-drop anzsic
 
 drop if A==.
 
-* exposure to concentrated industries
-gen weight_conc = HH*share_firm_ind_rev
+* assign tradable sectors (agri, manu, mining) a low concentration measure
+gen tradable = anzsic1=="A" | anzsic1=="B" | anzsic1=="C"
+replace HH = 50 if tradable==1 & HH>50 & HH~=.
+replace MS_4firm = 5 if tradable==1 & MS_4firm>5 & MS_4firm~=.
+replace MS_3firm = 5 if tradable==1 & MS_3firm>5 & MS_3firm~=.
 
-by rank: egen exposure = sum(weight_conc)
+* exposure to concentrated industries
+gen weight_concHH = HH*share_firm_ind_rev
+gen weight_conc4 = MS_4firm*share_firm_ind_rev
+
+by rank: egen exposureHH = sum(weight_concHH)
+by rank: egen exposure4 = sum(weight_conc4)
+
+save CompanyExposure, replace
 
 by rank: gen t = _n
 keep if t==1
 drop t
 
-reg roe_5yr exposure if roe_5yr>-.3 & roe_5yr<.5 & exposure<500 [aweight=totalrevenue]
-lpoly roe_5yr exposure if roe_5yr>-.3 & roe_5yr<.5 &  exposure<4500 [aweight=totalrevenue], ci bw(200) nosc
-lpoly roe exposure if roe>-.3 & roe<.5 &  exposure<4500 [aweight=totalrevenue], ci bw(500) nosc
+lpoly roe_5yr exposureHH if roe_5yr>-.3 & roe_5yr<.5 [aweight=totalrevenue], ci nosc
+lpoly roe exposureHH if roe>-.3 & roe<.5 [aweight=totalrevenue], ci nosc
 
-/*
-reshape wide anzsic1-anzsic3 share_firm_ind_rev, i(rank) j(A)
+lpoly roe_5yr exposure4 if roe_5yr>-.3 & roe_5yr<.5 [aweight=totalrevenue], ci nosc
+lpoly roe exposure4 if roe>-.3 & roe<.5 [aweight=totalrevenue], ci nosc
+
+egen exp4_ = cut(exposure4), at(0,15,30,45,60,75,100)
+egen expHH_ = cut(exposureHH), at(0,500,1000,1500,2000,10000)
+
+reg roe_5yr i.exp4_ if roe_5yr>-.3 & roe_5yr<.5 [aweight=totalrevenue]
+reg roe i.exp4_ if roe>-.3 & roe<.5 [aweight=totalrevenue]
+reg roe_5yr i.expHH_ if roe_5yr>-.3 & roe_5yr<.5 [aweight=totalrevenue]
+reg roe i.expHH_ if roe>-.3 & roe<.5 [aweight=totalrevenue]
+
+keep A anzsic tradable
+
+sort A
+
+by A: gen n = _n
+keep if n==1
+drop n
+save IndustryList, replace
+
+* Reshape and run regression against share in each industry
+
+use CompanyExposure, clear
+
+drop weight_concHH-exposure4
+drop anzsic
+
+reshape wide anzsic1-MS_4firm share_firm_ind_rev tradable, i(rank) j(A)
 
 forvalues i=1(1)470 {
 replace share_firm_ind_rev`i' = 0 if share_firm_ind_rev`i'==.
 }
 
-reg roe_5yr share_firm_ind_rev* if roe_5yr>-.3 & roe_5yr<.5 [aweight=totalrevenue]
-*/
+reg roe_5yr share_firm_ind_rev* if roe_5yr>-.3 & roe_5yr<.5 [aweight=totalrevenue], nocons
+
+est sto ROE
 
 
 
+use FourFirmMS, clear
+
+merge 1:1 anzsic using IndustryList
+drop _merge
+sort A
+
+
+forvalues i=1(1)470 {
+gen share_firm_ind_rev`i' = 0
+replace share_firm_ind_rev`i' = 1 if A==`i'
+}
+
+est res ROE
+
+predict ROE
+drop share_firm_ind_rev*
+
+merge 1:1 anzsic using FiveYearIndustry
+drop _merge
+
+egen exp4_ = cut(MS_4firm), at(0,15,30,45,60,75,100)
+egen expHH_ = cut(HH), at(0,500,1000,1500,2000,10000)
+
+reg ROE i.exp4_ [aweight=ind_rev_2015] if ROE>-.3 & ROE<.5
+reg ROE i.expHH_ [aweight=ind_rev_2015] if ROE>-.3 & ROE<.5
