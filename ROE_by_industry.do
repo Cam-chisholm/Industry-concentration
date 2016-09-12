@@ -73,60 +73,91 @@ replace totalassets = . if totalassets==0
 replace totalliabilities = . if totalliabilities==0
 replace totalshareholderequity = . if totalshareholderequity==0
 replace employees = . if employees==0
+keep if accountingperiod==12
+drop accountingperiod
+gen month = substr(balancedate,4,3)
+gen Month = .
+replace Month = 1 if month=="Jan"
+replace Month = 2 if month=="Feb"
+replace Month = 3 if month=="Mar"
+replace Month = 4 if month=="Apr"
+replace Month = 5 if month=="May"
+replace Month = 6 if month=="Jun"
+replace Month = 7 if month=="Jul"
+replace Month = 8 if month=="Aug"
+replace Month = 9 if month=="Sep"
+replace Month = 10 if month=="Oct"
+replace Month = 11 if month=="Nov"
+replace Month = 12 if month=="Dec"
+sort id year Month
+by id: gen t = _n
+xtset id t
+
+gen month_gap = (year-l.year)*12 + Month-l.Month
+
 gen roe = npat/totalshareholderequity
-
-putmata revenuerank year npat tse=totalshareholderequity, replace
-
-mata
-roe_5yr = J(rows(revenuerank),1,.)
-npat_5yr = J(rows(revenuerank),1,.)
-equity_5yr = J(rows(revenuerank),1,.)
-a = 1
-b = 1
-while (a<rows(revenuerank)) {
-a
-profit = 0
-equity = 0
-b = a
-while (revenuerank[a]==revenuerank[a+1] & year[a]>2010 & year[a]<2016) {
-profit = profit + npat[a]
-equity = equity + tse[a]
-a = a+1
-}
-if (b<a) {
-roe_5yr[b..a-1] = J(a-b,1,profit/equity)
-npat_5yr[b..a-1] = J(a-b,1,profit)
-equity_5yr[b..a-1] = J(a-b,1,equity)
-}
-a = a+1
-}
-end
-
-getmata roe_5yr npat_5yr equity_5yr, replace
+gen roe_beginning = npat/l.totalshareholderequity if month_gap>9 & month_gap<19
 
 replace company = "IBM A/NZ Holdings" if company=="IBM A/NZ Holdings "
 replace company = "Caterpillar Financial" if company=="Caterpillar Financial "
 
 save CompanyTimeSeries, replace
 
-keep if year==2015 | yearsincecurrent==0
-drop if accountingperiod<6
-sort company
-by company: gen n = _N
-drop if year==2016 & n==2
-drop n
-drop if accountingperiod<12 & company=="Freshmax"
-local financials "totalrevenue npbt npat totalassets totalliabilities totalshareholderequity"
+keep id company year t roe roe_beginning npat totalshareholderequity Month month_gap
 
-foreach x of local financials {
-replace `x' = `x'*12/accountingperiod if accountingperiod~=12
+sort id t
+
+gen same_year = 0
+forvalues i=1(1)10 {
+replace same_year = year==f.year
+replace year = year-1 if same_year==1
 }
 
 
 
+drop Month t month_gap same_year
+
+reshape wide roe roe_beginning npat totalshareholderequity , i(id) j(year)
+
+drop npat2016-roe_beginning2016
+
+gen npat = 0
+gen equity = 0
+forvalues i=2015(-1)2011 {
+local j =`i'-1
+replace npat = npat + npat`i' if npat`i'~=. & totalshareholderequity`j'~=.
+replace equity = equity + totalshareholderequity`j' if npat`i'~=. & totalshareholderequity`j'~=.
+}
+
+gen roe_5yr = npat/equity
+
+keep id company roe* npat equity
+drop roe2003-roe_beginning2009
+move company roe2010
+replace roe_5yr=. if roe_5yr==0
+rename npat profit_2011_15
+rename equity equity_2010_14
 
 save CompanyROE2015, replace
 
+use CompanyTimeSeries, clear
+drop t month_gap
+
+sort id year Month
+by id: egen max_year = max(year)
+by id: gen t = _n
+sort id t
+gen max_year2 = max_year==2016 & l.year==2015
+drop if max_year2==1
+drop max_year2
+keep if year==max_year | year==2015
+
+merge 1:1 id company using CompanyROE2015
+keep if _merge==3
+drop _merge
+drop month-t
+
+save CompanyROE2015, replace
 
 
 * Data across ANZSIC industies
@@ -216,29 +247,20 @@ replace HH = HH + market_share`j'^2 if market_share`j'~=.
 }
 
 gen ind_profit = 0
-gen ind_profit_5yr = 0
 gen ind_equity = 0
-gen ind_equity_5yr = 0
 gen MS_sum1 = 0
 gen MS_sum2 = 0
 forvalues i=1(1)7 {
 replace ind_profit = ind_profit + market_share`i'*npat`i' if npat`i'~=. & totalshareholderequity`i'~=.
-replace ind_profit_5yr = ind_profit_5yr + market_share`i'*npat_5yr`i' if npat_5yr`i'~=. & equity_5yr`i'~=.
 replace ind_equity = ind_equity + market_share`i'*totalshareholderequity`i' if npat`i'~=. & totalshareholderequity`i'~=.
-replace ind_equity_5yr = ind_equity_5yr + market_share`i'*equity_5yr`i' if npat_5yr`i'~=. & equity_5yr`i'~=.
 replace MS_sum1 = MS_sum1 + market_share`i' if npat`i'~=. & totalshareholderequity`i'~=.
-replace MS_sum2 = MS_sum2 + market_share`i' if npat_5yr`i'~=. & equity_5yr`i'~=.
 }
 
 replace ind_profit = ind_profit/MS_sum1
-replace ind_profit_5yr = ind_profit_5yr/MS_sum2
 replace ind_equity = ind_equity/MS_sum1
-replace ind_equity_5yr = ind_equity_5yr/MS_sum2
 gen ind_roe = ind_profit/ind_equity
-gen ind_roe_5yr = ind_profit_5yr/ind_equity_5yr
 
-
-keep anzsic MS_2firm MS_3firm MS_4firm HH ind_roe ind_roe_5yr
+keep anzsic MS_2firm MS_3firm MS_4firm HH ind_roe
 
 save FourFirmMS, replace
 
@@ -391,7 +413,7 @@ drop scale
 by rank: egen total_firm_ind_rev = sum(est_firm_ind_rev) if major_industry==0
 gen share_firm_ind_rev = est_firm_ind_rev/total_firm_ind_rev
 
-keep id company rank anzsic* A totalrevenue share_firm_ind_rev roe roe_5yr MS_3firm MS_4firm HH
+keep id company rank anzsic* A totalrevenue share_firm_ind_rev roe* MS_3firm MS_4firm HH
 
 drop if A==.
 
@@ -408,25 +430,46 @@ gen weight_conc4 = MS_4firm*share_firm_ind_rev
 by rank: egen exposureHH = sum(weight_concHH)
 by rank: egen exposure4 = sum(weight_conc4)
 
+forvalues i=2010(1)2015 {
+sum roe`i', detail
+gen extreme`i' = roe`i'<r(p5) | roe`i'>r(p95) if roe`i'~=.
+sum roe_beginning`i', detail
+gen extreme_b_`i' = roe_beginning`i'<r(p5) | roe_beginning`i'>r(p95) if roe_beginning`i'~=.
+}
+
+gen extreme = extreme2010==1 | extreme2011==1 | extreme2012==1 | extreme2013==1 | extreme2014==1 | extreme2015==1 | ///
+extreme_b_2010==1 | extreme_b_2011==1 | extreme_b_2012==1 | extreme_b_2013==1 | extreme_b_2014==1 | extreme_b_2015==1
+
+sort rank 
+by rank: egen tradability = sum(share_firm_ind_rev*tradable)
+
 save CompanyExposure, replace
 
 by rank: gen t = _n
 keep if t==1
 drop t
 
-lpoly roe_5yr exposureHH if roe_5yr>-.3 & roe_5yr<.5 [aweight=totalrevenue], ci nosc
-lpoly roe exposureHH if roe>-.3 & roe<.5 [aweight=totalrevenue], ci nosc
+* local polynomial regressions
+lpoly roe_5yr exposureHH if extreme~=1 [aweight=totalrevenue], ci nosc
+lpoly roe2015 exposureHH if extreme2015~=1 [aweight=totalrevenue], ci nosc
+lpoly roe_beginning2015 exposureHH if extreme_b_2015~=1 [aweight=totalrevenue], ci nosc
 
-lpoly roe_5yr exposure4 if roe_5yr>-.3 & roe_5yr<.5 [aweight=totalrevenue], ci nosc
-lpoly roe exposure4 if roe>-.3 & roe<.5 [aweight=totalrevenue], ci nosc
+lpoly roe_5yr exposure4 if extreme~=1 [aweight=totalrevenue], ci nosc
+lpoly roe2015 exposure4 if extreme2015~=1 [aweight=totalrevenue], ci nosc
+lpoly roe_beginning2015 exposure4 if extreme_b_2015~=1 [aweight=totalrevenue], ci nosc
 
+* regressions against concentration dummies
 egen exp4_ = cut(exposure4), at(0,15,30,45,60,75,100)
 egen expHH_ = cut(exposureHH), at(0,500,1000,1500,2000,10000)
 
-reg roe_5yr i.exp4_ if roe_5yr>-.3 & roe_5yr<.5 [aweight=totalrevenue]
-reg roe i.exp4_ if roe>-.3 & roe<.5 [aweight=totalrevenue]
-reg roe_5yr i.expHH_ if roe_5yr>-.3 & roe_5yr<.5 [aweight=totalrevenue]
-reg roe i.expHH_ if roe>-.3 & roe<.5 [aweight=totalrevenue]
+reg roe_5yr i.exp4_ if extreme~=1 [aweight=totalrevenue]
+reg roe_5yr i.expHH_ if extreme~=1 [aweight=totalrevenue]
+forvalues i=2010(1)2015 {
+reg roe`i' i.exp4_ if extreme`i'~=1 [aweight=totalrevenue]
+reg roe_beginning`i' i.exp4_ if extreme_b_`i'~=1 [aweight=totalrevenue]
+reg roe`i' i.expHH_ if extreme`i'~=1 [aweight=totalrevenue]
+reg roe_beginning`i' i.expHH_ if extreme_b_`i'~=1 [aweight=totalrevenue]
+}
 
 keep A anzsic tradable
 
@@ -436,6 +479,73 @@ by A: gen n = _n
 keep if n==1
 drop n
 save IndustryList, replace
+
+* Reshape and calculate share in each concentration group (tradables given own group)
+
+use CompanyExposure, clear
+
+drop weight_concHH-exposure4
+
+egen exp4_ = cut(MS_4firm), at(0,15,30,45,60,75,100)
+egen expHH_ = cut(HH), at(0,500,1000,1500,2000,10000)
+replace exp4_ = 9999 if tradable==1
+replace expHH_ = 9999 if tradable==1
+
+sort rank exp4_
+
+by rank exp4_: egen SHARE = sum(share_firm_ind_rev)
+local EXP4 "0 15 30 45 60 75 9999"
+foreach x of local EXP4 {
+by rank: egen share`x' = max(SHARE) if exp4_==`x'
+by rank: egen share_`x' = max(share`x')
+replace share_`x' = 0 if share_`x'==.
+drop share`x'
+}
+
+gen SUM = share_0 + share_15 + share_30 + share_45 + share_60 + share_75 + share_9999
+foreach x of local EXP4 {
+replace share_`x' = share_`x'/SUM if SUM~=0 & SUM~=.
+}
+drop SUM SHARE
+
+sort rank expHH_
+
+by rank expHH_: egen SHARE = sum(share_firm_ind_rev)
+local EXP4 "0 500 1000 1500 2000 9999"
+foreach x of local EXP4 {
+by rank: egen share`x' = max(SHARE) if expHH_==`x'
+by rank: egen shareHH_`x' = max(share`x')
+replace shareHH_`x' = 0 if shareHH_`x'==.
+drop share`x'
+}
+
+
+gen SUM = shareHH_0 + shareHH_500 + shareHH_1000 + shareHH_1500 + shareHH_2000 + shareHH_9999
+foreach x of local EXP4 {
+replace shareHH_`x' = shareHH_`x'/SUM if SUM~=0 & SUM~=.
+}
+drop SUM SHARE
+
+by rank: gen t = _n
+keep if t==1
+drop t exp4_ expHH_
+
+rename share_9999 share_tradable
+drop shareHH_9999
+
+
+* regressions against shares in each concentration group
+reg roe_5yr share_0-share_75 share_tradable if extreme~=1 [aweight=totalrevenue], nocons
+reg roe_5yr shareHH* share_tradable if extreme~=1 [aweight=totalrevenue], nocons
+forvalues i=2010(1)2015 {
+reg roe`i' share_0-share_75 share_tradable if extreme`i'~=1 [aweight=totalrevenue], nocons
+reg roe_beginning`i' share_0-share_75 share_tradable if extreme_b_`i'~=1 [aweight=totalrevenue], nocons
+reg roe`i' shareHH* share_tradable if extreme`i'~=1 [aweight=totalrevenue], nocons
+reg roe_beginning`i' shareHH* share_tradable if extreme_b_`i'~=1 [aweight=totalrevenue], nocons
+}
+
+
+
 
 * Reshape and run regression against share in each industry
 
@@ -479,5 +589,5 @@ drop _merge
 egen exp4_ = cut(MS_4firm), at(0,15,30,45,60,75,100)
 egen expHH_ = cut(HH), at(0,500,1000,1500,2000,10000)
 
-reg ROE i.exp4_ [aweight=ind_rev_2015] if ROE>-.3 & ROE<.5
-reg ROE i.expHH_ [aweight=ind_rev_2015] if ROE>-.3 & ROE<.5
+reg ROE i.exp4_ [aweight=ind_rev_2015] if ROE>-.3 & ROE<.5 & tradable==0
+reg ROE i.expHH_ [aweight=ind_rev_2015] if ROE>-.3 & ROE<.5 & tradable==0
