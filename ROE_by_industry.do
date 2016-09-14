@@ -246,6 +246,9 @@ replace MS_`j'firm = MS_`i'firm if MS_`j'firm==.
 replace HH = HH + market_share`j'^2 if market_share`j'~=.
 }
 
+replace HH = HH + (100-MS_7firm)/5*25
+
+
 gen ind_profit = 0
 gen ind_equity = 0
 gen MS_sum1 = 0
@@ -419,7 +422,7 @@ drop if A==.
 
 * assign tradable sectors (agri, manu, mining) a low concentration measure
 gen tradable = anzsic1=="A" | anzsic1=="B" | anzsic1=="C"
-replace HH = 50 if tradable==1 & HH>50 & HH~=.
+replace HH = 500 if tradable==1 & HH>50 & HH~=.
 replace MS_4firm = 5 if tradable==1 & MS_4firm>5 & MS_4firm~=.
 replace MS_3firm = 5 if tradable==1 & MS_3firm>5 & MS_3firm~=.
 
@@ -485,16 +488,18 @@ save IndustryList, replace
 use CompanyExposure, clear
 
 drop weight_concHH-exposure4
+gen revenue = totalrevenue*share_firm_ind_rev
+replace HH = 499 if HH==500
 
-egen exp4_ = cut(MS_4firm), at(0,15,30,45,60,75,100)
-egen expHH_ = cut(HH), at(0,500,1000,1500,2000,10000)
+egen exp4_ = cut(MS_4firm), at(0,15,30,50,70,100)
+egen expHH_ = cut(HH), at(0,515,602,797,1341,10000)
 replace exp4_ = 9999 if tradable==1
 replace expHH_ = 9999 if tradable==1
 
 sort rank exp4_
 
 by rank exp4_: egen SHARE = sum(share_firm_ind_rev)
-local EXP4 "0 15 30 45 60 75 9999"
+local EXP4 "0 15 30 50 70 9999"
 foreach x of local EXP4 {
 by rank: egen share`x' = max(SHARE) if exp4_==`x'
 by rank: egen share_`x' = max(share`x')
@@ -502,7 +507,7 @@ replace share_`x' = 0 if share_`x'==.
 drop share`x'
 }
 
-gen SUM = share_0 + share_15 + share_30 + share_45 + share_60 + share_75 + share_9999
+gen SUM = share_0 + share_15 + share_30 + share_50 + share_70 + share_9999
 foreach x of local EXP4 {
 replace share_`x' = share_`x'/SUM if SUM~=0 & SUM~=.
 }
@@ -511,7 +516,7 @@ drop SUM SHARE
 sort rank expHH_
 
 by rank expHH_: egen SHARE = sum(share_firm_ind_rev)
-local EXP4 "0 500 1000 1500 2000 9999"
+local EXP4 "0 515 602 797 1341 9999"
 foreach x of local EXP4 {
 by rank: egen share`x' = max(SHARE) if expHH_==`x'
 by rank: egen shareHH_`x' = max(share`x')
@@ -520,7 +525,7 @@ drop share`x'
 }
 
 
-gen SUM = shareHH_0 + shareHH_500 + shareHH_1000 + shareHH_1500 + shareHH_2000 + shareHH_9999
+gen SUM = shareHH_0 + shareHH_515 + shareHH_602 + shareHH_797 + shareHH_1341 + shareHH_9999
 foreach x of local EXP4 {
 replace shareHH_`x' = shareHH_`x'/SUM if SUM~=0 & SUM~=.
 }
@@ -535,15 +540,108 @@ drop shareHH_9999
 
 
 * regressions against shares in each concentration group
-reg roe_5yr share_0-share_75 share_tradable if extreme~=1 [aweight=totalrevenue], nocons
-reg roe_5yr shareHH* share_tradable if extreme~=1 [aweight=totalrevenue], nocons
+reg roe_5yr share_0-share_70 share_tradable if extreme~=1 [aweight=totalrevenue], nocons vce(r)
+est sto ROE5_4
+qreg roe_5yr share_0-share_70 share_tradable [iweight=totalrevenue], vce(r)
+est sto qreg_ROE5_4
+reg roe_5yr shareHH* share_tradable if extreme~=1 [aweight=totalrevenue], nocons vce(r)
+est sto ROE5_HH
+qreg roe_5yr shareHH_* share_tradable [iweight=totalrevenue], vce(r)
+est sto qreg_ROE5_HH
 forvalues i=2010(1)2015 {
-reg roe`i' share_0-share_75 share_tradable if extreme`i'~=1 [aweight=totalrevenue], nocons
-reg roe_beginning`i' share_0-share_75 share_tradable if extreme_b_`i'~=1 [aweight=totalrevenue], nocons
-reg roe`i' shareHH* share_tradable if extreme`i'~=1 [aweight=totalrevenue], nocons
-reg roe_beginning`i' shareHH* share_tradable if extreme_b_`i'~=1 [aweight=totalrevenue], nocons
+reg roe`i' share_0-share_70 share_tradable if extreme`i'~=1 [aweight=totalrevenue], nocons vce(r)
+est sto ROE`i'_4
+reg roe_beginning`i' share_0-share_70 share_tradable if extreme_b_`i'~=1 [aweight=totalrevenue], nocons vce(r)
+est sto ROE_b`i'_4
+reg roe`i' shareHH* share_tradable if extreme`i'~=1 [aweight=totalrevenue], nocons vce(r)
+est sto ROE`i'_HH
+reg roe_beginning`i' shareHH* share_tradable if extreme_b_`i'~=1 [aweight=totalrevenue], nocons vce(r)
+est sto ROE_b`i'_HH
 }
 
+
+* results for HH index
+clear
+set obs 6
+
+local EXP4 "0 515 602 797 1341"
+
+local i "1"
+foreach x of local EXP4 {
+gen shareHH_`x' = 0
+replace shareHH_`x' = 1 in `i'
+local i = `i'+1
+}
+gen share_tradable = 0
+replace share_tradable = 1 in 6
+
+est res ROE5_HH
+
+predict ROE
+predict ROE_SE, stdp
+gen ROE_LB = ROE - 1.96*ROE_SE
+gen ROE_UB = ROE + 1.96*ROE_SE
+
+drop ROE*
+
+est res ROE2015_HH
+
+predict ROE
+predict ROE_SE, stdp
+gen ROE_LB = ROE - 1.96*ROE_SE
+gen ROE_UB = ROE + 1.96*ROE_SE
+
+
+drop ROE*
+
+est res qreg_ROE5_HH
+
+predict ROE
+predict ROE_SE, stdp
+gen ROE_LB = ROE - 1.96*ROE_SE
+gen ROE_UB = ROE + 1.96*ROE_SE
+
+
+* results for 4-firm market share
+clear
+set obs 6
+
+local EXP4 "0 15 30 50 70"
+
+local i "1"
+foreach x of local EXP4 {
+gen share_`x' = 0
+replace share_`x' = 1 in `i'
+local i = `i'+1
+}
+gen share_tradable = 0
+replace share_tradable = 1 in 6
+
+est res ROE5_4
+
+predict ROE
+predict ROE_SE, stdp
+gen ROE_LB = ROE - 1.96*ROE_SE
+gen ROE_UB = ROE + 1.96*ROE_SE
+
+drop ROE*
+
+est res ROE2015_4
+
+predict ROE
+predict ROE_SE, stdp
+gen ROE_LB = ROE - 1.96*ROE_SE
+gen ROE_UB = ROE + 1.96*ROE_SE
+
+
+drop ROE*
+
+est res qreg_ROE5_4
+
+predict ROE
+predict ROE_SE, stdp
+gen ROE_LB = ROE - 1.96*ROE_SE
+gen ROE_UB = ROE + 1.96*ROE_SE
 
 
 
