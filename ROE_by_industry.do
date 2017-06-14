@@ -177,11 +177,12 @@ drop revenuecagr
 rename code anzsic
 
 gen anzsic4 = substr(anzsic,1,5)
+rename anzsic4 ANZSIC4
 
-merge m:1 anzsic4 using ANZSIC
+merge m:1 ANZSIC4 using ANZSIC
 drop if _merge==2
 rename _merge merge
-rename anzsic3 anzsic_3
+rename ANZSIC3 anzsic_3
 gen anzsic3 = substr(anzsic,1,4)
 merge m:1 anzsic3 using ANZSIC3
 drop if _merge==2
@@ -189,7 +190,7 @@ gen major_industry = _merge==1 & substr(anzsic,1,1)~="X" & substr(anzsic,1,1)~="
 drop anzsic_3
 replace anzsic2 = substr(anzsic,1,3) if anzsic2==""
 replace anzsic1 = substr(anzsic,1,1) if anzsic1==""
-drop merge _merge anzsic4
+drop merge _merge ANZSIC4
 
 save FiveYearIndustry, replace
 
@@ -207,6 +208,88 @@ replace market_share = . if market_share==0
 keep anzsic profit_share wages_share company market_share
 
 save MarketShares, replace
+
+* Industry classifications (IBIS)
+import delimited IndustryClassifications.csv, clear
+
+sort code
+by code: gen t = _n
+keep if t==1
+drop unitofmeasurement-t title exportsm2010 importsm2010
+
+rename code anzsic
+rename lifecyclestage life_cycle
+rename exportslevel exports_level
+rename exportstrend exports_trend
+rename importslevel imports_level
+rename importstrend imports_trend
+rename marketshareconcentration conc_level
+rename basisofcompetitionlevel comp_level
+rename barrierstoentrylevel barriers_level
+rename barrierstoentrytrend barriers_trend
+rename globalizationlevel global_level
+rename globalizationtrend global_trend
+
+forvalues i=2011(1)2016 {
+rename exportsm`i' exports_`i'
+rename importsm`i' imports_`i'
+replace exports_`i' = exports_`i'*1000
+replace imports_`i' = imports_`i'*1000
+}
+
+drop if substr(anzsic,1,1)=="X"
+
+save IndustryClassifications, replace
+
+* Industry Classifications (ours)
+import delimited "C:\Users\chisholmc\Dropbox (Personal)\Grattan\GitHub\Industry-concentration\ANZSICClassifications.csv", clear
+
+rename code anzsic
+drop in 247
+
+save ANZSICClassifications, replace
+
+* Categorise industries by revenue
+use FiveYearIndustry, clear
+
+merge 1:1 anzsic using IndustryClassifications
+keep if _merge==3
+drop _merge
+merge 1:1 anzsic using ANZSICClassifications
+drop _merge
+
+gen traded = tradable==1 | tradable==2 | exports_2015>0 | imports_2015>0
+gen regional1 = regional==1
+gen regional2 = regional==2
+
+gen large4 = ind_rev_2015>10^7 & traded==0
+sort anzsic3
+by anzsic3: egen ind3_rev = sum(ind_rev_2015) if large4==0 & traded==0
+gen large3 = ind3_rev>10^7 & large4==0 & traded==0
+sort anzsic2
+by anzsic2: egen ind2_rev = sum(ind_rev_2015) if large4==0 & large3==0 & traded==0
+gen large2 = ind2_rev>10^7 & large4==0 & large3==0 & traded==0
+sort anzsic1
+by anzsic1: egen ind1_rev = sum(ind_rev_2015) if large4==0 & large3==0 & large2==0 & traded==0
+egen traded_rev = sum(ind_rev_2015) if traded==1
+
+gen sector = anzsic if large4==1 & traded==0
+replace sector = anzsic3 if large3==1 & traded==0
+replace sector = anzsic2 if large2==1 & traded==0
+replace sector = anzsic1 if large4==0 & large3==0 & large2==0 & traded==0
+replace sector = "Traded" if traded==1
+
+gen sector_rev = ind_rev_2015 if large4==1 & traded==0
+replace sector_rev = ind3_rev if large3==1 & traded==0
+replace sector_rev = ind2_rev if large2==1 & traded==0
+replace sector_rev = ind1_rev if large4==0 & large3==0 & large2==0 & traded==0
+replace sector_rev = traded_rev if traded==1
+
+encode sector, gen(Sector)
+
+drop title-ind_wages_2016 exports_2011-imports_2016 tradable regional ind1_rev ind2_rev ind3_rev traded_rev
+
+save SectorGrouping, replace
 
 * MERGERS
 
@@ -262,6 +345,17 @@ replace MS_sum1 = MS_sum1 + market_share`i' if npat`i'~=. & totalshareholderequi
 replace ind_profit = ind_profit/MS_sum1
 replace ind_equity = ind_equity/MS_sum1
 gen ind_roe = ind_profit/ind_equity
+
+replace MS_1firm = 4 if company1=="No major players"
+replace MS_2firm = 7 if company1=="No major players"
+replace MS_2firm = MS_2firm + 3 if MS_2firm==MS_1firm
+replace MS_3firm = 9 if company1=="No major players"
+replace MS_3firm = MS_3firm + 2 if MS_3firm==MS_2firm
+replace MS_3firm = MS_3firm + 5 if MS_3firm==MS_1firm
+replace MS_4firm = 10 if company1=="No major players"
+replace MS_4firm = MS_4firm + 1 if MS_4firm==MS_3firm
+replace MS_4firm = MS_4firm + 3 if MS_4firm==MS_2firm
+replace MS_4firm = MS_4firm + 6 if MS_4firm==MS_1firm
 
 keep anzsic MS_2firm MS_3firm MS_4firm HH ind_roe
 
@@ -374,8 +468,48 @@ drop _merge
 
 sort firm_seg
 
+merge m:1 anzsic using SectorGrouping
+drop if _merge==2
+drop _merge
+
+format %5s anzsic1
+format %5s anzsic2
+format %5s anzsic3
+format %7s anzsic
+format %20s company
+format %20s segmentname
+
+
 save Company_merged_Industry, replace
 
+* Calculate firm's exposure to each industry
+
+use Company_merged_Industry, clear
+
+sort rank segmentcode ind_no
+
+sort rank anzsic
+
+
+by rank anzsic: egen seg_rev = sum(revenue)
+gen firm_ind_rev2 = revenue/seg_rev*firm_ind_rev
+drop seg_rev
+
+sort rank segmentcode
+
+by rank segmentcode: egen rev_used = sum(firm_ind_rev2)
+gen rev_remaining = revenue-rev_used
+replace firm_ind_rev = 0 if rev_remaining==0 & firm_ind_rev==.
+replace firm_ind_rev2 = 0 if rev_remaining==0 & firm_ind_rev2==.
+
+by rank: egen firm_rev_used = sum(firm_ind_rev2)
+gen firm_rev_remaining = firm_rev - firm_rev_used
+
+by rank segmentcode: egen total_rev = sum(ind_rev_2015) if firm_ind_rev==.
+replace firm_ind_rev2 = rev_remaining*ind_rev_2015/total_rev if firm_ind_rev2==.
+
+
+// OLD regression approaches //
 * Calculate firm's exposure to each industry
 
 use Company_merged_Industry, clear
@@ -416,15 +550,31 @@ drop scale
 by rank: egen total_firm_ind_rev = sum(est_firm_ind_rev) if major_industry==0
 gen share_firm_ind_rev = est_firm_ind_rev/total_firm_ind_rev
 
-keep id company rank anzsic* A totalrevenue share_firm_ind_rev roe* MS_3firm MS_4firm HH
+/*
+sort rank Sector
+by rank Sector: egen share_firm_sec_rev = sum(share_firm_ind_rev)
+gen t = _n
+tsset t
+drop if Sector==l.Sector & rank==l.rank
+drop t
+keep id company rank anzsic* A totalrevenue share_firm_sec_rev roe* MS_3firm MS_4firm HH traded 
+drop if A==.
+
+gen weight_concHH = HH*share_firm_sec_rev
+gen weight_conc4 = MS_4firm*share_firm_sec_rev
+
+by rank: egen tradability = sum(share_firm_sec_rev*traded)
+*/
+
+keep id company rank anzsic* A totalrevenue share_firm_ind_rev roe* MS_3firm MS_4firm HH traded 
 
 drop if A==.
 
 * assign tradable sectors (agri, manu, mining) a low concentration measure
-gen tradable = anzsic1=="A" | anzsic1=="B" | anzsic1=="C"
-replace HH = 500 if tradable==1 & HH>50 & HH~=.
-replace MS_4firm = 5 if tradable==1 & MS_4firm>5 & MS_4firm~=.
-replace MS_3firm = 5 if tradable==1 & MS_3firm>5 & MS_3firm~=.
+*gen tradable = anzsic1=="A" | anzsic1=="B" | anzsic1=="C"
+replace HH = 500 if traded==1 & HH>50 & HH~=.
+replace MS_4firm = 5 if traded==1 & MS_4firm>5 & MS_4firm~=.
+replace MS_3firm = 5 if traded==1 & MS_3firm>5 & MS_3firm~=.
 
 * exposure to concentrated industries
 gen weight_concHH = HH*share_firm_ind_rev
@@ -443,8 +593,11 @@ gen extreme_b_`i' = roe_beginning`i'<r(p5) | roe_beginning`i'>r(p95) if roe_begi
 gen extreme = extreme2010==1 | extreme2011==1 | extreme2012==1 | extreme2013==1 | extreme2014==1 | extreme2015==1 | ///
 extreme_b_2010==1 | extreme_b_2011==1 | extreme_b_2012==1 | extreme_b_2013==1 | extreme_b_2014==1 | extreme_b_2015==1
 
+sum roe_5yr if extreme==0, detail
+replace extreme=0 if roe_5yr>r(p5) & roe_5yr<r(p95)
+
 sort rank 
-by rank: egen tradability = sum(share_firm_ind_rev*tradable)
+by rank: egen tradability = sum(share_firm_ind_rev*traded)
 
 save CompanyExposure, replace
 
@@ -474,7 +627,7 @@ reg roe`i' i.expHH_ if extreme`i'~=1 [aweight=totalrevenue]
 reg roe_beginning`i' i.expHH_ if extreme_b_`i'~=1 [aweight=totalrevenue]
 }
 
-keep A anzsic tradable
+keep A anzsic traded
 
 sort A
 
@@ -493,8 +646,8 @@ replace HH = 499 if HH==500
 
 egen exp4_ = cut(MS_4firm), at(0,15,30,50,70,100)
 egen expHH_ = cut(HH), at(0,515,602,797,1341,10000)
-replace exp4_ = 9999 if tradable==1
-replace expHH_ = 9999 if tradable==1
+replace exp4_ = 9999 if traded==1
+replace expHH_ = 9999 if traded==1
 
 sort rank exp4_
 
@@ -652,7 +805,7 @@ use CompanyExposure, clear
 drop weight_concHH-exposure4
 drop anzsic
 
-reshape wide anzsic1-MS_4firm share_firm_ind_rev tradable, i(rank) j(A)
+reshape wide anzsic1-MS_4firm share_firm_ind_rev traded, i(rank) j(A)
 
 forvalues i=1(1)470 {
 replace share_firm_ind_rev`i' = 0 if share_firm_ind_rev`i'==.
