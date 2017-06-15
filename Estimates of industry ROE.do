@@ -264,6 +264,10 @@ replace anzsic1_`i' = "" if anzsic1_`j'==anzsic1_`i'
 }
 }
 
+replace rev_1 = revenue - rev_2 if rev_1==. & revenue>rev_2
+replace rev3_1 = revenue - rev3_2 if rev3_1==. & revenue>rev3_2
+replace rev2_1 = revenue - rev2_2 if rev2_1==. & revenue>rev2_2
+replace rev1_1 = revenue - rev1_2 if rev1_1==. & revenue>rev1_2
 gen rev_total=0
 forvalues i=1(1)12 {
 replace rev_total = rev_total + rev_`i' if rev_`i'~=.
@@ -298,10 +302,6 @@ replace share_1 = 1 if share_1==0
 replace share3_1 = 1 if share3_1==0
 replace share2_1 = 1 if share2_1==0
 replace share1_1 = 1 if share1_1==0
-replace rev_1 = rev_total if rev_1==0
-replace rev3_1 = rev_total if rev3_1==0
-replace rev2_1 = rev_total if rev2_1==0
-replace rev1_1 = rev_total if rev1_1==0
 
 forvalues i=1(1)12 {
 sum share3_`i'
@@ -325,6 +325,94 @@ replace MS4_1=-99 if MS4_1==.
 
 save CompanyRevenueShares, replace
 
+
+/* calculate number of firms in each industry at each level (for the purposes
+of excluding some from fixed effects) */
+
+use CompanyRevenueShares, clear
+
+forvalues i=1(1)12 {
+rename anzsic_`i' anzsic
+merge m:1 anzsic using MarketShares
+drop if _merge==2 & `i'>1
+drop marketshare1-MS_7firm
+drop _merge
+rename anzsic anzsic_`i'
+}
+
+sort anzsic_1
+
+multencode anzsic_1-anzsic_12, gen(A_1 A_2 A_3 A_4 A_5 A_6 A_7 A_8 A_9 A_10 A_11 A_12)
+multencode anzsic3_1-anzsic3_11, gen(B_1 B_2 B_3 B_4 B_5 B_6 B_7 B_8 B_9 B_10 B_11)
+multencode anzsic2_1-anzsic2_6, gen(C_1 C_2 C_3 C_4 C_5 C_6)
+multencode anzsic1_1-anzsic1_3, gen(D_1 D_2 D_3)
+
+gen no_firms = 0
+gen no_firms3 = 0
+gen no_firms2 = 0
+gen no_firms1 = 0
+
+forvalues i=1(1)600 {
+forvalues j=1(1)12 {
+gen test = A_`j'==`i' & negequityflag~=.
+sum test
+replace no_firms = no_firms + r(sum) if A_1==`i'
+drop test
+}
+}
+
+* set minimum number of firms per group
+scalar minfirms = 10
+
+gen L4_flag = no_firms>=minfirms
+
+forvalues i=1(1)250 {
+forvalues j=1(1)11 {
+gen test = B_`j'==`i' & negequityflag~=.
+sum test if L4_flag==0
+replace no_firms3 = no_firms3 + r(sum) if B_1==`i' & L4_flag==0
+drop test
+}
+}
+
+gen L3_flag = no_firms3>=minfirms
+
+forvalues i=1(1)100 {
+forvalues j=1(1)6 {
+gen test = C_`j'==`i' & negequityflag~=.
+sum test if L4_flag==0 & L3_flag==0
+replace no_firms2 = no_firms2 + r(sum) if C_1==`i' & L4_flag==0 & L3_flag==0
+drop test
+}
+}
+
+gen L2_flag = no_firms2>=minfirms
+
+forvalues i=1(1)20 {
+forvalues j=1(1)3 {
+gen test = D_`j'==`i' & negequityflag~=.
+sum test if L4_flag==0 & L3_flag==0 & L2_flag==0
+replace no_firms1 = no_firms1 + r(sum) if D_1==`i' & L4_flag==0 & L3_flag==0 & L2_flag==0
+drop test
+}
+}
+
+gen L1_flag = no_firms1>=minfirms
+
+sort A_1 B_1 C_1 D_1
+
+gen t = _n
+tsset t
+drop if A_1 == l.A_1
+
+rename anzsic_1 anzsic
+rename A_1 ANZSIC
+
+drop if no_firms==0
+keep anzsic ANZSIC L4_flag-L1_flag
+
+save IndustryDummies, replace
+
 // Estimate regressions against higher-level industries and market shares
 
 use CompanyRevenueShares, clear
@@ -332,56 +420,48 @@ use CompanyRevenueShares, clear
 gen lnrev = ln(revenue000)
 gen lnDE = ln(debtequity) if negequityflag==0
 
+gen MS_miss = MS4_1==-99 & traded_1==.
+
+
 forvalues i=1(1)12 {
-gen M_`i' = MS4_`i'==-99 & traded_`i'==.
+rename anzsic_`i' anzsic
+merge m:1 anzsic using IndustryDummies
+drop if _merge==2
+drop _merge
+gen AA_`i' = substr(anzsic,1,1)
+replace AA_`i' = substr(anzsic,1,3) if L2_flag==1
+replace AA_`i' = substr(anzsic,1,4) if L3_flag==1
+replace AA_`i' = anzsic if L4_flag==1
+replace AA_`i' = "misc" if L1_flag==0 & L2_flag==0 & L3_flag==0 & L4_flag==0
+drop L1_flag L2_flag L3_flag L4_flag ANZSIC
+rename anzsic anzsic_`i'
 }
 
-/* calculate number of firms in each industry at each level (for the purposes
-of excluding some from fixed effects) */
+multencode AA_1-AA_12, gen(A_1 A_2 A_3 A_4 A_5 A_6 A_7 A_8 A_9 A_10 A_11 A_12)
 
-multencode anzsic_1-anzsic_12, gen(A_1 A_2 A_3 A_4 A_5 A_6 A_7 A_8 A_9 A_10 A_11 A_12)
-set matsize 500
-
-gen no_firms = 0
-gen no_firms3 = 0
-gen no_firms2 = 0
-gen no_firms1 = 0
-
-forvalues i=1(1)474 {
-sort anzsic_`i'
-by anzsic_`i': replace no_firms = no_firms+_N if anzsic_`i'~=""
-}
-
-forvalues i=1(1)11 {
-sort anzsic3_`i'
-by anzsic3_`i': replace no_firms3 = no_firms3+_N if anzsic3_`i'~=""
-}
-
-forvalues i=1(1)6 {
-sort anzsic2_`i'
-by anzsic2_`i': replace no_firms2 = no_firms2+_N if anzsic2_`i'~=""
-}
-
-forvalues i=1(1)3 {
-sort anzsic1_`i'
-by anzsic1_`i': replace no_firms1 = no_firms1+_N if anzsic1_`i'~=""
-}
-
-
-
-
-* ssc install multencode // ensures coding is the same for all anzsic variables
-
-multencode anzsic_1-anzsic_12, gen(A_1 A_2 A_3 A_4 A_5 A_6 A_7 A_8 A_9 A_10 A_11 A_12)
-set matsize 500
-
-forvalues i=1(1)474 {
+* calculate share in each industry group
+forvalues i=1(1)120 {
 gen S`i' = 0
 forvalues j=1(1)12 {
 replace S`i' = share_`j' if A_`j'==`i'
 }
 }
 
+* calculate share in each 4-firm market share group
+matrix define cut = (0,15,35,60,75,100) // generate cut points for concentration
+forvalues i=1(1)5 {
+gen MS_`i' = 0
+forvalues j=1(1)12 {
+replace MS_`i' = MS_`i' + share_`j' if MS4_`j'>=cut[1,`i'] & MS4_`j'<cut[1,`i'+1] & traded_`j'==0
+}
+}
+
+gen MS_traded = 0
+forvalues i=1(1)12 {
+replace MS_traded = MS_traded + share_`i' if traded_`i'==1
+}
+
+reg roc S*
 
 
 
