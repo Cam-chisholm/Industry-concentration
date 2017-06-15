@@ -52,9 +52,11 @@ rename companyname company
 rename totalassets assets
 rename totalsalesrevenue revenue
 rename totalshareholderequity equity
-keep if yearsincecurrent==0 // keep only most recent year
+* keep if yearsincecurrent==0 // keep only most recent year
+keep if yearsincecurrent<5
+rename yearsincecurrent ysc
 
-keep id company assets equity npat revenue
+keep id company assets equity npat revenue ysc
 
 gen roe = npat/equity
 replace roe=. if npat==0 | equity==0
@@ -71,11 +73,13 @@ save CompanyFinancials, replace
 use CompanyInfo, clear
 drop in 1803
 
-merge 1:1 company using CompanyFinancials
+*merge 1:1 company using CompanyFinancials
+merge 1:m company using CompanyFinancials
 keep if _merge==3
 drop _merge
 
-merge 1:1 id using CompanySegment
+*merge 1:1 id using CompanySegment
+merge m:1 company using CompanySegment
 drop if _merge==2
 gen major = _merge==3
 drop _merge
@@ -186,7 +190,8 @@ use CompanyMerged, clear
 
 forvalues i=1(1)12 {
 rename anzsic_`i' anzsic
-merge 1:1 company anzsic using Industry
+*merge 1:1 company anzsic using Industry
+merge m:1 company anzsic using Industry
 drop if _merge==2
 gen rev_`i' = rev_ind*marketshare
 drop _merge marketshare VA_ind ANZSIC4-ind_match rev_ind
@@ -362,15 +367,15 @@ drop test
 }
 
 * set minimum number of firms per group
-scalar minfirms = 10
+scalar minfirms = 100
 
 gen L4_flag = no_firms>=minfirms
 
 forvalues i=1(1)250 {
 forvalues j=1(1)11 {
 gen test = B_`j'==`i' & negequityflag~=.
-sum test if L4_flag==0
-replace no_firms3 = no_firms3 + r(sum) if B_1==`i' & L4_flag==0
+sum test //if L4_flag==0
+replace no_firms3 = no_firms3 + r(sum) if B_1==`i' //& L4_flag==0
 drop test
 }
 }
@@ -380,8 +385,8 @@ gen L3_flag = no_firms3>=minfirms
 forvalues i=1(1)100 {
 forvalues j=1(1)6 {
 gen test = C_`j'==`i' & negequityflag~=.
-sum test if L4_flag==0 & L3_flag==0
-replace no_firms2 = no_firms2 + r(sum) if C_1==`i' & L4_flag==0 & L3_flag==0
+sum test if L3_flag==0 //& L3_flag==0
+replace no_firms2 = no_firms2 + r(sum) if C_1==`i' & L3_flag==0 //& L4_flag==0
 drop test
 }
 }
@@ -391,8 +396,8 @@ gen L2_flag = no_firms2>=minfirms
 forvalues i=1(1)20 {
 forvalues j=1(1)3 {
 gen test = D_`j'==`i' & negequityflag~=.
-sum test if L4_flag==0 & L3_flag==0 & L2_flag==0
-replace no_firms1 = no_firms1 + r(sum) if D_1==`i' & L4_flag==0 & L3_flag==0 & L2_flag==0
+sum test if L2_flag==0 & L3_flag==0 //& L4_flag==0
+replace no_firms1 = no_firms1 + r(sum) if D_1==`i' & L2_flag==0 & L3_flag==0 //& L4_flag==0
 drop test
 }
 }
@@ -431,8 +436,8 @@ drop _merge
 gen AA_`i' = substr(anzsic,1,1)
 replace AA_`i' = substr(anzsic,1,3) if L2_flag==1
 replace AA_`i' = substr(anzsic,1,4) if L3_flag==1
-replace AA_`i' = anzsic if L4_flag==1
-replace AA_`i' = "misc" if L1_flag==0 & L2_flag==0 & L3_flag==0 & L4_flag==0
+*replace AA_`i' = anzsic if L4_flag==1
+replace AA_`i' = "misc" if L1_flag==0 & L2_flag==0 & L3_flag==0 //& L4_flag==0
 drop L1_flag L2_flag L3_flag L4_flag ANZSIC
 rename anzsic anzsic_`i'
 }
@@ -445,7 +450,13 @@ gen S`i' = 0
 forvalues j=1(1)12 {
 replace S`i' = share_`j' if A_`j'==`i'
 }
+sum S`i', meanonly
+if (r(mean)==0) {
+drop S`i'
 }
+}
+
+
 
 * calculate share in each 4-firm market share group
 matrix define cut = (0,15,35,60,75,100) // generate cut points for concentration
@@ -460,6 +471,21 @@ gen MS_traded = 0
 forvalues i=1(1)12 {
 replace MS_traded = MS_traded + share_`i' if traded_`i'==1
 }
+
+* generate firm-level controls
+gen lnsize = ln(equity)
+gen lnde = ln(debtequity)
+
+// Simplest regression - no controls
+
+reg roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss
+reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss
+
+* remove extremes
+
+reg roc MS_1-MS_5 MS_traded
+
+
 
 reg roc S*
 
