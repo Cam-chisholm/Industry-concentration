@@ -35,6 +35,8 @@ gen t = _n
 tsset t
 encode anzsic, gen(AZ)
 drop if AZ==l.AZ
+drop if anzsic=="J5800" | anzsic=="G4200" | anzsic=="Q8400" | anzsic=="K6200" ///
+| anzsic=="Q8700" | anzsic=="M6900" | anzsic=="E" | anzsic=="B" | anzsic=="P"
 drop t AZ
 sort id
 
@@ -53,7 +55,10 @@ rename totalassets assets
 rename totalsalesrevenue revenue
 rename totalshareholderequity equity
 * keep if yearsincecurrent==0 // keep only most recent year
-keep if yearsincecurrent<5
+keep if yearsincecurrent<7
+replace npat = npat*12/accountingperiod
+replace revenue = revenue*12/accountingperiod
+drop if accountingperiod<6
 rename yearsincecurrent ysc
 
 keep id company assets equity npat revenue ysc
@@ -139,14 +144,173 @@ gen ANZSIC1 = substr(ANZSIC4,1,1)
 
 merge m:1 ANZSIC4 ANZSIC3 ANZSIC2 ANZSIC1 using ANZSIC
 drop if _merge==2
-replace ANZSIC4="" if strlen(anzsic)==1
-replace ANZSIC3="" if strlen(anzsic)==1
-replace ANZSIC2="" if strlen(anzsic)==1
+drop if anzsic=="J5800" | anzsic=="G4200" | anzsic=="Q8400" | anzsic=="K6200" ///
+| anzsic=="Q8700" | anzsic=="M6900" | anzsic=="E" | anzsic=="B" | anzsic=="P"
 
 gen ind_match = _merge==3
 drop _merge
 
 save Industry, replace
+
+* create equivalent for level-3 industries
+use Industry, clear
+
+encode anzsic, gen(A)
+sort anzsic
+gen t = _n
+tsset t
+drop if A==f.A
+sort ANZSIC3 t
+by ANZSIC3: replace rev_ind = sum(rev_ind)
+by ANZSIC3: replace VA_ind = sum(VA_ind)
+drop A
+encode ANZSIC3, gen(A)
+sort A t
+drop t
+gen t = _n
+tsset t
+drop if A==f.A
+replace anzsic = ANZSIC3
+keep anzsic rev_ind VA_ind
+
+save Industry3, replace
+
+use Industry, clear
+
+gen rev_firm = rev_ind*marketshare/100
+encode company, gen(C)
+encode ANZSIC3, gen(A)
+sort ANZSIC3 company
+by ANZSIC3 company: replace rev_firm = sum(rev_firm)
+sort ANZSIC3 company
+gen t = _n
+tsset t
+drop if C==f.C & A==f.A & company~="There are no major players in this industry"
+drop C A t marketshare
+
+replace anzsic = ANZSIC3
+drop ANZSIC4 rev_ind VA_ind
+
+merge m:1 anzsic using Industry3
+drop _merge
+
+save Industry3, replace
+
+* create equivalent for level-2 industries
+use Industry3, clear
+
+encode ANZSIC3, gen(A)
+sort ANZSIC3
+gen t = _n
+tsset t
+drop if A==f.A
+sort ANZSIC2
+by ANZSIC2: replace rev_ind = sum(rev_ind)
+by ANZSIC2: replace VA_ind = sum(VA_ind)
+drop A t
+encode ANZSIC2, gen(A)
+sort A rev_ind
+gen t = _n
+tsset t
+drop if A==f.A
+replace anzsic = ANZSIC2
+keep anzsic rev_ind VA_ind
+
+save Industry2, replace
+
+use Industry, clear
+
+gen rev_firm = rev_ind*marketshare/100
+encode company, gen(C)
+encode ANZSIC2, gen(A)
+sort ANZSIC2 company
+by ANZSIC2 company: replace rev_firm = sum(rev_firm)
+sort ANZSIC2 company
+gen t = _n
+tsset t
+drop if C==f.C & A==f.A & company~="There are no major players in this industry"
+drop C A t marketshare
+
+replace anzsic = ANZSIC2
+drop ANZSIC4 ANZSIC3 rev_ind VA_ind
+
+merge m:1 anzsic using Industry2
+drop _merge
+
+save Industry2, replace
+
+
+* create equivalent for level-1 industries
+use Industry2, clear
+
+encode ANZSIC2, gen(A)
+sort ANZSIC2
+gen t = _n
+tsset t
+drop if A==f.A
+sort ANZSIC1
+by ANZSIC1: replace rev_ind = sum(rev_ind)
+by ANZSIC1: replace VA_ind = sum(VA_ind)
+drop A t
+encode ANZSIC1, gen(A)
+sort A rev_ind
+gen t = _n
+tsset t
+drop if A==f.A
+replace anzsic = ANZSIC1
+keep anzsic rev_ind VA_ind
+
+save Industry1, replace
+
+use Industry, clear
+
+gen rev_firm = rev_ind*marketshare/100
+encode company, gen(C)
+encode ANZSIC1, gen(A)
+sort ANZSIC1 company
+by ANZSIC1 company: replace rev_firm = sum(rev_firm)
+sort ANZSIC1 company
+gen t = _n
+tsset t
+drop if C==f.C & A==f.A & company~="There are no major players in this industry"
+drop C A t marketshare
+
+replace anzsic = ANZSIC1
+drop ANZSIC2 rev_ind VA_ind
+
+merge m:1 anzsic using Industry1
+drop _merge
+
+save Industry1, replace
+
+* Remove duplicates of 'no major players'
+forvalues i=1(1)3 {
+use Industry`i', clear
+gen t = _n
+tsset t
+encode anzsic, gen(A)
+drop if A==f.A & company=="There are no major players in this industry"
+drop t A
+save Industry`i', replace
+gen t = _n
+tsset t
+encode anzsic, gen(A)
+drop if A==f.A
+drop t A
+keep anzsic rev_ind VA_ind
+save Industry_`i', replace
+}
+
+use Industry, clear
+gen t = _n
+tsset t
+encode anzsic, gen(A)
+drop if A==f.A
+drop t A
+save Industry_4, replace
+
+* Estimate 4-firm market shares
+use Industry, clear
 
 drop company ANZSIC* ind_match
 gsort anzsic -marketshare
@@ -340,7 +504,7 @@ forvalues i=1(1)12 {
 rename anzsic_`i' anzsic
 merge m:1 anzsic using MarketShares
 drop if _merge==2 & `i'>1
-drop marketshare1-MS_7firm
+drop marketshare* MS_*
 drop _merge
 rename anzsic anzsic_`i'
 }
@@ -371,38 +535,80 @@ scalar minfirms = 100
 
 gen L4_flag = no_firms>=minfirms
 
+rename anzsic_1 anzsic
+drop rev_ind VA_ind
+merge m:1 anzsic using Industry_4
+drop if _merge==2
+drop _merge
+rename anzsic anzsic_1
+
+replace L4_flag = 1 if VA_ind>=2000 & VA_ind~=.
+replace L4_flag = 1 if rev_ind>=20000 & rev_ind~=.
+
 forvalues i=1(1)250 {
 forvalues j=1(1)11 {
 gen test = B_`j'==`i' & negequityflag~=.
-sum test //if L4_flag==0
-replace no_firms3 = no_firms3 + r(sum) if B_1==`i' //& L4_flag==0
+sum test if L4_flag==0
+replace no_firms3 = no_firms3 + r(sum) if B_1==`i' & L4_flag==0
 drop test
 }
 }
 
+
 gen L3_flag = no_firms3>=minfirms
+
+rename anzsic3_1 anzsic
+drop rev_ind VA_ind
+merge m:1 anzsic using Industry_3
+drop if _merge==2
+drop _merge
+rename anzsic anzsic3_1
+
+replace L3_flag = 1 if VA_ind>2000 & VA_ind~=.
+replace L3_flag = 1 if rev_ind>20000 & rev_ind~=.
+
 
 forvalues i=1(1)100 {
 forvalues j=1(1)6 {
 gen test = C_`j'==`i' & negequityflag~=.
-sum test if L3_flag==0 //& L3_flag==0
-replace no_firms2 = no_firms2 + r(sum) if C_1==`i' & L3_flag==0 //& L4_flag==0
+sum test if L3_flag==0 & L4_flag==0
+replace no_firms2 = no_firms2 + r(sum) if C_1==`i' & L3_flag==0 & L4_flag==0
 drop test
 }
 }
 
 gen L2_flag = no_firms2>=minfirms
 
+rename anzsic2_1 anzsic
+drop rev_ind VA_ind
+merge m:1 anzsic using Industry_2
+drop if _merge==2
+drop _merge
+rename anzsic anzsic2_1
+
+replace L2_flag = 1 if VA_ind>2000 & VA_ind~=.
+replace L2_flag = 1 if rev_ind>20000 & rev_ind~=.
+
 forvalues i=1(1)20 {
 forvalues j=1(1)3 {
 gen test = D_`j'==`i' & negequityflag~=.
-sum test if L2_flag==0 & L3_flag==0 //& L4_flag==0
-replace no_firms1 = no_firms1 + r(sum) if D_1==`i' & L2_flag==0 & L3_flag==0 //& L4_flag==0
+sum test if L2_flag==0 & L3_flag==0 & L4_flag==0
+replace no_firms1 = no_firms1 + r(sum) if D_1==`i' & L2_flag==0 & L3_flag==0 & L4_flag==0
 drop test
 }
 }
 
-gen L1_flag = no_firms1>=minfirms
+gen L1_flag = no_firms1>=minfirms     
+
+rename anzsic1_1 anzsic
+drop rev_ind VA_ind
+merge m:1 anzsic using Industry_1
+drop if _merge==2
+drop _merge
+rename anzsic anzsic1_1
+
+replace L1_flag = 1 if VA_ind>2000 & VA_ind~=.
+replace L1_flag = 1 if rev_ind>20000 & rev_ind~=.           
 
 sort A_1 B_1 C_1 D_1
 
@@ -414,9 +620,35 @@ rename anzsic_1 anzsic
 rename A_1 ANZSIC
 
 drop if no_firms==0
-keep anzsic ANZSIC L4_flag-L1_flag
+keep anzsic ANZSIC no_firms* L1_flag L2_flag L3_flag L4_flag
 
 save IndustryDummies, replace
+
+gen AA = substr(anzsic,1,1)
+replace AA = substr(anzsic,1,3) if L2_flag==1
+replace AA = substr(anzsic,1,4) if L3_flag==1
+replace AA = anzsic if L4_flag==1
+replace AA = "misc" if L1_flag==0 & L2_flag==0 & L3_flag==0 & L4_flag==0
+
+multencode AA, gen(A)
+
+sort A
+gen t = _n
+tsset t
+drop if A==l.A
+drop t
+
+local obs = _N
+
+forvalues i=1(1)`obs' {
+gen S`i' = 0
+replace S`i' = 1 in `i'
+}
+
+keep AA-S`obs' no_firms*
+
+save IndPredict, replace
+
 
 // Estimate regressions against higher-level industries and market shares
 
@@ -436,8 +668,8 @@ drop _merge
 gen AA_`i' = substr(anzsic,1,1)
 replace AA_`i' = substr(anzsic,1,3) if L2_flag==1
 replace AA_`i' = substr(anzsic,1,4) if L3_flag==1
-*replace AA_`i' = anzsic if L4_flag==1
-replace AA_`i' = "misc" if L1_flag==0 & L2_flag==0 & L3_flag==0 //& L4_flag==0
+replace AA_`i' = anzsic if L4_flag==1
+replace AA_`i' = "misc" if L1_flag==0 & L2_flag==0 & L3_flag==0 & L4_flag==0
 drop L1_flag L2_flag L3_flag L4_flag ANZSIC
 rename anzsic anzsic_`i'
 }
@@ -445,7 +677,7 @@ rename anzsic anzsic_`i'
 multencode AA_1-AA_12, gen(A_1 A_2 A_3 A_4 A_5 A_6 A_7 A_8 A_9 A_10 A_11 A_12)
 
 * calculate share in each industry group
-forvalues i=1(1)120 {
+forvalues i=1(1)200 {
 gen S`i' = 0
 forvalues j=1(1)12 {
 replace S`i' = share_`j' if A_`j'==`i'
@@ -459,7 +691,7 @@ drop S`i'
 
 
 * calculate share in each 4-firm market share group
-matrix define cut = (0,15,35,60,75,100) // generate cut points for concentration
+matrix define cut = (0,15,30,50,75,100) // generate cut points for concentration
 forvalues i=1(1)5 {
 gen MS_`i' = 0
 forvalues j=1(1)12 {
@@ -474,52 +706,155 @@ replace MS_traded = MS_traded + share_`i' if traded_`i'==1
 
 * generate firm-level controls
 gen lnsize = ln(equity)
+*gen lnsize2 = lnsize^2
 gen lnde = ln(debtequity)
+*gen lnde2 = lnde^2
+gen public = type==6
+gen proprietary = type==5
 
-// Simplest regression - no controls
+// Linear regressions with extremes removed
+reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss i.ysc if roe>-.7 & roe<.9 & type>3
+reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public i.ysc if roe>-.7 & roe<.9 & type>3
+reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public S* i.ysc if roe>-.7 & roe<.9 & type>3
+reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if roe>-.7 & roe<.9 & ysc==0 & type>3
+reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if roe>-.7 & roe<.9 & ysc==1 & type>3
+reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if roe>-.7 & roe<.9 & ysc==2 & type>3
+reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if roe>-.7 & roe<.9 & ysc==3 & type>3
+reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if roe>-.7 & roe<.9 & ysc==4 & type>3
 
-reg roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss
-reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss
+reg roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss i.ysc if roc>-.7 & roc<.9 & type>3
+reg roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public i.ysc if roc>-.7 & roc<.9 & type>3
+reg roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public S* i.ysc if roc>-.7 & roc<.9 & type>3
+reg roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if roc>-.7 & roc<.9 & ysc==0 & type>3
+reg roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if roc>-.7 & roc<.9 & ysc==1 & type>3
+reg roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if roc>-.7 & roc<.9 & ysc==2 & type>3
+reg roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if roc>-.7 & roc<.9 & ysc==3 & type>3
+reg roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if roc>-.7 & roc<.9 & ysc==4 & type>3
 
-* remove extremes
+// Censored regression (I'm sceptical, but for completeness sake)
+tobit roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss i.ysc if type>3, ll(-.4) ul(.6)
+tobit roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public i.ysc if type>3, ll(-.4) ul(.6)
+tobit roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if type>3 & ysc==0, ll(-.4) ul(.6)
 
-reg roc MS_1-MS_5 MS_traded
+tobit roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss i.ysc if type>3, ll(-.4) ul(.6)
+tobit roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public i.ysc if type>3, ll(-.4) ul(.6)
+tobit roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if type>3 & ysc==0, ll(-.4) ul(.6)
 
+// Quantile regressions (no need for special treatment of extremes)
+qreg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss i.ysc if type>3
+qreg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public i.ysc if type>3
+qreg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if type>3 & ysc==0
+qreg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if type>3 & ysc==1
+qreg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if type>3 & ysc==2
+qreg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if type>3 & ysc==3
+qreg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if type>3 & ysc==4
 
+qreg roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss i.ysc if type>3
+qreg roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public i.ysc if type>3
+qreg roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if type>3 & ysc==0
+qreg roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if type>3 & ysc==1
+qreg roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if type>3 & ysc==2
+qreg roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if type>3 & ysc==3
+qreg roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if type>3 & ysc==4
 
-reg roc S*
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	/* difficult to obtain any significance with quantile regression (could
+	perhaps bootstrap and see if any difference) */
 
 
+// Regressions against industry dummies
 
+use CompanyRevenueShares, clear
+
+forvalues i=1(1)12 {
+rename anzsic_`i' anzsic
+merge m:1 anzsic using IndustryDummies
+drop if _merge==2
+drop _merge
+gen AA_`i' = substr(anzsic,1,1)
+replace AA_`i' = substr(anzsic,1,3) if L2_flag==1
+replace AA_`i' = substr(anzsic,1,4) if L3_flag==1
+replace AA_`i' = anzsic if L4_flag==1
+replace AA_`i' = "misc" if L1_flag==0 & L2_flag==0 & L3_flag==0 & L4_flag==0
+drop L1_flag L2_flag L3_flag L4_flag ANZSIC
+rename anzsic anzsic_`i'
+}
+
+multencode AA_1-AA_12, gen(A_1 A_2 A_3 A_4 A_5 A_6 A_7 A_8 A_9 A_10 A_11 A_12)
+
+* calculate share in each industry group
+forvalues i=1(1)200 {
+gen S`i' = 0
+forvalues j=1(1)12 {
+replace S`i' = share_`j' if A_`j'==`i'
+}
+sum S`i', meanonly
+if (r(mean)==0) {
+drop S`i'
+}
+}
+
+reg roe S* if roe>-.5 & roe<.7 & type>3 [w=revenue000]
+est sto IndDum
+reg roc S* if roc>-.5 & roc<.7 & type>3 [w=revenue000]
+est sto IndDumROC
+
+use Indpredict, clear
+
+est res IndDum
+predict ROE
+est res IndDumROC
+predict ROC
+
+drop S*
+
+/*
+ANZSIC level 4 (some are 'other' categories): 
+Wired telcos: ROE = 56%, ROC = 23%
+Accounting services: ROE = 49%, ROC = 18%
+Consumer goods retailing: ROE = 25%, ROC = 10%
+Superannuation funds: ROE = 22%, ROC = 2.6% (some funds missing data)
+Petroleum product wholesaling: ROE = 22%, ROC = 7%
+Construction: ROE = 16%, ROC = 4.5%
+Motor vehicle retailing: ROE = 20%, ROC = 8.5%
+Car wholesaling: ROE = 18%, ROC = 2%
+Electricity, elect. and gas appliance retailing: ROE = 17%, ROC = 11%
+Professional, Sci. Tech. ind (general): ROE = 17%, ROC = 7%
+Health insurance: ROE = 15%, ROC = 8%
+Supermarkets: ROE = 15%, ROC = 7%
+Banking: ROE = 14%, ROC = 1% (not sure if ROC is reliable for banking)
+Telcos (other): ROE = 13%, ROC = 7%
+Clothing retailing: ROE = 13%, ROC = 5%
+Take-away food services: ROE = 13%, ROC = 8%
+Legal services: ROE = 13%, ROC = 8%
+Eng consulting: ROE = 12%, ROC = 5%
+
+ANZSIC level 3 or higher:
+Grocery, liquor and tobacco wholesaling: ROE = 20%, ROC = 9%
+Motor vehicle wholesaling: ROE = 17%, ROC = 5%
+Machinery and equipment wholesaling: ROE = 14%, ROC = 5%
+Auxiliary finance and investment services: ROE = 13%, ROC = 4%
+Water transport support services: ROE = 12%, ROC = 4%
+Property operators: ROE = 12%, ROC = 6%
+Administration services: ROE = 14%, ROC = 8%
+Public administration and safety: ROE = 22%, ROC = 7%
+Accommodation and food services: ROE = 15%, ROC = 6%
+Information media and telcos: ROE = 14%, ROC = 7%
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
 // Estimate fixed effects regression //
 
 use CompanyRevenueShares, clear
@@ -641,3 +976,4 @@ use Industries, clear
 
 est res FE_uw
 predict test
+
