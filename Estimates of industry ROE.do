@@ -36,7 +36,8 @@ tsset t
 encode anzsic, gen(AZ)
 drop if AZ==l.AZ
 drop if anzsic=="J5800" | anzsic=="G4200" | anzsic=="Q8400" | anzsic=="K6200" ///
-| anzsic=="Q8700" | anzsic=="M6900" | anzsic=="E" | anzsic=="B" | anzsic=="P"
+| anzsic=="Q8700" | anzsic=="D2600" | anzsic=="M6900" | anzsic=="F3400" ///
+| anzsic=="E" | anzsic=="B" | anzsic=="P"
 drop t AZ
 sort id
 
@@ -69,8 +70,9 @@ gen roc = npat/assets
 replace roc=. if npat==0 | assets==0
 drop in 1803 // Error in data set (same company listed twice)
 gen debtequity = (assets-equity)/equity
-replace debtequity = . if assets==0 | equity==0
+replace debtequity = . if assets==0 | equity<=0
 gen negequityflag = equity<0
+replace roe = . if equity<0
 
 save CompanyFinancials, replace
 
@@ -129,6 +131,12 @@ rename v4 ANZSIC4
 
 save ANZSIC, replace
 
+import delimited AnzsicNames.csv, clear
+rename v1 anzsic
+rename v2 ind_name
+
+save AnzsicNames, replace
+
 import delimited Industry17.csv, clear
 
 rename code anzsic
@@ -145,7 +153,8 @@ gen ANZSIC1 = substr(ANZSIC4,1,1)
 merge m:1 ANZSIC4 ANZSIC3 ANZSIC2 ANZSIC1 using ANZSIC
 drop if _merge==2
 drop if anzsic=="J5800" | anzsic=="G4200" | anzsic=="Q8400" | anzsic=="K6200" ///
-| anzsic=="Q8700" | anzsic=="M6900" | anzsic=="E" | anzsic=="B" | anzsic=="P"
+| anzsic=="Q8700" | anzsic=="D2600" | anzsic=="M6900" | anzsic=="F3400" ///
+| anzsic=="E" | anzsic=="B" | anzsic=="P"
 
 gen ind_match = _merge==3
 drop _merge
@@ -306,7 +315,7 @@ gen t = _n
 tsset t
 encode anzsic, gen(A)
 drop if A==f.A
-drop t A
+keep anzsic rev_ind VA_ind
 save Industry_4, replace
 
 * Estimate 4-firm market shares
@@ -334,6 +343,43 @@ replace MS_4firm = MS_4firm + 3 if MS_4firm==MS_2firm & MS_4firm<97
 replace MS_4firm = MS_4firm + 6 if MS_4firm==MS_1firm & MS_4firm<94
 
 save MarketShares, replace
+
+* calculate average 4-firm market share for each industry group
+use MarketShares, clear
+
+local obs = _N
+
+append using Industry_3
+append using Industry_2
+append using Industry_1
+
+gen ANZSIC3 = substr(anzsic,1,4) if strlen(anzsic)>=4
+gen ANZSIC2 = substr(anzsic,1,3) if strlen(anzsic)>=3
+gen ANZSIC1 = substr(anzsic,1,1)
+
+encode anzsic, gen(A)
+encode ANZSIC3, gen(B)
+encode ANZSIC2, gen(C)
+encode ANZSIC1, gen(D)
+
+gen rev4 = rev_ind*MS_4firm
+
+local inds "B C D"
+
+foreach x of local inds {
+sum `x'
+forvalues i=1(1)`r(max)' {
+sum rev4 if `x'==`i' in 1/`obs'
+scalar temp = r(sum)
+sum rev_ind if `x'==`i' in 1/`obs'
+scalar temp_ = r(sum)
+replace MS_4firm = temp/temp_ if `x'==`i' & MS_4firm==.
+}
+}
+
+keep anzsic MS_4firm rev_ind VA_ind
+
+save MarketSharesAllIndustries, replace
 
 import delimited IndustryClassifications.csv, clear
 
@@ -523,7 +569,7 @@ gen no_firms1 = 0
 
 forvalues i=1(1)600 {
 forvalues j=1(1)12 {
-gen test = A_`j'==`i' & negequityflag~=.
+gen test = A_`j'==`i' & negequityflag~=. & roe~=.
 sum test
 replace no_firms = no_firms + r(sum) if A_1==`i'
 drop test
@@ -532,6 +578,10 @@ drop test
 
 * set minimum number of firms per group
 scalar minfirms = 100
+scalar min_firms = 40
+* set minimum value added and revenue per group
+scalar ValAdd = 5000
+scalar REV = 20000
 
 gen L4_flag = no_firms>=minfirms
 
@@ -542,12 +592,17 @@ drop if _merge==2
 drop _merge
 rename anzsic anzsic_1
 
-replace L4_flag = 1 if VA_ind>=2000 & VA_ind~=.
-replace L4_flag = 1 if rev_ind>=20000 & rev_ind~=.
+replace L4_flag = 1 if VA_ind>=ValAdd & VA_ind~=. & no_firms>=min_firms
+replace L4_flag = 1 if rev_ind>=REV & rev_ind~=. & no_firms>=min_firms
+replace L4_flag = 0 if substr(anzsic_1,-2,2)=="00"
+replace L4_flag = 1 if anzsic_1=="G4111" | anzsic_1=="E3109" | anzsic_1=="J5802" | ///
+anzsic_1=="K6322" | anzsic_1=="E3011" | anzsic_1=="E3021" | anzsic_1=="K6310" | ///
+anzsic_1=="K6420" | anzsic_1=="E3101" | anzsic_1=="D2640" | anzsic_1=="G4251" | ///
+anzsic_1=="K6330" | anzsic_1=="E3021" | anzsic_1=="K6321" | anzsic_1=="G4000"
 
 forvalues i=1(1)250 {
 forvalues j=1(1)11 {
-gen test = B_`j'==`i' & negequityflag~=.
+gen test = B_`j'==`i' & negequityflag~=. & roe~=.
 sum test if L4_flag==0
 replace no_firms3 = no_firms3 + r(sum) if B_1==`i' & L4_flag==0
 drop test
@@ -564,13 +619,14 @@ drop if _merge==2
 drop _merge
 rename anzsic anzsic3_1
 
-replace L3_flag = 1 if VA_ind>2000 & VA_ind~=.
-replace L3_flag = 1 if rev_ind>20000 & rev_ind~=.
-
+replace L3_flag = 1 if VA_ind>ValAdd & VA_ind~=. & no_firms3>=min_firms
+replace L3_flag = 1 if rev_ind>REV & rev_ind~=. & no_firms3>=min_firms
+replace L3_flag = 0 if substr(anzsic_1,-2,2)=="00"
+replace L3_flag = 1 if L4_flag==1
 
 forvalues i=1(1)100 {
 forvalues j=1(1)6 {
-gen test = C_`j'==`i' & negequityflag~=.
+gen test = C_`j'==`i' & negequityflag~=. & roe~=.
 sum test if L3_flag==0 & L4_flag==0
 replace no_firms2 = no_firms2 + r(sum) if C_1==`i' & L3_flag==0 & L4_flag==0
 drop test
@@ -586,12 +642,13 @@ drop if _merge==2
 drop _merge
 rename anzsic anzsic2_1
 
-replace L2_flag = 1 if VA_ind>2000 & VA_ind~=.
-replace L2_flag = 1 if rev_ind>20000 & rev_ind~=.
+replace L2_flag = 1 if VA_ind>ValAdd & VA_ind~=. & no_firms2>=min_firms
+replace L2_flag = 1 if rev_ind>REV & rev_ind~=. & no_firms2>=min_firms
+replace L2_flag = 1 if L3_flag==1
 
 forvalues i=1(1)20 {
 forvalues j=1(1)3 {
-gen test = D_`j'==`i' & negequityflag~=.
+gen test = D_`j'==`i' & negequityflag~=. & roe~=.
 sum test if L2_flag==0 & L3_flag==0 & L4_flag==0
 replace no_firms1 = no_firms1 + r(sum) if D_1==`i' & L2_flag==0 & L3_flag==0 & L4_flag==0
 drop test
@@ -607,8 +664,9 @@ drop if _merge==2
 drop _merge
 rename anzsic anzsic1_1
 
-replace L1_flag = 1 if VA_ind>2000 & VA_ind~=.
-replace L1_flag = 1 if rev_ind>20000 & rev_ind~=.           
+replace L1_flag = 1 if VA_ind>ValAdd & VA_ind~=. & no_firms1>=min_firms
+replace L1_flag = 1 if rev_ind>REV & rev_ind~=. & no_firms1>=min_firms
+replace L1_flag = 1 if L2_flag==1            
 
 sort A_1 B_1 C_1 D_1
 
@@ -627,6 +685,8 @@ save IndustryDummies, replace
 gen AA = substr(anzsic,1,1)
 replace AA = substr(anzsic,1,3) if L2_flag==1
 replace AA = substr(anzsic,1,4) if L3_flag==1
+replace AA = substr(anzsic,1,3) if L3_flag==1 & L4_flag==0 & substr(anzsic,4,1)=="0"
+replace L3_flag=0 if L3_flag==1 & L4_flag==0 & substr(anzsic,4,1)=="0"
 replace AA = anzsic if L4_flag==1
 replace AA = "misc" if L1_flag==0 & L2_flag==0 & L3_flag==0 & L4_flag==0
 
@@ -665,9 +725,10 @@ rename anzsic_`i' anzsic
 merge m:1 anzsic using IndustryDummies
 drop if _merge==2
 drop _merge
-gen AA_`i' = substr(anzsic,1,1)
+gen AA_`i' = substr(anzsic,1,1) if L1_flag==1
 replace AA_`i' = substr(anzsic,1,3) if L2_flag==1
 replace AA_`i' = substr(anzsic,1,4) if L3_flag==1
+replace AA_`i' = substr(anzsic,1,3) if L3_flag==1 & L4_flag==0 & substr(anzsic,4,1)=="0"
 replace AA_`i' = anzsic if L4_flag==1
 replace AA_`i' = "misc" if L1_flag==0 & L2_flag==0 & L3_flag==0 & L4_flag==0
 drop L1_flag L2_flag L3_flag L4_flag ANZSIC
@@ -677,7 +738,7 @@ rename anzsic anzsic_`i'
 multencode AA_1-AA_12, gen(A_1 A_2 A_3 A_4 A_5 A_6 A_7 A_8 A_9 A_10 A_11 A_12)
 
 * calculate share in each industry group
-forvalues i=1(1)200 {
+forvalues i=1(1)300 {
 gen S`i' = 0
 forvalues j=1(1)12 {
 replace S`i' = share_`j' if A_`j'==`i'
@@ -716,6 +777,7 @@ gen proprietary = type==5
 reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss i.ysc if roe>-.7 & roe<.9 & type>3
 reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public i.ysc if roe>-.7 & roe<.9 & type>3
 reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public S* i.ysc if roe>-.7 & roe<.9 & type>3
+reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnde* public S* i.ysc if roe>-.7 & roe<.9 & type>3 [w=revenue000]
 reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if roe>-.7 & roe<.9 & ysc==0 & type>3
 reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if roe>-.7 & roe<.9 & ysc==1 & type>3
 reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if roe>-.7 & roe<.9 & ysc==2 & type>3
@@ -770,9 +832,10 @@ rename anzsic_`i' anzsic
 merge m:1 anzsic using IndustryDummies
 drop if _merge==2
 drop _merge
-gen AA_`i' = substr(anzsic,1,1)
+gen AA_`i' = substr(anzsic,1,1) if L1_flag==1
 replace AA_`i' = substr(anzsic,1,3) if L2_flag==1
 replace AA_`i' = substr(anzsic,1,4) if L3_flag==1
+replace AA_`i' = substr(anzsic,1,3) if L3_flag==1 & L4_flag==0 & substr(anzsic,4,1)=="0"
 replace AA_`i' = anzsic if L4_flag==1
 replace AA_`i' = "misc" if L1_flag==0 & L2_flag==0 & L3_flag==0 & L4_flag==0
 drop L1_flag L2_flag L3_flag L4_flag ANZSIC
@@ -782,7 +845,7 @@ rename anzsic anzsic_`i'
 multencode AA_1-AA_12, gen(A_1 A_2 A_3 A_4 A_5 A_6 A_7 A_8 A_9 A_10 A_11 A_12)
 
 * calculate share in each industry group
-forvalues i=1(1)200 {
+forvalues i=1(1)300 {
 gen S`i' = 0
 forvalues j=1(1)12 {
 replace S`i' = share_`j' if A_`j'==`i'
@@ -793,19 +856,207 @@ drop S`i'
 }
 }
 
-reg roe S* if roe>-.5 & roe<.7 & type>3 [w=revenue000]
+reg roe S* if roe>-.5 & roe<.7 & type>3 [iw=equity]
 est sto IndDum
-reg roc S* if roc>-.5 & roc<.7 & type>3 [w=revenue000]
+reg roc S* if roc>-.5 & roc<.7 & type>3 [iw=equity]
 est sto IndDumROC
+tobit roe S* if type>3 [iw=equity], ll(-.3) ul(.5)
+est sto IndDumTobit
+tobit roc S* if type>3 [iw=equity], ll(-.3) ul(.5)
+est sto IndDumROCTobit
 
+* Prediction by industry
 use Indpredict, clear
 
 est res IndDum
 predict ROE
 est res IndDumROC
 predict ROC
+est res IndDumTobit
+predict ROE2
+est res IndDumROCTobit
+predict ROC2
 
 drop S*
+
+gen sorting = max(1,min(4,strlen(AA)-1))
+gsort -sorting -ROE
+
+* Estimate ROE/ROC at each industry level
+rename AA anzsic
+
+local obs = _N + 1
+set obs `obs'
+replace anzsic="M" in `obs'
+replace sorting=1 in `obs'
+replace ROE = 0 in `obs'
+replace ROE2 = 0 in `obs'
+replace ROC = 0 in `obs'
+replace ROC2 = 0 in `obs'
+
+forvalues i=4(-1)1 {
+merge 1:1 anzsic using Industry_`i'
+drop if _merge==2
+drop _merge
+rename rev_ind rev_ind`i'
+rename VA_ind VA_ind`i'
+}
+
+gen ANZSIC4 = anzsic if sorting==4
+gen ANZSIC3 = substr(anzsic,1,4) if sorting>=3
+gen ANZSIC2 = substr(anzsic,1,3) if sorting>=2
+gen ANZSIC1 = substr(anzsic,1,1)
+
+egen rev_ind = rowmean(rev_ind*)
+egen VA_ind = rowmean(VA_ind*)
+
+forvalues i=3(-1)1 {
+local k = `i'+1
+encode ANZSIC`i', gen(B)
+sum B
+local max = r(max)
+sort B
+forvalues j=1(1)`max' {
+sum rev_ind if B==`j' & sorting>`i'
+replace rev_ind = rev_ind - r(sum) if B==`j' & sorting==`i'
+replace rev_ind = 0 if ROE==.
+}
+drop B
+}
+
+gen temp1 = rev_ind*ROE
+gen temp2 = rev_ind*ROE2
+gen temp_1 = rev_ind*ROC
+gen temp_2 = rev_ind*ROC2
+
+replace temp1 = 0 if temp1==.
+replace temp2 = 0 if temp2==.
+replace temp_1 = 0 if temp_1==.
+replace temp_2 = 0 if temp_2==.
+
+gen ROE_ = 0
+gen ROE_2 = 0
+gen ROC_ = 0
+gen ROC_2 = 0
+gen temp3 = 0
+
+replace ROE_ = ROE if sorting==5
+replace ROE_2 = ROE2 if sorting==5
+replace ROC_ = ROC if sorting==5
+replace ROC_2 = ROC2 if sorting==5
+
+gen temp1_ = 0
+gen temp_1_ = 0
+gen temp2_ = 0
+gen temp_2_ = 0
+
+forvalues i=3(-1)1 {
+encode ANZSIC`i', gen(B)
+sum B
+local max = r(max)
+sort B
+forvalues j=1(1)`max' {
+sum rev_ind if B==`j' & sorting>=`i'
+replace temp3 = r(sum) if B==`j' & sorting==`i'
+local TEMP "temp1 temp2 temp_1 temp_2"
+foreach x of local TEMP {
+sum `x' if B==`j' & sorting>=`i'
+replace `x'_ = r(sum) if B==`j' & sorting==`i'
+}
+}
+drop B
+replace temp3 = 0 if temp1_==0
+replace ROE_ = temp1_/temp3 if sorting==`i'
+replace ROE_2 = temp2_/temp3 if sorting==`i'
+replace ROC_ = temp_1_/temp3 if sorting==`i'
+replace ROC_2 = temp_2_/temp3 if sorting==`i'
+}
+replace ROE_ = ROE if sorting==4
+replace ROE_2 = ROE2 if sorting==4
+replace ROC_ = ROC if sorting==4
+replace ROC_2 = ROC2 if sorting==4
+drop temp*
+
+merge 1:1 anzsic using AnzsicNames
+drop if _merge==2
+drop _merge
+
+merge 1:1 anzsic using IndustryTradability
+drop if _merge==2
+drop _merge
+
+merge 1:1 anzsic using MarketSharesAllIndustries
+drop if _merge==2
+drop _merge
+
+* put in two aggregated industries
+local obs = _N + 1
+set obs `obs'
+replace anzsic = "K63_" in `obs'
+replace ind_name = "Other insurance" in `obs'
+local obs = _N + 1
+set obs `obs'
+replace anzsic = "J_" in `obs'
+replace ind_name = "Information media" in `obs'
+
+drop rev_ind VA_ind
+egen rev_ind = rowmean(rev_ind*)
+egen VA_ind = rowmean(VA_ind*)
+
+sum ROE_ if anzsic=="K63"
+scalar temp = r(mean)
+sum rev_ind if anzsic=="K63"
+scalar tempR = r(mean)
+sum VA_ind if anzsic=="K63"
+scalar tempV = r(mean)
+sum ROE_ if anzsic=="K6321"
+scalar temp_ = r(mean)
+sum rev_ind if anzsic=="K6321"
+scalar tempR_ = r(mean)
+sum VA_ind if anzsic=="K6321"
+scalar tempV_ = r(mean)
+sum ROE_ if anzsic=="K6330"
+scalar _temp = r(mean)
+sum rev_ind if anzsic=="K6330"
+scalar _tempR = r(mean)
+sum VA_ind if anzsic=="K6330"
+scalar _tempV = r(mean)
+replace ROE_ = (temp - tempR_/tempR*temp_ - _tempR/tempR*_temp)*tempR/(tempR-tempR_-_tempR) if anzsic=="K63_"
+replace rev_ind = tempR - tempR_ - _tempR if anzsic=="K63_"
+replace VA_ind = tempV - tempV_ - _tempV if anzsic=="K63_"
+sum MS_4firm if anzsic=="K63"
+replace MS_4firm = r(mean) if anzsic=="K63_"
+
+sum ROE_ if anzsic=="J"
+scalar temp = r(mean)
+sum rev_ind if anzsic=="J"
+scalar tempR = r(mean)
+sum VA_ind if anzsic=="J"
+scalar tempV = r(mean)
+sum ROE_ if anzsic=="J58"
+scalar temp_ = r(mean)
+sum rev_ind if anzsic=="J58"
+scalar tempR_ = r(mean)
+sum VA_ind if anzsic=="J58"
+scalar tempV_ = r(mean)
+replace ROE_ = (temp - tempR_/tempR*temp_)*tempR/(tempR-tempR_) if anzsic=="J_"
+replace rev_ind = tempR - tempR_ if anzsic=="J_"
+replace VA_ind = tempV - tempV_ if anzsic=="J_"
+sum MS_4firm if anzsic=="J"
+replace MS_4firm = r(mean) if anzsic=="J_"
+
+replace traded = 1 if ANZSIC1=="A" | ANZSIC1=="B" | ANZSIC1=="C"
+replace traded = 0 if traded==.
+
+gsort traded -ROE_
+
+edit anzsic ind_name ROE_ MS_4firm VA_ind rev_ind ROE_2 ROC_* no_firms*  if ///
+anzsic=="D26" | anzsic=="E30" | anzsic=="E31" | anzsic=="E32" | anzsic=="G42" | ///
+anzsic=="F" | anzsic=="G4111" | anzsic=="G39" | anzsic=="G4000" | anzsic=="H44" | anzsic=="H45" | ///
+anzsic=="I" | anzsic=="J58" | anzsic=="J" | anzsic=="K6221a" | ///
+anzsic=="K63" | anzsic=="K64" | anzsic=="L67" | anzsic=="M69" | anzsic=="M70"
+
+
 
 /*
 ANZSIC level 4 (some are 'other' categories): 
