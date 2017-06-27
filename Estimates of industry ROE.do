@@ -403,7 +403,7 @@ rename anzsic_`i' anzsic
 *merge 1:1 company anzsic using Industry
 merge m:1 company anzsic using Industry
 drop if _merge==2
-gen rev_`i' = rev_ind*marketshare
+gen VA_`i' = VA_ind*marketshare
 drop _merge marketshare VA_ind ANZSIC4-ind_match rev_ind
 merge m:1 anzsic using MarketShares
 drop if _merge==2
@@ -416,27 +416,27 @@ rename traded traded_`i'
 rename anzsic anzsic_`i'
 }
 
-order MS4_* rev_* traded_*, alphabetic before(MS_1firm)
+order MS4_* VA_* traded_*, alphabetic before(MS_1firm)
 order MS4_10-MS4_12, alphabetic after(MS4_9)
-order rev_10-rev_12, alphabetic after(rev_9)
+order VA_10-VA_12, alphabetic after(VA_9)
 order traded_10-traded_12, alphabetic after(traded_9)
 
 forvalues i=1(1)12 {
-gen rev3_`i' = rev_`i'
+gen VA3_`i' = VA_`i'
 }
 forvalues i=1(1)12 {
 gen anzsic3_`i' = substr(anzsic_`i',1,4)
 }
 
 forvalues i=1(1)12 {
-gen rev2_`i' = rev_`i'
+gen VA2_`i' = VA_`i'
 }
 forvalues i=1(1)12 {
 gen anzsic2_`i' = substr(anzsic_`i',1,3)
 }
 
 forvalues i=1(1)12 {
-gen rev1_`i' = rev_`i'
+gen VA1_`i' = VA_`i'
 }
 forvalues i=1(1)12 {
 gen anzsic1_`i' = substr(anzsic_`i',1,1)
@@ -445,16 +445,16 @@ gen anzsic1_`i' = substr(anzsic_`i',1,1)
 forvalues i=2(1)12 {
 local k = `i'-1
 forvalues j=1(1)`k' {
-replace rev3_`j' = rev3_`i' + rev3_`j' if anzsic3_`i'==anzsic3_`j' // sum revenue shares in same industry
-replace rev3_`i' = . if anzsic3_`i'==anzsic3_`j'
+replace VA3_`j' = VA3_`i' + VA3_`j' if anzsic3_`i'==anzsic3_`j' // sum revenue shares in same industry
+replace VA3_`i' = . if anzsic3_`i'==anzsic3_`j'
 replace anzsic3_`i' = "" if anzsic3_`i'==anzsic3_`j'
 
-replace rev2_`j' = rev2_`i' + rev2_`j' if anzsic2_`i'==anzsic2_`j'
-replace rev2_`i' = . if anzsic2_`i'==anzsic2_`j'
+replace VA2_`j' = VA2_`i' + VA2_`j' if anzsic2_`i'==anzsic2_`j'
+replace VA2_`i' = . if anzsic2_`i'==anzsic2_`j'
 replace anzsic2_`i' = "" if anzsic2_`i'==anzsic2_`j'
 
-replace rev1_`j' = rev1_`i' + rev1_`j' if anzsic1_`i'==anzsic1_`j'
-replace rev1_`i' = . if anzsic1_`i'==anzsic1_`j'
+replace VA1_`j' = VA1_`i' + VA1_`j' if anzsic1_`i'==anzsic1_`j'
+replace VA1_`i' = . if anzsic1_`i'==anzsic1_`j'
 replace anzsic1_`i' = "" if anzsic1_`i'==anzsic1_`j'
 }
 }
@@ -462,55 +462,54 @@ replace anzsic1_`i' = "" if anzsic1_`i'==anzsic1_`j'
 forvalues i=3(1)12 {
 local k = `i'-1
 forvalues j=2(1)`k' {
-replace rev3_`j' = rev3_`i' if anzsic3_`j'=="" & anzsic3_`i'~="" // skip blanks
-replace rev3_`i' = . if anzsic3_`j'=="" & anzsic3_`i'~=""
+replace VA3_`j' = VA3_`i' if anzsic3_`j'=="" & anzsic3_`i'~="" // skip blanks
+replace VA3_`i' = . if anzsic3_`j'=="" & anzsic3_`i'~=""
 replace anzsic3_`j' = anzsic3_`i' if anzsic3_`j'=="" & anzsic3_`i'~=""
 replace anzsic3_`i' = "" if anzsic3_`j'==anzsic3_`i'
 
-replace rev2_`j' = rev2_`i' if anzsic2_`j'=="" & anzsic2_`i'~=""
-replace rev2_`i' = . if anzsic2_`j'=="" & anzsic2_`i'~=""
+replace VA2_`j' = VA2_`i' if anzsic2_`j'=="" & anzsic2_`i'~=""
+replace VA2_`i' = . if anzsic2_`j'=="" & anzsic2_`i'~=""
 replace anzsic2_`j' = anzsic2_`i' if anzsic2_`j'=="" & anzsic2_`i'~=""
 replace anzsic2_`i' = "" if anzsic2_`j'==anzsic2_`i'
 
-replace rev1_`j' = rev1_`i' if anzsic1_`j'=="" & anzsic1_`i'~=""
-replace rev1_`i' = . if anzsic1_`j'=="" & anzsic1_`i'~=""
+replace VA1_`j' = VA1_`i' if anzsic1_`j'=="" & anzsic1_`i'~=""
+replace VA1_`i' = . if anzsic1_`j'=="" & anzsic1_`i'~=""
 replace anzsic1_`j' = anzsic1_`i' if anzsic1_`j'=="" & anzsic1_`i'~=""
 replace anzsic1_`i' = "" if anzsic1_`j'==anzsic1_`i'
 }
 }
 
-replace rev_1 = revenue - rev_2 if rev_1==. & revenue>rev_2
-replace rev3_1 = revenue - rev3_2 if rev3_1==. & revenue>rev3_2
-replace rev2_1 = revenue - rev2_2 if rev2_1==. & revenue>rev2_2
-replace rev1_1 = revenue - rev1_2 if rev1_1==. & revenue>rev1_2
-gen rev_total=0
-forvalues i=1(1)12 {
-replace rev_total = rev_total + rev_`i' if rev_`i'~=.
-}
-replace rev_total = revenue if rev_total==0
+drop if VA_1==. & VA_2~=.
+
+gen VA_total=0
 
 forvalues i=1(1)12 {
-gen share_`i' = rev_`i'/rev_total // generate revenue shares 
+replace VA_total = VA_total + VA_`i' if VA_`i'~=.
+}
+replace VA_total = . if VA_total==0
+
+forvalues i=1(1)12 {
+gen share_`i' = VA_`i'/VA_total // generate VA shares 
 replace share_`i' = 0 if share_`i'==.
-replace rev_`i' = 0 if rev_`i'==.
+replace VA_`i' = 0 if VA_`i'==.
 }
 
 forvalues i=1(1)12 {
-gen share3_`i' = rev3_`i'/rev_total
+gen share3_`i' = VA3_`i'/VA_total
 replace share3_`i' = 0 if share3_`i'==.
-replace rev3_`i' = 0 if rev3_`i'==.
+replace VA3_`i' = 0 if VA3_`i'==.
 }
 
 forvalues i=1(1)12 {
-gen share2_`i' = rev2_`i'/rev_total
+gen share2_`i' = VA2_`i'/VA_total
 replace share2_`i' = 0 if share2_`i'==.
-replace rev2_`i' = 0 if rev2_`i'==.
+replace VA2_`i' = 0 if VA2_`i'==.
 }
 
 forvalues i=1(1)12 {
-gen share1_`i' = rev1_`i'/rev_total
+gen share1_`i' = VA1_`i'/VA_total
 replace share1_`i' = 0 if share1_`i'==.
-replace rev1_`i' = 0 if rev1_`i'==.
+replace VA1_`i' = 0 if VA1_`i'==.
 }
 
 replace share_1 = 1 if share_1==0
@@ -521,30 +520,30 @@ replace share1_1 = 1 if share1_1==0
 forvalues i=1(1)12 {
 sum share3_`i'
 if (r(mean)==0) {
-drop rev3_`i' anzsic3_`i' share3_`i' // remove unnecessary variables
+drop VA3_`i' anzsic3_`i' share3_`i' // remove unnecessary variables
 }
 
 sum share2_`i'
 if (r(mean)==0) {
-drop rev2_`i' anzsic2_`i' share2_`i' 
+drop VA2_`i' anzsic2_`i' share2_`i' 
 }
 
 sum share1_`i'
 if (r(mean)==0) {
-drop rev1_`i' anzsic1_`i' share1_`i' 
+drop VA1_`i' anzsic1_`i' share1_`i' 
 }
 }
 
 drop MS_1firm MS_2firm MS_3firm
 replace MS4_1=-99 if MS4_1==.
 
-save CompanyRevenueShares, replace
+save CompanyVAShares, replace
 
 
 /* calculate number of firms in each industry at each level (for the purposes
 of excluding some from fixed effects) */
 
-use CompanyRevenueShares, clear
+use CompanyVAShares, clear
 
 forvalues i=1(1)12 {
 rename anzsic_`i' anzsic
@@ -712,7 +711,7 @@ save IndPredict, replace
 
 // Estimate regressions against higher-level industries and market shares
 
-use CompanyRevenueShares, clear
+use CompanyVAShares, clear
 
 gen lnrev = ln(revenue000)
 gen lnDE = ln(debtequity) if negequityflag==0
@@ -777,7 +776,7 @@ gen proprietary = type==5
 reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss i.ysc if roe>-.7 & roe<.9 & type>3
 reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public i.ysc if roe>-.7 & roe<.9 & type>3
 reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public S* i.ysc if roe>-.7 & roe<.9 & type>3
-reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnde* public S* i.ysc if roe>-.7 & roe<.9 & type>3 [w=revenue000]
+reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnde* public S* i.ysc if roe>-.7 & roe<.9 & type>3 [w=equity]
 reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if roe>-.7 & roe<.9 & ysc==0 & type>3
 reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if roe>-.7 & roe<.9 & ysc==1 & type>3
 reg roe MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if roe>-.7 & roe<.9 & ysc==2 & type>3
@@ -825,7 +824,7 @@ qreg roc MS_1 MS_2 MS_4 MS_5 MS_traded MS_miss lnsize* lnde* public if type>3 & 
 
 // Regressions against industry dummies
 
-use CompanyRevenueShares, clear
+use CompanyVAShares, clear
 
 forvalues i=1(1)12 {
 rename anzsic_`i' anzsic
@@ -917,17 +916,17 @@ sum B
 local max = r(max)
 sort B
 forvalues j=1(1)`max' {
-sum rev_ind if B==`j' & sorting>`i'
-replace rev_ind = rev_ind - r(sum) if B==`j' & sorting==`i'
-replace rev_ind = 0 if ROE==.
+sum VA_ind if B==`j' & sorting>`i'
+replace VA_ind = VA_ind - r(sum) if B==`j' & sorting==`i'
+replace VA_ind = 0 if ROE==.
 }
 drop B
 }
 
-gen temp1 = rev_ind*ROE
-gen temp2 = rev_ind*ROE2
-gen temp_1 = rev_ind*ROC
-gen temp_2 = rev_ind*ROC2
+gen temp1 = VA_ind*ROE
+gen temp2 = VA_ind*ROE2
+gen temp_1 = VA_ind*ROC
+gen temp_2 = VA_ind*ROC2
 
 replace temp1 = 0 if temp1==.
 replace temp2 = 0 if temp2==.
@@ -956,7 +955,7 @@ sum B
 local max = r(max)
 sort B
 forvalues j=1(1)`max' {
-sum rev_ind if B==`j' & sorting>=`i'
+sum VA_ind if B==`j' & sorting>=`i'
 replace temp3 = r(sum) if B==`j' & sorting==`i'
 local TEMP "temp1 temp2 temp_1 temp_2"
 foreach x of local TEMP {
