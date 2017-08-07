@@ -6,6 +6,126 @@ cd "C:\Users\chisholmc\Dropbox (Personal)\Grattan\GitHub\Industry-concentration\
 
 // Import IBISWorld Data from various spreadsheets //
 
+* Company Information
+import delimited CompanyInfo17.csv, clear
+
+rename tradingname company
+rename mainindustrybrcode main_anzsic
+
+encode companytype, gen(type)
+encode ownership, gen(local)
+gen anzsic_level = min(5,length(main_anzsic))-1
+
+keep company asx main_anzsic anzsic_level revenue000 type local
+drop in 1803 // Error in data set (same company listed twice)
+
+save CompanyInfo, replace
+
+* Data on Firms' various segments
+import delimited CompanySegment.csv, clear
+
+rename identerprise id
+rename companyname company
+rename anzsiccode anzsic
+keep if ismajorplayer=="Yes"
+
+keep id company anzsic
+sort id anzsic
+gen t = _n
+tsset t
+encode anzsic, gen(AZ)
+drop if AZ==l.AZ
+drop if anzsic=="J5800" | anzsic=="G4200" | anzsic=="Q8400" | anzsic=="K6200" ///
+| anzsic=="Q8700" | anzsic=="D2600" | anzsic=="M6900" | anzsic=="F3400" ///
+| anzsic=="E" | anzsic=="B" | anzsic=="P"
+drop t AZ
+sort id
+
+by id: gen ind = _n
+rename anzsic anzsic_
+reshape wide anzsic_, i(id) j(ind)
+
+save CompanySegment, replace
+
+* Financials going back up to 10 years
+import delimited CompanyTimeSeries.csv, clear
+
+rename identerprise id
+rename companyname company
+rename totalassets assets
+rename totalsalesrevenue revenue
+rename totalshareholderequity equity
+* keep if yearsincecurrent==0 // keep only most recent year
+keep if yearsincecurrent<7
+replace npat = npat*12/accountingperiod
+replace revenue = revenue*12/accountingperiod
+drop if accountingperiod<6
+rename yearsincecurrent ysc
+
+keep id company assets equity npat revenue ysc
+
+gen roe = npat/equity
+replace roe=. if npat==0 | equity==0
+gen roc = npat/assets
+replace roc=. if npat==0 | assets==0
+drop in 1803 // Error in data set (same company listed twice)
+gen debtequity = (assets-equity)/equity
+replace debtequity = . if assets==0 | equity<=0
+gen negequityflag = equity<0
+replace roe = . if equity<0
+
+xtset id ysc
+
+gen growth = (revenue-f.revenue)/f.revenue if revenue~=0 & f.revenue~=0
+
+save CompanyFinancials, replace
+
+* Merge company data
+use CompanyInfo, clear
+drop in 1803
+
+*merge 1:1 company using CompanyFinancials
+merge 1:m company using CompanyFinancials
+keep if _merge==3
+drop _merge
+
+*merge 1:1 id using CompanySegment
+merge m:1 company using CompanySegment
+drop if _merge==2
+gen major = _merge==3
+drop _merge
+
+replace anzsic_1 = main_anzsic if anzsic_1==""
+replace anzsic_1 = anzsic_1 + "00" if strlen(anzsic_1)==3
+replace anzsic_1 = anzsic_1 + "0" if strlen(anzsic_1)==4
+replace revenue = revenue000/1.09 if revenue==0 & ysc==0 // Based on ratio of total to sales revenue 
+
+forvalues i=1(1)12 {
+forvalues j=1(1)12 {
+gen temp = substr(anzsic_`i',1,4)==substr(anzsic_`j',1,4) & substr(anzsic_`i',-1,1)=="0" & `i'~=`j'
+replace anzsic_`i'="" if temp==1
+drop temp
+gen temp = substr(anzsic_`i',1,3)==substr(anzsic_`j',1,3) & substr(anzsic_`i',-2,2)=="00" & `i'~=`j'
+replace anzsic_`i'="" if temp==1
+drop temp
+gen temp = strlen(anzsic_`i')==1 & substr(anzsic_`i',1,1)==substr(anzsic_`j',1,1) & `i'~=`j'
+replace anzsic_`i'="" if temp==1
+drop temp
+}
+}
+
+* skip blanks
+forvalues i=2(1)12 {
+local k = `i'-1
+forvalues j=1(1)`k' {
+replace anzsic_`j' = anzsic_`i' if anzsic_`j'=="" & anzsic_`i'~=""
+replace anzsic_`i' = "" if anzsic_`j'==anzsic_`i'
+}
+}
+
+
+save CompanyMerged, replace 
+
 * Data across ANZSIC industies
 import delimited ANZSIC.csv, clear
 rename v1 ANZSIC1
@@ -279,128 +399,6 @@ keep anzsic traded
 gen public = substr(anzsic,1,1)=="O" | substr(anzsic,1,1)=="P" | substr(anzsic,1,1)=="Q" | substr(anzsic,1,1)=="R" 
 
 save IndustryTradability, replace
-
-* Company Information
-import delimited CompanyInfo17.csv, clear
-
-rename tradingname company
-rename mainindustrybrcode main_anzsic
-
-encode companytype, gen(type)
-encode ownership, gen(local)
-gen anzsic_level = min(5,length(main_anzsic))-1
-
-keep company asx main_anzsic anzsic_level revenue000 type local
-drop in 1803 // Error in data set (same company listed twice)
-
-save CompanyInfo, replace
-
-* Data on Firms' various segments
-import delimited CompanySegment.csv, clear
-
-rename identerprise id
-rename companyname company
-rename anzsiccode anzsic
-keep if ismajorplayer=="Yes"
-
-keep id company anzsic
-sort id anzsic
-gen t = _n
-tsset t
-encode anzsic, gen(AZ)
-drop if AZ==l.AZ
-drop if anzsic=="J5800" | anzsic=="G4200" | anzsic=="Q8400" | anzsic=="K6200" ///
-| anzsic=="Q8700" | anzsic=="D2600" | anzsic=="M6900" | anzsic=="F3400" ///
-| anzsic=="E" | anzsic=="B" | anzsic=="P"
-drop t AZ
-sort id
-
-by id: gen ind = _n
-rename anzsic anzsic_
-reshape wide anzsic_, i(id) j(ind)
-
-save CompanySegment, replace
-
-* Financials going back up to 10 years
-import delimited CompanyTimeSeries.csv, clear
-
-rename identerprise id
-rename companyname company
-rename totalassets assets
-rename totalsalesrevenue revenue
-rename totalshareholderequity equity
-* keep if yearsincecurrent==0 // keep only most recent year
-keep if yearsincecurrent<7
-replace npat = npat*12/accountingperiod
-replace revenue = revenue*12/accountingperiod
-drop if accountingperiod<6
-rename yearsincecurrent ysc
-
-keep id company assets equity npat revenue ysc
-
-gen roe = npat/equity
-replace roe=. if npat==0 | equity==0
-gen roc = npat/assets
-replace roc=. if npat==0 | assets==0
-drop in 1803 // Error in data set (same company listed twice)
-gen debtequity = (assets-equity)/equity
-replace debtequity = . if assets==0 | equity<=0
-gen negequityflag = equity<0
-replace roe = . if equity<0
-
-xtset id ysc
-
-gen growth = (revenue-f.revenue)/f.revenue if revenue~=0 & f.revenue~=0
-
-save CompanyFinancials, replace
-
-* Merge company data
-use CompanyInfo, clear
-drop in 1803
-
-*merge 1:1 company using CompanyFinancials
-merge 1:m company using CompanyFinancials
-keep if _merge==3
-drop _merge
-
-*merge 1:1 id using CompanySegment
-merge m:1 company using CompanySegment
-drop if _merge==2
-gen major = _merge==3
-drop _merge
-
-replace anzsic_1 = main_anzsic if anzsic_1==""
-replace anzsic_1 = anzsic_1 + "00" if strlen(anzsic_1)==3
-replace anzsic_1 = anzsic_1 + "0" if strlen(anzsic_1)==4
-replace revenue = revenue000/1.09 if revenue==0 & ysc==0 // Based on ratio of total to sales revenue 
-
-forvalues i=1(1)12 {
-forvalues j=1(1)12 {
-gen temp = substr(anzsic_`i',1,4)==substr(anzsic_`j',1,4) & substr(anzsic_`i',-1,1)=="0" & `i'~=`j'
-replace anzsic_`i'="" if temp==1
-drop temp
-gen temp = substr(anzsic_`i',1,3)==substr(anzsic_`j',1,3) & substr(anzsic_`i',-2,2)=="00" & `i'~=`j'
-replace anzsic_`i'="" if temp==1
-drop temp
-gen temp = strlen(anzsic_`i')==1 & substr(anzsic_`i',1,1)==substr(anzsic_`j',1,1) & `i'~=`j'
-replace anzsic_`i'="" if temp==1
-drop temp
-}
-}
-
-* skip blanks
-forvalues i=2(1)12 {
-local k = `i'-1
-forvalues j=1(1)`k' {
-replace anzsic_`j' = anzsic_`i' if anzsic_`j'=="" & anzsic_`i'~=""
-replace anzsic_`i' = "" if anzsic_`j'==anzsic_`i'
-}
-}
-
-
-save CompanyMerged, replace 
-
-
 
 * Match company info to market shares
 use CompanyMerged, clear
