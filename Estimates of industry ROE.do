@@ -396,7 +396,9 @@ sort anzsic
 
 keep company main_anzsic anzsic asx revenue000 type local id
 
-bysort id: gen ind = _n
+sort id anzsic
+
+by id: gen ind = _n
 rename anzsic anzsic_
 reshape wide anzsic_, i(id) j(ind)
 
@@ -416,14 +418,17 @@ strpos(segmentname,"Australasia")>0 | strpos(segmentname,"Worldwide")>0 | ///
 strpos(segmentname,"Asia Pacific")>0 | strpos(segmentname,"Victoria")>0 | ///
 strpos(segmentname,"International")>0 |  strpos(segmentname,"Queensland")>0  
 
+replace revenue=0 if revenue<0
+
 bysort company: egen rev = sum(revenue)
 bysort company local: egen revL = sum(revenue)
 
 gen aus_percent = revL/rev if local==1
+replace aus_percent=0 if local==0
 
 gsort company -local
 by company: gen n = _n
-keep if n==1 & local==1
+keep if n==1
 
 keep company aus_percent
 
@@ -447,14 +452,13 @@ rename yearsincecurrent ysc
 keep id company assets equity npat revenue ysc
 
 gen roe = npat/equity
-replace roe=. if npat==0 | equity==0
+replace roe=. if npat==0 | equity<=0
 gen roc = npat/assets
-replace roc=. if npat==0 | assets==0
+replace roc=. if npat==0 | assets<=0
 drop in 1803 // Error in data set (same company listed twice)
 gen debtequity = (assets-equity)/equity
 replace debtequity = . if assets==0 | equity<=0
 gen negequityflag = equity<0
-replace roe = . if equity<0
 
 xtset id ysc
 
@@ -465,22 +469,31 @@ save CompanyFinancials, replace
 * Merge company data
 use CompanyInfo, clear
 drop in 1803
+drop main_anzsic
 
-*merge 1:1 company using CompanyFinancials
+* merge in financials
 merge 1:m company using CompanyFinancials
 keep if _merge==3
 drop _merge
 
-*merge 1:1 id using CompanySegment
+*merge segment information
 merge m:1 company using CompanySegment
 drop if _merge==2
-gen major = _merge==3
 drop _merge
 
-replace anzsic_1 = main_anzsic if anzsic_1==""
+*merge goegraphy information
+merge m:1 company using Geography
+drop if _merge==2
+drop _merge
+
+replace revenue = revenue*aus_percent if aus_percent~=.
+replace equity = equity*aus_percent if aus_percent~=.
+
 replace anzsic_1 = anzsic_1 + "00" if strlen(anzsic_1)==3
 replace anzsic_1 = anzsic_1 + "0" if strlen(anzsic_1)==4
-replace revenue = revenue000/1.09 if revenue==0 & ysc==0 // Based on ratio of total to sales revenue 
+
+gen assetsrevenue = assets/revenue
+replace assetsrevenue = . if assets<=0 | revenue<=0
 
 forvalues i=1(1)12 {
 forvalues j=1(1)12 {
@@ -509,7 +522,6 @@ replace anzsic_`i' = "" if anzsic_`j'==anzsic_`i'
 save CompanyMerged, replace 
 
 
-
 * Match company info to market shares
 use CompanyMerged, clear
 
@@ -532,7 +544,7 @@ rename public public_`i'
 rename anzsic anzsic_`i'
 }
 
-order MS4_* VA_* traded_*, alphabetic after(major)
+order MS4_* VA_* traded_*, alphabetic after(assetsrevenue)
 order MS4_10-MS4_12, alphabetic after(MS4_9)
 order VA_10-VA_12, alphabetic after(VA_9)
 order traded_10-traded_12, alphabetic after(traded_9)
@@ -556,6 +568,14 @@ gen VA1_`i' = VA_`i'
 }
 forvalues i=1(1)12 {
 gen anzsic1_`i' = substr(anzsic_`i',1,1)
+}
+
+
+* combine some 2-digit industries
+forvalues i=1(1)6 {
+replace anzsic2_`i' = "J58" if anzsic2_`i'=="J59"
+replace anzsic2_`i' = "D26" if anzsic2_`i'=="D27"
+replace anzsic2_`i' = "D28" if anzsic2_`i'=="D29"
 }
 
 forvalues i=2(1)12 {
@@ -654,6 +674,104 @@ replace MS4_1=-99 if MS4_1==.
 
 save CompanyVAShares, replace
 
+/* Set up for mixed effects regression */
+
+use CompanyVAShares, clear
+
+multencode anzsic2_1-anzsic2_6, gen(A_1 A_2 A_3 A_4 A_5 A_6)
+
+* calculate share in each industry group
+forvalues i=1(1)100 {
+gen S`i' = 0
+forvalues j=1(1)6 {
+replace S`i' = share2_`j' if A_`j'==`i'
+}
+sum S`i', meanonly
+if (r(mean)==0) {
+drop S`i'
+}
+}
+
+egen test = rowmean(S*)
+replace test = test*79
+forvalues i=1(1)79 {
+replace S`i' = S`i'*test
+}
+drop test
+
+reg roe S* if roe>-.5 & roe<.7 & debtequity<20 & assetsrevenue>0.25 & type>2 [w=equity], vce(cl company)
+est sto Ind2
+
+tobit roe S* if debtequity<20 & assetsrevenue>0.25 & type>2 [w=equity], ll(-.5) ul(.7) vce(cl company)
+est sto Ind2tobit
+
+replace equity = equity/10^6
+mixed roe S* || main_anzsic_g: if roe>-.5 & roe<.7 & debtequity<20 & assetsrevenue>0.25 & type>2 [fw=equity]
+est sto Ind2me
+
+
+predict ROE, fit
+predict ROE_
+gen fit = ROE-ROE_
+
+keep fit main_anzsic_g
+
+bysort main_anzsic_g: keep if _n==1
+
+gen ANZSIC2 = substr(main_anzsic_g,1,3)
+
+save IndustryME, replace
+
+use CompanyVAShares, clear
+
+multencode anzsic2_1-anzsic2_6, gen(A_1 A_2 A_3 A_4 A_5 A_6)
+
+keep if ysc==0
+keep company A_1-A_6
+
+drop if company=="Dow Chemical"
+
+reshape long A_, i(company) j(a)
+drop company
+drop if A_==.
+
+sort A_
+by A_: gen n = _n
+keep if n==1
+keep A_
+
+decode A_, gen(ANZSIC2)
+
+forvalues i=1(1)79 {
+gen S`i' = A_==`i'
+}
+
+est res Ind2tobit
+predict ROE_Tobit
+
+merge 1:m ANZSIC2 using IndustryME
+drop _merge
+
+est res Ind2me
+
+predict ROE_ME
+replace ROE_ME = ROE_ME + fit
+
+
+est sto IndDum
+reg roc S* if roc>-.5 & roc<.7 & debtequity<20 [w=equity], vce(r)
+est sto IndDumROC
+tobit roe S* if debtequity<20 & assetsrevenue>0.25 [w=equity], ll(-.3) ul(.5) vce(r)
+est sto IndDumTobit
+tobit roc S* if debtequity<20 & assetsrevenue>0.25 [w=equity], ll(-.3) ul(.5) vce(r)
+est sto IndDumROCTobit
+
+
+
+
+
+
+
 
 /* calculate number of firms in each industry at each level (for the purposes
 of excluding some from fixed effects) */
@@ -683,7 +801,7 @@ gen no_firms1 = 0
 
 forvalues i=1(1)600 {
 forvalues j=1(1)12 {
-gen test = A_`j'==`i' & negequityflag~=. & roe~=.
+gen test = A_`j'==`i' & equity>0 & roe~=. & debtequity<20 & assetsrevenue>0.25
 sum test
 replace no_firms = no_firms + r(sum) if A_1==`i'
 drop test
@@ -692,9 +810,9 @@ drop test
 
 * set minimum number of firms per group
 scalar minfirms = 100
-scalar min_firms = 40
+scalar min_firms = 50
 * set minimum value added and revenue per group
-scalar ValAdd = 5000
+scalar ValAdd = 3000
 scalar REV = 20000
 
 gen L4_flag = no_firms>=minfirms
@@ -981,13 +1099,13 @@ drop S`i'
 }
 
 
-reg roe S* if roe>-.5 & roe<.7 & type>3 & debtequity<100 [w=equity], vce(r)
+reg roe S* if roe>-.5 & roe<.7 & debtequity<20 & assetsrevenue>0.25 [w=equity], vce(r)
 est sto IndDum
-reg roc S* if roc>-.5 & roc<.7 & type>3 & debtequity<100 [w=equity], vce(r)
+reg roc S* if roc>-.5 & roc<.7 & debtequity<20 [w=equity], vce(r)
 est sto IndDumROC
-tobit roe S* if type>3 & debtequity<100 [w=equity], ll(-.3) ul(.5) vce(r)
+tobit roe S* if debtequity<20 & assetsrevenue>0.25 [w=equity], ll(-.3) ul(.5) vce(r)
 est sto IndDumTobit
-tobit roc S* if type>3 & debtequity<100 [w=equity], ll(-.3) ul(.5) vce(r)
+tobit roc S* if debtequity<20 & assetsrevenue>0.25 [w=equity], ll(-.3) ul(.5) vce(r)
 est sto IndDumROCTobit
 
 * Prediction by industry
