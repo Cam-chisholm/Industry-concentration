@@ -45,6 +45,20 @@ drop _merge
 
 save Industry, replace
 
+keep if (VA_ind>3000 | (VA_ind>2200 & rev_ind>20000)) & company~="There are no major players in this industry"
+
+gen large=1
+
+save IndustryLarge, replace
+
+sort anzsic
+by anzsic: gen n = _n
+keep if n==1
+drop company marketshare n
+
+
+save Industry_Large, replace
+
 * create equivalent for level-3 industries
 use Industry, clear
 
@@ -301,25 +315,119 @@ import delimited CompanySegment.csv, clear
 rename identerprise id
 rename companyname company
 rename anzsiccode anzsic
-keep if ismajorplayer=="Yes"
+gen major = ismajorplayer=="Yes"
+drop ismajorplayer
 
-keep id company anzsic
-sort id anzsic
-gen t = _n
-tsset t
-encode anzsic, gen(AZ)
-drop if AZ==l.AZ
-drop if anzsic=="J5800" | anzsic=="G4200" | anzsic=="Q8400" | anzsic=="K6200" ///
+merge m:1 anzsic company using Industry
+drop if _merge==2
+drop _merge
+
+sort company
+by company: egen ct = sum(major)
+drop if ct>0 & major==0
+
+merge m:1 anzsic using Industry_Large
+drop if _merge==1 & major==0
+drop _merge
+
+sort revenuerank anzsic
+by revenuerank anzsic: gen dup = cond(_N==1,0,_n)
+
+drop if dup>1
+drop dup
+
+replace large = 0 if large==.
+
+keep id company anzsic major large
+
+drop if (anzsic=="J5800" | anzsic=="G4200" | anzsic=="Q8400" | anzsic=="K6200" ///
 | anzsic=="Q8700" | anzsic=="D2600" | anzsic=="M6900" | anzsic=="F3400" ///
-| anzsic=="E" | anzsic=="B" | anzsic=="P"
-drop t AZ
+| anzsic=="E" | anzsic=="B" | anzsic=="P") & major==1
+
 sort id
 
-by id: gen ind = _n
+save CompanySegment, replace
+
+use CompanyInfo, clear
+
+merge 1:m company using CompanySegment
+drop if _merge==2
+drop _merge
+
+merge m:1 anzsic using Industry_4
+drop if _merge==2
+drop _merge
+
+sort company
+
+by company: gen n = _n
+by company: gen N = _N
+
+gen match = substr(anzsic,1,3)==substr(main_anzsic,1,3)
+
+by company: egen sum_match = sum(match)
+drop if sum_match==0 & n>1 & major==0
+drop if match==0 & sum_match>0 & major==0
+
+gen digit2 = strlen(main_anzsic)<=3
+
+by company: replace N = _N
+
+replace main_anzsic = anzsic if N==1 & digit2==1 & strlen(anzsic)>4
+
+gsort company -match -VA_ind
+by company: replace n = _n
+
+drop if major==0 & n>1
+
+replace main_anzsic = anzsic if N>1 & digit2==1 & match==1 & strlen(anzsic)>4
+
+replace main_anzsic = main_anzsic[_n-1] if company[_n]==company[_n-1]
+
+replace anzsic = main_anzsic if anzsic==""
+
+sort company
+drop id
+encode company, gen(id)
+
+save CompanySegment, replace
+
+sort anzsic
+
+keep company main_anzsic anzsic asx revenue000 type local id
+
+bysort id: gen ind = _n
 rename anzsic anzsic_
 reshape wide anzsic_, i(id) j(ind)
 
+gen gov = "_G" if type==3
+egen main_anzsic_g = concat(main_anzsic gov)
+drop gov
+
 save CompanySegment, replace
+
+* Proportion of revenue earned in Australia
+import delimited GeographicSegment.csv, clear
+
+rename companyname company
+
+gen local = strpos(segmentname,"Australia")>0 | strpos(segmentname,"Unallocated")>0 | ///
+strpos(segmentname,"Australasia")>0 | strpos(segmentname,"Worldwide")>0 | ///
+strpos(segmentname,"Asia Pacific")>0 | strpos(segmentname,"Victoria")>0 | ///
+strpos(segmentname,"International")>0 |  strpos(segmentname,"Queensland")>0  
+
+bysort company: egen rev = sum(revenue)
+bysort company local: egen revL = sum(revenue)
+
+gen aus_percent = revL/rev if local==1
+
+gsort company -local
+by company: gen n = _n
+keep if n==1 & local==1
+
+keep company aus_percent
+
+save Geography, replace
 
 * Financials going back up to 10 years
 import delimited CompanyTimeSeries.csv, clear
