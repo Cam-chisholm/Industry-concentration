@@ -34,6 +34,8 @@ save IndustrySim, replace
 clear
 set obs 2000
 
+gen weight = exp(rnormal(0,1))
+
 gen a3_1 = 1+int((max)*runiform())
 gen a3_2 = (runiform()>.4)*(1+int((max)*runiform()))
 
@@ -116,7 +118,7 @@ replace share_=1 if co_id==.
 
 recode MS (0/.2 = 1) (.2/.4 = 2) (.4/.6 = 3) (.6/.8 = 4) (.8/1 = 5) 
 
-mixed roeT i.MS || a1: || a2: || a3: [fweight=share_]
+mixed roeT i.MS || a1: || a2: || a3: [fweight=weight]
 
 predict roe_hat, fit
 replace roe_hat = . if co_id!=.

@@ -64,4 +64,4 @@ substr(anzsic,1,1)=="K" | substr(anzsic,1,1)=="L" | substr(anzsic,1,1)=="M" | su
 
 sum profits if high==1 & NT==1
 di r(sum)*(12.7-9)/12.7 // Size of transfer from consumers to producers if high ROE is 12.7 vs 9
-di r(sum)*(12.7-9)/12.7*.05*.5 // Size of efficiency cost if consumers consume 5% less
+di r(sum)*(12.7-9)/12.7*.05*.5 // Size of efficiency cost if consumers would have consumed 5% more

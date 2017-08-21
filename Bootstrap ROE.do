@@ -1,197 +1,225 @@
-use IndPredict, clear
-keep AA
-rename AA anzsic
+use Industry, clear
+keep anzsic
+bysort anzsic: keep if _n==1
 save "ROE Bootstrap", replace
 
-local reps 2000
+local reps 200
 
 forvalues a=1(1)`reps' {
 
 use CompanyVAShares, clear
-bsample
+
+drop if id==5968 // Dow Chemical
 
 forvalues i=1(1)12 {
-rename anzsic_`i' anzsic
-merge m:1 anzsic using IndustryDummies
-drop if _merge==2
-drop _merge
-gen AA_`i' = substr(anzsic,1,1) if L1_flag==1
-replace AA_`i' = substr(anzsic,1,3) if L2_flag==1
-replace AA_`i' = substr(anzsic,1,4) if L3_flag==1
-replace AA_`i' = substr(anzsic,1,3) if L3_flag==1 & L4_flag==0 & substr(anzsic,4,1)=="0"
-replace AA_`i' = anzsic if L4_flag==1
-replace AA_`i' = "misc" if L1_flag==0 & L2_flag==0 & L3_flag==0 & L4_flag==0
-drop L1_flag L2_flag L3_flag L4_flag ANZSIC
-rename anzsic anzsic_`i'
+replace share_`i'=0 if share_`i'<.1
 }
 
-multencode AA_1-AA_12, gen(A_1 A_2 A_3 A_4 A_5 A_6 A_7 A_8 A_9 A_10 A_11 A_12)
-
-* calculate share in each industry group
-forvalues i=1(1)300 {
-gen S`i' = 0
-forvalues j=1(1)12 {
-replace S`i' = share_`j' if A_`j'==`i'
-}
-sum S`i', meanonly
-if (r(mean)==0) {
-drop S`i'
-}
+forvalues i=1(1)6 {
+replace share2_`i'=0 if share2_`i'<.1
 }
 
-reg roe S* if roe>-.5 & roe<.7 & type>3 & debtequity<100 [iw=equity]
-est sto IndDum
-reg roc S* if roc>-.5 & roc<.7 & type>3 & debtequity<100 [iw=equity]
-est sto IndDumROC
-tobit roe S* if type>3 & debtequity<100 [iw=equity], ll(-.3) ul(.5)
-est sto IndDumTobit
-tobit roc S* if type>3 & debtequity<100 [iw=equity], ll(-.3) ul(.5)
-est sto IndDumROCTobit
+forvalues i=1(1)3 {
+replace share1_`i'=0 if share1_`i'<.1
+}
 
-* Prediction by industry
-use Indpredict, clear
+drop share3* MS4* VA* id anzsic3*
 
-est res IndDum
+sort company ysc
+
+tostring ysc, gen(Y)
+
+gen id=company+" "+Y
+
+reshape long share_ share2_ share1_ traded_ public_ anzsic_ anzsic2_ anzsic1_, i(id) j(A)
+bsample, cl(company anzsic_)
+
+replace anzsic2_ = substr(anzsic_,1,3)
+replace anzsic1_ = substr(anzsic_,1,1)
+
+drop if traded_==.
+drop if in_sample==0
+
+gen equity4 = equity*share_/10^6
+gen revenue4 = revenue*share_/10^6
+gen composite = equity4 + revenue4/2
+rename anzsic_ anzsic
+rename anzsic2_ anzsic2
+rename anzsic1_ anzsic1
+
+* simulate values for extreme ROEs (closer to a normal distribution)
+gen rand = runiform()*runiform()
+gen roe_sim = roe
+replace roe_sim = rand*.4 + 0.8 if roe>.8
+replace roe_sim = roe if roe_sim>roe & roe>.8
+replace roe_sim = rand*.4 - 1 if roe<-.6
+replace roe_sim = roe if roe_sim<roe & roe<-.6
+
+*mixed roe i.ysc if roe<0.8 & roe>-.6 [fw=revenue4] || anzsic1: || anzsic2: || anzsic:
+*mixed roe i.ysc if roe<0.8 & roe>-.6 [fw=composite] || anzsic1: || anzsic2: || anzsic:
+*mixed roe i.ysc if roe<0.8 & roe>-.6 [fw=equity4] || anzsic1: || anzsic2: || anzsic: || company:
+
+mixed roe_sim i.ysc [fw=equity4] || anzsic1: || anzsic2: || anzsic: || company:, nostd iterate(15)
+
 predict ROE
-est res IndDumROC
-predict ROC
-est res IndDumTobit
-predict ROE2
-est res IndDumROCTobit
-predict ROC2
+predict A1 A2 A4 C, reffects
+gen ROE_A4 = ROE + A1 + A2 + A4
+gen ROE_A2 = ROE + A1 + A2
+gen ROE_A1 = ROE + A1
+gen ROE_C = ROE_A4 + C
 
-drop S*
+sort anzsic
 
-gen sorting = max(1,min(4,strlen(AA)-1))
-gsort -sorting -ROE
+encode anzsic, gen(A_4)
+encode anzsic2, gen(A_2)
+encode anzsic1, gen(A_1)
 
-* Estimate ROE/ROC at each industry level
-rename AA anzsic
+gen ROE_A4a = 0
+gen ROE_A2a = 0
+gen ROE_A1a = 0
 
-local obs = _N + 1
-set obs `obs'
-replace anzsic="M" in `obs'
-replace sorting=1 in `obs'
-replace ROE = 0 in `obs'
-replace ROE2 = 0 in `obs'
-replace ROC = 0 in `obs'
-replace ROC2 = 0 in `obs'
+forvalues i=1(1)382 {
+sum ROE_C if A_4==`i' [w=equity4]
+replace ROE_A4a = r(mean) if A_4==`i'
+sum ROE_A4 if A_4==`i' [w=equity4]
+replace ROE_A4 = r(mean) if A_4==`i'
+}
 
-forvalues i=4(-1)1 {
-merge 1:1 anzsic using Industry_`i'
+forvalues i=1(1)79 {
+sum ROE_C if A_2==`i' [w=equity4]
+replace ROE_A2a = r(mean) if A_2==`i'
+sum ROE_A2 if A_2==`i' [w=equity4]
+replace ROE_A2 = r(mean) if A_2==`i'
+}
+
+forvalues i=1(1)19 {
+sum ROE_C if A_1==`i' [w=equity4]
+replace ROE_A1a = r(mean) if A_1==`i'
+sum ROE_A1 if A_1==`i' [w=equity4]
+replace ROE_A1 = r(mean) if A_1==`i'
+}
+
+keep company anzsic anzsic2 anzsic1 equity4 revenue4 roe_sim ROE_A4-ROE_C ROE_A4a-ROE_A1a
+
+bysort company anzsic: keep if _n==1
+
+save "Estimated company ROE", replace
+
+bysort anzsic: keep if _n==1
+keep anzsic* ROE_A4-ROE_A1 ROE_A4a-ROE_A1a
+
+save "Estimated industry ROE", replace
+
+bysort anzsic2: keep if _n==1
+keep anzsic2 anzsic1 ROE_A2 ROE_A1 ROE_A2a-ROE_A1a
+
+save "Estimated industry2 ROE", replace
+
+bysort anzsic1: keep if _n==1
+keep anzsic1 ROE_A1 ROE_A1a
+
+save "Estimated industry1 ROE", replace
+
+use Industry, clear
+
+merge 1:1 anzsic company using "Estimated company ROE"
 drop if _merge==2
+drop _merge ROE_A4-ROE_A1 ROE_A4a-ROE_A1a
+
+merge m:1 anzsic using "Estimated industry ROE"
+drop if _merge==2
+drop _merge ROE_A2-ROE_A1 ROE_A2a-ROE_A1a
+
+replace anzsic2 = substr(anzsic,1,3)
+
+merge m:1 anzsic2 using "Estimated industry2 ROE"
+drop if _merge==2
+drop _merge ROE_A1 ROE_A1a
+
+replace anzsic1 = substr(anzsic,1,1)
+
+merge m:1 anzsic1 using "Estimated industry1 ROE"
 drop _merge
-rename rev_ind rev_ind`i'
-rename VA_ind VA_ind`i'
+
+gen ROE = ROE_C
+replace ROE = ROE_A4 if ROE==.
+replace ROE = ROE_A2 if ROE==.
+replace ROE = ROE_A1 if ROE==.
+gen ROE_other = ROE_A4
+replace ROE_other = ROE_A2 if ROE_other==.
+replace ROE_other = ROE_A1 if ROE_other==.
+
+drop company equity4-ROE_A1a
+
+gsort anzsic -marketshare
+by anzsic: gen n=_n
+
+reshape wide marketshare ROE, i(anzsic) j(n)
+
+forvalues i=1(1)7 {
+replace marketshare`i' = 0 if marketshare`i'==.
+replace ROE`i' = 0 if ROE`i'==.
 }
 
-gen ANZSIC4 = anzsic if sorting==4
-gen ANZSIC3 = substr(anzsic,1,4) if sorting>=3
-gen ANZSIC2 = substr(anzsic,1,3) if sorting>=2
-gen ANZSIC1 = substr(anzsic,1,1)
+gen marketshare_other = 100 - marketshare1 - marketshare2 - marketshare3 - ///
+marketshare4 - marketshare5 - marketshare6 - marketshare7
 
-egen rev_ind = rowmean(rev_ind*)
-egen VA_ind = rowmean(VA_ind*)
-
-forvalues i=3(-1)1 {
-local k = `i'+1
-encode ANZSIC`i', gen(B)
-sum B
-local max = r(max)
-sort B
-forvalues j=1(1)`max' {
-sum VA_ind if B==`j' & sorting>`i'
-replace VA_ind = VA_ind - r(sum) if B==`j' & sorting==`i'
-replace VA_ind = 0 if ROE==.
-}
-drop B
+gen ROE = 0
+forvalues i=1(1)7 {
+replace ROE = ROE + marketshare`i'*ROE`i'
 }
 
-gen temp1 = VA_ind*ROE
-gen temp2 = VA_ind*ROE2
-gen temp_1 = VA_ind*ROC
-gen temp_2 = VA_ind*ROC2
+replace ROE = ROE + marketshare_other*ROE_other
 
-replace temp1 = 0 if temp1==.
-replace temp2 = 0 if temp2==.
-replace temp_1 = 0 if temp_1==.
-replace temp_2 = 0 if temp_2==.
+keep anzsic ROE marketshare* VA_ind
+rename ROE ROE_`a'
 
-gen ROE_ = 0
-gen ROE_2 = 0
-gen ROC_ = 0
-gen ROC_2 = 0
-gen temp3 = 0
-
-replace ROE_ = ROE if sorting==5
-replace ROE_2 = ROE2 if sorting==5
-replace ROC_ = ROC if sorting==5
-replace ROC_2 = ROC2 if sorting==5
-
-gen temp1_ = 0
-gen temp_1_ = 0
-gen temp2_ = 0
-gen temp_2_ = 0
-
-forvalues i=3(-1)1 {
-encode ANZSIC`i', gen(B)
-sum B
-local max = r(max)
-sort B
-forvalues j=1(1)`max' {
-sum VA_ind if B==`j' & sorting>=`i'
-replace temp3 = r(sum) if B==`j' & sorting==`i'
-local TEMP "temp1 temp2 temp_1 temp_2"
-foreach x of local TEMP {
-sum `x' if B==`j' & sorting>=`i'
-replace `x'_ = r(sum) if B==`j' & sorting==`i'
-}
-}
-drop B
-replace temp3 = 0 if temp1_==0
-replace ROE_ = temp1_/temp3 if sorting==`i'
-replace ROE_2 = temp2_/temp3 if sorting==`i'
-replace ROC_ = temp_1_/temp3 if sorting==`i'
-replace ROC_2 = temp_2_/temp3 if sorting==`i'
-}
-replace ROE_ = ROE if sorting==4
-replace ROE_2 = ROE2 if sorting==4
-replace ROC_ = ROC if sorting==4
-replace ROC_2 = ROC2 if sorting==4
-drop temp*
-
-keep anzsic ROE* ROC*
-rename ROE _ROE_`a'
-rename ROE2 _ROE2_`a'
-rename ROC _ROC_`a'
-rename ROC2 _ROC2_`a'
-rename ROE_ ROE__`a'
-rename ROE_2 ROE_2_`a'
-rename ROC_ ROC__`a'
-rename ROC_2 ROC_2_`a'
 merge 1:1 anzsic using "ROE Bootstrap"
 drop if _merge==2
 drop _merge
 save "ROE Bootstrap", replace
 }
 
-order ROC_2_* ROC__* ROE_2_* ROE__* _ROC2_* _ROC_* _ROE2_* _ROE_* , seq
-order anzsic, before(ROC_2_1)
+gen MS_4firm = marketshare1+marketshare2+marketshare3+marketshare4
+
+merge 1:1 anzsic using AnzsicNames
+drop if _merge==2
+drop _merge
+
+merge 1:1 anzsic using IndustryTradability
+drop if _merge==2
+drop _merge
+
+order traded public MS_4firm ROE* ind_name anzsic, seq
+
+matrix CI = J(200,3,0)
+forvalues i=1(1)200 {
+sum ROE_`i' if MS_4firm<35 & traded==0 & public==0 [w=VA_ind]
+matrix CI[`i',1] = r(mean)
+sum ROE_`i' if MS_4firm>=35 & MS_4firm<65 & traded==0 & public==0 [w=VA_ind]
+matrix CI[`i',2] = r(mean)
+sum ROE_`i' if MS_4firm>=65 & traded==0 & public==0 [w=VA_ind]
+matrix CI[`i',3] = r(mean)
+}
+
 save "ROE Bootstrap", replace
 
 use "ROE Bootstrap", clear
-putmata X=(ROE__*) anzsic, replace
+putmata X=(ROE*) anzsic, replace
 mata
-anzsic=anzsic[1..rows(X)-1]
-roe = J(2000,rows(X)-1,0)
-for(i=1; i<=rows(X)-1; i++) {
+roe = J(cols(X),rows(X),0)
+for(i=1; i<=rows(X); i++) {
 i
 roe[.,i] = sort(X[i,.]',1)
 }
-lb = roe[51,.]'
-ub = roe[1950,.]'
-median = (roe[1000,.]'+roe[1001,.]')/2
+lb = roe[6,.]'
+ub = roe[195,.]'
+median = (roe[100,.]'+roe[101,.]')/2
 sd = diagonal(sqrt(variance(roe)))
+CI =  sort(st_matrix("CI")[.,1],1), sort(st_matrix("CI")[.,2],1),sort(st_matrix("CI")[.,3],1)
+CI_lb = CI[6,.]'
+CI_ub = CI[195,.]'
+CI_lb,CI_ub
 end
 
 clear
