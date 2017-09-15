@@ -7,6 +7,17 @@ cd "C:\Users\chisholmc\Dropbox (Personal)\Grattan\GitHub\Industry-concentration\
 // Import IBISWorld Data from various spreadsheets //
 
 * Data across ANZSIC industies
+import delimited FiveYearIndustry.csv, clear
+
+gen growth_rev = ((revenuem2016/revenuem2011)^0.2-1)*100
+gen growth_VA = ((ivam2016/ivam2011)^0.2-1)*100
+
+rename code anzsic
+
+keep anzsic growth*
+
+save IndustryGrowth, replace
+
 import delimited ANZSIC.csv, clear
 rename v1 ANZSIC1
 rename v2 ANZSIC2
@@ -19,6 +30,53 @@ import delimited AnzsicNames.csv, clear
 rename v1 anzsic
 rename v2 ind_name
 
+* provide shorter names for certain industries
+replace ind_name = "Prof., Sci. and Tech." if ind_name=="Professional, Scientific and Technical Services (Except Computer System Design and Related Services)"
+replace ind_name = "Banking" if ind_name=="National and Regional Commercial Banks"
+replace ind_name = "Financial Planning" if ind_name=="Financial Planning and Investment Advice"
+replace ind_name = "Other Property Operators" if ind_name=="Industrial and Other Property Operators"
+replace ind_name = "Funds Mgt. Serv." if ind_name=="Funds Management Services"
+replace ind_name = "Heavy Industry Const." if ind_name=="Heavy Industry and Other Non-Building Construction"
+replace ind_name = "Wired Telecom." if ind_name=="Wired Telecommunications Network Operation"
+replace ind_name = "Wireless Telecom." if ind_name=="Wireless Telecommunications Carriers"
+replace ind_name = "Free-to-Air TV" if ind_name=="Free-to-Air Television Broadcasting"
+replace ind_name = "Fossil Fuel Elec. Gen." if ind_name=="Fossil Fuel Electricity Generation"
+replace ind_name = "Supermarkets" if ind_name=="Supermarkets and Grocery Stores"
+replace ind_name = "Road & Bridge Const." if ind_name=="Road and Bridge Construction"
+replace ind_name = "Pharmaceutical Prod. Mfg." if ind_name=="Pharmaceutical Product Mfg."
+replace ind_name = "ISPs" if ind_name=="Internet Service Providers"
+replace ind_name = "Ready-Mixed Concr. Mfg." if ind_name=="Ready-Mixed Concrete Mfg."
+replace ind_name = "Petroleum Prod. Whl." if ind_name=="Petroleum Product Whl."
+replace ind_name = "Sports Betting" if ind_name=="Horse and Sports Betting"
+replace ind_name = "Internet Publishing" if ind_name=="Internet Publishing and Broadcasting"
+replace ind_name = "Comp. & Software Rtl." if ind_name=="Computer and Software Retailing"
+replace ind_name = "Cust., Trustee & SX Serv." if ind_name=="Custody, Trustee and Stock Exchange Services"
+replace ind_name = "Computer Whl." if ind_name=="Computer and Computer Peripheral Whl."
+replace ind_name = "Inv. & Security Serv." if ind_name=="Investigation and Security Services"
+replace ind_name = "Commercial Const." if ind_name=="Commercial and Industrial Building Construction"
+replace ind_name = "Medical Equip. Whl." if ind_name=="Medical and Scientific Equipment Whl."
+replace ind_name = "Pre-packaged Food Whl." if ind_name=="Soft Drink and Pre-Packaged Food Whl."
+replace ind_name = "Serv. to Water Transport" if ind_name=="Navigation, Towage and Services to Water Transport"
+replace ind_name = "Travel Services" if ind_name=="Travel Agency and Tour Arrangement Services"
+replace ind_name = "Chem. Product Whl." if ind_name=="Industrial and Agricultural Chemical Product Whl."
+replace ind_name = "Delivery Services" if ind_name=="Courier Pick-up and Delivery Services"
+replace ind_name = "Freight Forwarding" if ind_name=="Rail, Air and Sea Freight Forwarding"
+replace ind_name = "Ind. Mach. Whl." if ind_name=="Mining and Industrial Machinery Whl."
+replace ind_name = "General Warehousing" if ind_name=="General Warehousing and Cold Storage"
+replace ind_name = "Farm & Const. Mach. Whl." if ind_name=="Farm and Construction Machinery Whl."
+replace ind_name = "Comp. System Design" if ind_name=="Computer System Design Services"
+replace ind_name = "Domestic Appliance Rtl." if ind_name=="Domestic Appliance Retailing"
+replace ind_name = "Passenger Car Rental" if ind_name=="Passenger Car Rental and Hiring"
+replace ind_name = "Wooden Struc. Cmpt. Mfg." if ind_name=="Wooden Structural Component Mfg."
+replace ind_name = "Investment Banking" if ind_name=="Investment Banking and Securities Brokerage"
+replace ind_name = "Commercial Cleaning" if ind_name=="Commercial Cleaning Services"
+replace ind_name = "Inst. Building Const." if ind_name=="Institutional Building Construction"
+replace ind_name = "Sport & Camping Equip. Rtl." if ind_name=="Sport and Camping Equipment Retailing"
+replace ind_name = "Heavy Mach. Repair & Maint." if ind_name=="Heavy Machinery Repair and Maintenance"
+replace ind_name = "Cosmetics & Toiletry Whl." if ind_name=="Cosmetics and Toiletry Whl."
+
+replace ind_name = substr(ind_name,1,1) + lower(substr(ind_name,2,.)) if length(anzsic)==1
+
 save AnzsicNames, replace
 
 import delimited Industry17.csv, clear
@@ -27,7 +85,8 @@ rename code anzsic
 rename revenuem20162017 rev_ind
 rename ivam20162017 VA_ind
 rename majorplayers company
-keep anzsic rev_ind VA_ind company marketshare
+rename coststructureprofit profit_pc
+keep anzsic rev_ind VA_ind company marketshare profit_pc
 drop if substr(anzsic,1,1)=="X"
 gen ANZSIC4 = substr(anzsic,1,5)
 gen ANZSIC3 = substr(ANZSIC4,1,4)
@@ -45,9 +104,10 @@ drop _merge
 
 save Industry, replace
 
-keep if (VA_ind>3000 | (VA_ind>2200 & rev_ind>20000)) & company~="There are no major players in this industry"
+*keep if (VA_ind>3000 | (VA_ind>2200 & rev_ind>20000)) & company~="There are no major players in this industry"
+*keep if company~="There are no major players in this industry"
 
-gen large=1
+gen large=1 if (VA_ind>3000 | (VA_ind>2200 & rev_ind>20000)) & company~="There are no major players in this industry"
 
 save IndustryLarge, replace
 
@@ -287,14 +347,111 @@ keep if t==1
 rename code anzsic
 drop if substr(anzsic,1,1)=="X"
 gen traded = exportslevel=="Medium" | exportslevel=="High" | importslevel=="Medium" | ///
-importslevel=="High"
+importslevel=="High" | anzsic=="H4530" | anzsic=="A0146" 
 
 keep anzsic traded
-gen public = substr(anzsic,1,1)=="O" | substr(anzsic,1,1)=="P" | substr(anzsic,1,1)=="Q" | substr(anzsic,1,1)=="R" 
+gen public = substr(anzsic,1,1)=="P" | anzsic=="Q8539" | anzsic=="R9113" | anzsic=="I4622" ///
+| anzsic=="I4720" | anzsic=="O7714" | anzsic=="Q8401" | anzsic=="Q8402" ///
+| anzsic=="Q8591" | anzsic=="O7710" | anzsic=="J6010" | anzsic=="M6910" ///
+| anzsic=="K6330" | anzsic=="K6419d" | anzsic=="I5101" | anzsic=="S9540" ///
+| anzsic=="S9551" | anzsic=="S9559" | anzsic=="R8910" | anzsic=="R8921" ///
+| anzsic=="R8922" | anzsic=="O7600" | anzsic=="K6222" | anzsic=="K6223" ///
+| anzsic=="D2812" | anzsic=="D2811" | anzsic=="R9112" | anzsic=="Q8609" ///
+| anzsic=="H4530" 
 
 save IndustryTradability, replace
 
+* IBISWorld competition indicators
+import delimited IndustryClassifications.csv, clear
+bysort code: keep if _n==1
+drop if substr(code,1,1)=="X"
+
+rename code anzsic
+gen global_low = globalizationlevel=="Low"
+gen global_high = globalizationlevel=="High"
+
+keep anzsic global_low global_high
+
+save "IndustryIndicators", replace
+
+import delimited BarriersToEntryIndicators.csv, clear
+drop if substr(code,1,1)=="X" | substr(code,1,2)=="OD"
+
+rename code anzsic
+gen growth_ = lifecyclestage=="Growth"
+gen decline = lifecyclestage=="Decline"
+gen comp_low = basisofcompetitionlevel=="Low"
+gen comp_high = basisofcompetitionlevel=="High"
+gen barriers_low = barrierstoentrylevel=="Low"
+gen barriers_high = barrierstoentrylevel=="High"
+gen cap_int_low = capitalintensitylevel=="Low"
+gen cap_int_high = capitalintensitylevel=="High"
+gen reg_low = regulationpolicylevel=="Light" | regulationpolicylevel=="None"
+gen reg_high = regulationpolicylevel=="Heavy"
+gen ind_assist_high = industryassistancelevel=="High"
+gen ind_assist_med = industryassistancelevel=="Medium"
+
+keep anzsic growth_-ind_assist_med
+
+merge 1:1 anzsic using IndustryIndicators
+drop _merge
+
+save "IndustryIndicators", replace
+
+import delimited Barriers, clear
+drop v6-v11
+drop if anzsic==""
+
+save IndustryBarriers, replace
+
+* Industry Beta information
+import delimited AnzsicBeta.csv, clear
+keep anzsic beta
+
+save AnzsicBeta, replace
+
 * Company Information
+import delimited CompanyID16, clear
+rename identerprise id
+rename companyname company
+drop if id==id[_n-1]
+
+save CompanyID, replace
+
+import delimited CompanyID17, clear
+rename identerprise id
+rename companyname company
+drop if id==id[_n-1]
+drop in 1803 // Error in data set (same company listed twice)
+
+merge 1:1 id using CompanyID
+gen only16 = _merge==2
+gen only17 = _merge==1
+drop _merge
+
+save CompanyID, replace
+
+import delimited CompanyInfo16.csv, clear
+rename identerprise id
+rename mainindustrycode main_anzsic
+encode companytype, gen(type)
+encode ownershiptype, gen(local)
+replace main_anzsic = substr(main_anzsic,1,6)
+replace main_anzsic = substr(main_anzsic,1,5) if substr(main_anzsic,6,6)==" "
+replace main_anzsic = substr(main_anzsic,1,4) if substr(main_anzsic,6,6)=="-"
+replace main_anzsic = substr(main_anzsic,1,3) if substr(main_anzsic,5,5)=="-"
+gen anzsic_level = min(5,length(main_anzsic))-1
+
+keep id asx main_anzsic anzsic_level type local
+
+gen only16=1
+
+merge m:1 id only16 using CompanyID
+keep if _merge==3
+drop _merge
+
+save "CompanyInfo16", replace
+
 import delimited CompanyInfo17.csv, clear
 
 rename tradingname company
@@ -306,6 +463,18 @@ gen anzsic_level = min(5,length(main_anzsic))-1
 
 keep company asx main_anzsic anzsic_level revenue000 type local
 drop in 1803 // Error in data set (same company listed twice)
+drop if company=="Energy Queensland" | company=="Kogan.com" | company=="Vesco Foods"
+
+save CompanyInfo17, replace
+
+gen only16=0
+
+append using CompanyInfo16
+drop only17 id
+
+merge 1:1 company only16 using CompanyID
+drop if _merge==2
+drop _merge
 
 save CompanyInfo, replace
 
@@ -345,13 +514,13 @@ drop if (anzsic=="J5800" | anzsic=="G4200" | anzsic=="Q8400" | anzsic=="K6200" /
 | anzsic=="E" | anzsic=="B" | anzsic=="P") & major==1
 
 sort id
+drop if id==.
 
 save CompanySegment, replace
 
 use CompanyInfo, clear
 
-merge 1:m company using CompanySegment
-drop if _merge==2
+merge 1:m id using CompanySegment
 drop _merge
 
 merge m:1 anzsic using Industry_4
@@ -381,6 +550,7 @@ by company: replace n = _n
 drop if major==0 & n>1
 
 replace main_anzsic = anzsic if N>1 & digit2==1 & match==1 & strlen(anzsic)>4
+drop N
 
 replace main_anzsic = main_anzsic[_n-1] if company[_n]==company[_n-1]
 
@@ -392,20 +562,21 @@ rename main_anzsic anzsic
 merge m:1 anzsic using Industry_Large
 drop if _merge==2
 
-bysort anzsic: replace anzsic = "" if _merge==1 | _N<5
-
 rename anzsic main_anzsic
 rename anzsic_ anzsic
 
+/*
 sort company
 drop id
 encode company, gen(id)
+*/
 
 save CompanySegment, replace
 
 sort anzsic
 
-keep company main_anzsic anzsic asx revenue000 type local id
+rename _merge merge
+keep company main_anzsic anzsic asx revenue000 type local id merge
 
 sort id anzsic
 
@@ -413,12 +584,7 @@ by id: gen ind = _n
 rename anzsic anzsic_
 reshape wide anzsic_, i(id) j(ind)
 
-bysort main_anzsic: gen N = _N
-bysort main_anzsic type: gen NG = _N if type==3
-
-gen gov = "_G" if type==3 & NG>=3 & N-NG>=3
-egen main_anzsic_g = concat(main_anzsic gov)
-drop gov N NG
+gen main_anzsic2 = substr(main_anzsic,1,3)
 
 save CompanySegment, replace
 
@@ -426,6 +592,7 @@ save CompanySegment, replace
 import delimited GeographicSegment.csv, clear
 
 rename companyname company
+rename identerprise id
 
 gen local = strpos(segmentname,"Australia")>0 | strpos(segmentname,"Unallocated")>0 | ///
 strpos(segmentname,"Australasia")>0 | strpos(segmentname,"Worldwide")>0 | ///
@@ -444,7 +611,7 @@ gsort company -local
 by company: gen n = _n
 keep if n==1
 
-keep company aus_percent
+keep id aus_percent
 
 save Geography, replace
 
@@ -456,8 +623,7 @@ rename companyname company
 rename totalassets assets
 rename totalsalesrevenue revenue
 rename totalshareholderequity equity
-* keep if yearsincecurrent==0 // keep only most recent year
-keep if yearsincecurrent<7
+keep if yearsincecurrent<=5 & year>=2011
 replace npat = npat*12/accountingperiod
 replace revenue = revenue*12/accountingperiod
 drop if accountingperiod<6
@@ -480,23 +646,58 @@ gen growth = (revenue-f.revenue)/f.revenue if revenue~=0 & f.revenue~=0
 
 save CompanyFinancials, replace
 
-* Merge company data
-use CompanyInfo, clear
-drop in 1803
-drop main_anzsic
+* Financials going back up to 10 years
+import delimited CompanyFinancials2016.csv, clear
 
-* merge in financials
-merge 1:m company using CompanyFinancials
+rename identerprise id
+rename companyname company
+rename totalassets assets
+rename totalsalesrevenue revenue
+rename totalshareholderequity equity
+keep if yearsincecurrent<=5 & year>=2011
+replace npat = npat*12/accountingperiod
+replace revenue = revenue*12/accountingperiod
+drop if accountingperiod<6
+rename yearsincecurrent ysc
+
+keep id assets equity npat revenue ysc
+
+gen roe = npat/equity
+replace roe=. if npat==0 | equity<=0
+gen roc = npat/assets
+replace roc=. if npat==0 | assets<=0
+gen debtequity = (assets-equity)/equity
+replace debtequity = . if assets==0 | equity<=0
+gen negequityflag = equity<0
+
+xtset id ysc
+
+gen growth = (revenue-f.revenue)/f.revenue if revenue~=0 & f.revenue~=0
+
+merge m:1 id using CompanyInfo16
 keep if _merge==3
 drop _merge
 
+save CompanyFinancials2016, replace
+
+* Merge company data
+use CompanyInfo, clear
+drop main_anzsic
+
+* merge in financials
+merge 1:m id using CompanyFinancials
+drop if _merge==2
+drop _merge
+
+append using CompanyFinancials2016
+
 *merge segment information
-merge m:1 company using CompanySegment
+merge m:m id using CompanySegment
 drop if _merge==2
 drop _merge
 
 *merge goegraphy information
-merge m:1 company using Geography
+merge m:1 id using Geography
 drop if _merge==2
 drop _merge
 
@@ -532,6 +733,27 @@ replace anzsic_`i' = "" if anzsic_`j'==anzsic_`i'
 }
 }
 
+gen in_sample = 1
+replace in_sample = 0 if company=="Australian Rail Track" | company=="NBN Co" | company=="Housing SA" ///
+| main_anzsic=="K6330" | main_anzsic=="K6419d" | type<=3
+replace in_sample = 1 if company=="Synergy" | company=="Essential Energy" | company=="Power & Water" ///
+| company=="Horizon Power" | company=="Delta Electricity" | company=="Hydro Tasmania" | company=="Western Power" ///
+| company=="Transpower" | company=="Ausgrid" | company=="Endeavour Energy" | company=="Orion" | main_anzsic=="D28" ///
+| main_anzsic=="D281" | company=="Sydney Water" | company=="Water NSW" | company=="Pilbara Ports Authority" ///
+| company=="Victorian Ports Corporation (Melbourne)" | company=="Fremantle Ports" | company=="Port Authority of New South Wales"
+replace in_sample = 0 if debtequity>20 | assetsrevenue<0.25 | equity<=0 | roe==.
+
+* Fix firms that are clearly misallocated
+replace anzsic_1 = "B1011" if company=="Chevron Australia"
+replace anzsic_2 = "B10" if company=="Chevron Australia"
+replace main_anzsic = "B1011" if company=="Chevron Australia"
+
+gen small=0
+
+bysort main_anzsic in_sample: replace small=1 if merge==1 | _N<=5
+bysort main_anzsic2 in_sample: egen N = sum(small)
+bysort main_anzsic2 in_sample: replace small=1 if _N-small<=10 & merge==1
+drop merge N
 
 save CompanyMerged, replace 
 
@@ -585,13 +807,6 @@ forvalues i=1(1)12 {
 gen anzsic1_`i' = substr(anzsic_`i',1,1)
 }
 
-
-* combine some 2-digit industries
-forvalues i=1(1)6 {
-replace anzsic2_`i' = "J58" if anzsic2_`i'=="J59"
-replace anzsic2_`i' = "D26" if anzsic2_`i'=="D27"
-replace anzsic2_`i' = "D28" if anzsic2_`i'=="D29"
-}
 
 forvalues i=2(1)12 {
 local k = `i'-1
@@ -663,10 +878,10 @@ replace share1_`i' = 0 if share1_`i'==.
 replace VA1_`i' = 0 if VA1_`i'==.
 }
 
-replace share_1 = 1 if share_1==0
-replace share3_1 = 1 if share3_1==0
-replace share2_1 = 1 if share2_1==0
-replace share1_1 = 1 if share1_1==0
+replace share_1 = 1 if share_1==0 & share_2==0 & share_3==0
+replace share3_1 = 1 if share3_1==0 & share3_1==0
+replace share2_1 = 1 if share2_1==0 & share2_2==0
+replace share1_1 = 1 if share1_1==0 & share1_2==0
 
 forvalues i=1(1)12 {
 sum share3_`i'
@@ -693,96 +908,551 @@ save CompanyVAShares, replace
 
 use CompanyVAShares, clear
 
-multencode anzsic2_1-anzsic2_6, gen(A_1 A_2 A_3 A_4 A_5 A_6)
+drop if id==5968 // Error
 
-forvalues j=1(1)6 {
-replace share2_`j' = 0 if share2_`j'<.1
+forvalues i=1(1)12 {
+replace share_`i'=0 if share_`i'<.05
 }
 
-* calculate share in each industry group
-forvalues i=1(1)100 {
-gen S`i' = 0
-forvalues j=1(1)6 {
-replace S`i' = share2_`j' if A_`j'==`i'
-}
-sum S`i', meanonly
-if (r(mean)==0) {
-drop S`i'
-}
+forvalues i=1(1)6 {
+replace share2_`i'=0 if share2_`i'<.05
 }
 
-egen test = rowmean(S*)
-replace test = test*79
-forvalues i=1(1)79 {
-replace S`i' = S`i'/test
-}
-drop test
-
-reg roe S* if roe>-.5 & roe<.7 & debtequity<20 & assetsrevenue>0.5 & type>2 [w=equity], vce(cl company)
-est sto Ind2
-
-tobit roe S* if debtequity<20 & assetsrevenue>0.5 & type>2 [w=equity], ll(-.5) ul(.7) vce(cl company)
-est sto Ind2tobit
-
-replace equity = equity/10^6
-replace revenue = revenue/10^6
-mixed roe S* || main_anzsic_g: if roe>-.5 & roe<.7 & debtequity<20 & assetsrevenue>0.5 & type>2 [fw=revenue]
-est sto Ind2me
-
-
-predict ROE, fit
-predict ROE_
-gen fit = ROE-ROE_
-
-keep fit main_anzsic_g
-
-bysort main_anzsic_g: keep if _n==1
-
-gen ANZSIC2 = substr(main_anzsic_g,1,3)
-
-save IndustryME, replace
-
-use CompanyVAShares, clear
-
-multencode anzsic2_1-anzsic2_6, gen(A_1 A_2 A_3 A_4 A_5 A_6)
-
-keep if ysc==0
-keep company A_1-A_6
-
-drop if company=="Dow Chemical"
-
-reshape long A_, i(company) j(a)
-drop company
-drop if A_==.
-
-sort A_
-by A_: gen n = _n
-keep if n==1
-keep A_
-
-decode A_, gen(ANZSIC2)
-
-forvalues i=1(1)79 {
-gen S`i' = A_==`i'
+forvalues i=1(1)3 {
+replace share1_`i'=0 if share1_`i'<.05
 }
 
-est res Ind2tobit
-predict ROE_Tobit
+drop share3* MS4* VA* id anzsic3*
 
-merge 1:m ANZSIC2 using IndustryME
+sort company ysc
+
+tostring ysc, gen(Y)
+
+gen id=company+" "+Y
+
+reshape long share_ share2_ share1_ traded_ public_ anzsic_ anzsic2_ anzsic1_, i(id) j(A)
+
+replace anzsic2_ = substr(anzsic_,1,3)
+replace anzsic1_ = substr(anzsic_,1,1)
+
+drop if traded_==.
+drop if in_sample==0
+
+gen equity4 = equity*share_/10^6
+gen revenue4 = revenue*share_/10^6
+gen composite = equity4 + revenue4/2
+rename anzsic_ anzsic
+rename anzsic2_ anzsic2
+rename anzsic1_ anzsic1
+
+gen mining = substr(anzsic,1,1)=="B"
+
+mixed roe i.ysc i.mining#i.ysc [fw=equity4] if roe>-1.8 & roe<2 || anzsic1: || anzsic2: || anzsic: || company:
+
+predict ROE
+predict A1 A2 A4 C, reffects
+gen ROE_A4 = ROE + A1 + A2 + A4
+gen ROE_A2 = ROE + A1 + A2
+gen ROE_A1 = ROE + A1
+gen ROE_C = ROE_A4 + C
+
+sort anzsic
+
+encode anzsic, gen(A_4)
+encode anzsic2, gen(A_2)
+encode anzsic1, gen(A_1)
+drop id
+encode company, gen(id)
+gen CO_A = company+anzsic
+encode CO_A, gen(CA)
+drop CO_A
+
+gen ROE_A4a = 0
+gen ROE_A2a = 0
+gen ROE_A1a = 0
+gen ROE_co = 0
+gen equity_C = 0
+
+forvalues i=1(1)386 {
+sum ROE_C if A_4==`i' [w=equity4]
+replace ROE_A4a = r(mean) if A_4==`i'
+sum ROE_A4 if A_4==`i' [w=equity4]
+replace ROE_A4 = r(mean) if A_4==`i'
+}
+replace ROE_A4a = ROE_A4 if ROE_A4a==0
+
+forvalues i=1(1)78 {
+sum ROE_C if A_2==`i' [w=equity4]
+replace ROE_A2a = r(mean) if A_2==`i'
+sum ROE_A2 if A_2==`i' [w=equity4]
+replace ROE_A2 = r(mean) if A_2==`i'
+}
+replace ROE_A2a = ROE_A2 if ROE_A2a==0
+
+forvalues i=1(1)19 {
+sum ROE_C if A_1==`i' [w=equity4]
+replace ROE_A1a = r(mean) if A_1==`i'
+sum ROE_A1 if A_1==`i' [w=equity4]
+replace ROE_A1 = r(mean) if A_1==`i'
+}
+replace ROE_A1a = ROE_A1 if ROE_A1a==0
+
+forvalues i=1(1)1496 {
+sum ROE_C if id==`i' [w=equity4]
+replace ROE_co = r(mean) if id==`i'
+}
+
+forvalues i=1(1)1732 {
+sum ROE_C if CA==`i' [w=equity4]
+replace ROE_C = r(mean) if CA==`i'
+sum equity4 if CA==`i'
+replace equity4 = r(mean) if CA==`i'
+sum revenue4 if CA==`i'
+replace revenue4 = r(mean) if CA==`i'
+}
+
+keep company anzsic anzsic2 anzsic1 A_4 equity4 revenue4 ROE_A4-ROE_C ROE_A4a-ROE_A1a ROE_co type
+
+save "Estimated company ROE_", replace
+
+bysort company anzsic: keep if _n==1
+
+forvalues i=1(1)386 {
+sum equity4 if A_4==`i' 
+replace equity4 = r(sum) if A_4==`i'
+sum revenue4 if A_4==`i'
+replace revenue4 = r(sum) if A_4==`i'
+}
+
+gen missing = ROE_C==.
+bysort anzsic missing: gen N = _N
+replace N = . if missing==1
+drop missing
+
+bysort anzsic: egen equity_ind_ = max(equity4)
+bysort anzsic: egen rev_ind_ = max(revenue4)
+
+save "Estimated company ROE", replace
+
+bysort anzsic: keep if _n==1
+keep anzsic* ROE_A4-ROE_A1 ROE_A4a-ROE_A1a N
+
+save "Estimated industry ROE", replace
+
+bysort anzsic2: keep if _n==1
+keep anzsic2 anzsic1 ROE_A2 ROE_A1 ROE_A2a-ROE_A1a
+
+save "Estimated industry2 ROE", replace
+
+bysort anzsic1: keep if _n==1
+keep anzsic1 ROE_A1 ROE_A1a
+
+save "Estimated industry1 ROE", replace
+
+use "Estimated company ROE_", clear
+
+keep company ROE_co
+
+bysort company: keep if _n==1
+
+save "Estimated company ROE_", replace
+
+use Industry, clear
+
+merge 1:1 anzsic company using "Estimated company ROE"
+drop if _merge==2
+drop _merge ROE_A4-ROE_A1 ROE_A4a-ROE_A1a type
+
+merge m:1 anzsic using "Estimated industry ROE"
+drop if _merge==2
+drop _merge ROE_A2-ROE_A1 ROE_A2a-ROE_A1a
+
+replace anzsic2 = substr(anzsic,1,3)
+
+merge m:1 anzsic2 using "Estimated industry2 ROE"
+drop if _merge==2
+drop _merge ROE_A1 ROE_A1a
+
+replace anzsic1 = substr(anzsic,1,1)
+
+merge m:1 anzsic1 using "Estimated industry1 ROE"
+drop _merge ROE_co
+
+merge m:1 company using "Estimated company ROE_"
+drop if _merge==2
 drop _merge
 
-est res Ind2me
+/*
+gen ROE = ROE_C
+replace ROE = ROE_co if ROE==.
+replace ROE = ROE_A4a if ROE==.
+replace ROE = ROE_A2a if ROE==.
+replace ROE = ROE_A1a if ROE==.
+gen ROE_other = ROE_A4
+replace ROE_other = ROE_A2 if ROE_other==.
+replace ROE_other = ROE_A1 if ROE_other==.
+*/
 
-predict ROE_ME
-replace ROE_ME = ROE_ME + fit
+gsort anzsic -marketshare
+by anzsic: gen n=_n
+by anzsic: egen MS = sum(marketshare) if N~=.
+replace N = 0 if N==.
+by anzsic: egen N_ = max(N)
+drop N
 
-drop S*
-gen anzsic = main_anzsic_g
-replace anzsic = substr(anzsic,1,6) if substr(anzsic,-2,2)=="_G"
-replace anzsic = substr(anzsic,1,5) if substr(anzsic,-1,1)=="_"
+gen ROE = ROE_A4a if N>=4 | (N>=3 & MS>60)
+replace ROE = ROE_A4a*MS/100 + ROE_A4*(100-MS)/100 if ROE==. | N<=2
+by anzsic: egen ROE_ = max(ROE)
+replace ROE = ROE_ if ROE==.
+drop ROE_
+replace ROE = ROE_A4 if ROE==.
+replace ROE = ROE_A2 if ROE==.
+replace ROE = ROE_A1 if ROE==.
 
+drop n
+gsort anzsic -marketshare
+by anzsic: gen n = _n
+drop if n>4
+
+by anzsic: egen MS_4firm = sum(marketshare)
+keep if n==1
+
+keep anzsic-profit_pc N_ ROE MS_4firm equity_ind_ rev_ind_ equity4
+
+merge 1:1 anzsic using AnzsicNames
+drop if _merge==2
+drop _merge
+
+merge 1:1 anzsic using IndustryTradability
+drop if _merge==2
+drop _merge
+
+gen profit = profit*rev_ind/100
+
+merge 1:1 anzsic using "Estimated industry ROE"
+drop if _merge==2
+replace N_=0 if N_==.
+gen uncertain_flag = 0
+replace uncertain_flag = 1 if N_==. | N==. | N<=1
+replace uncertain_flag = 1 if anzsic=="D2611" | anzsic=="D2612" | anzsic=="D2619" | anzsic=="D2640"
+
+drop ROE_A4-ROE_A1a _merge
+
+merge 1:1 anzsic using AnzsicBeta
+drop if _merge==2
+drop _merge
+replace ROE = ROE*100
+
+scalar R_rf = 3.7
+sum beta if public==0 & traded==0 [w=VA_ind]
+scalar beta_avg = r(mean)
+sum ROE if public==0 & traded==0 [w=VA_ind]
+scalar R_rp = (r(mean) - R_rf)/beta_avg
+
+gen ROE_ra = ROE + (1-beta)*R_rp
+gen equity_ind = min(profit/ROE,profit/max(6,ROE))*100
+replace equity_ind = profit/6 if equity_ind<0 & ROE~=.
+replace equity_ind = 0 if equity_ind<0
+gen equity_obs = equity_ind_
+replace equity_ind_ = equity_ind_*rev_ind/(rev_ind_)
+gen equity = min(equity_ind,equity_ind_)
+
+gsort -ROE
+
+merge 1:1 anzsic using IndustryBarriers
+drop if _merge==2
+drop _merge
+
+* avg. ROE by no. of barriers to entry
+gen barriers_count = switching_costs+ essential_service+ network_effects+ regulatory_barriers
+
+merge 1:1 anzsic using AnzsicNames
+
+drop if _merge==2 & length(anzsic)>1
+drop _merge
+drop if traded==1 | public==1
+replace uncertain_flag=1 if profit<250
+
+sort anzsic
+
+local IND "A B C D E F G I J K N R S"
+
+foreach x of local IND {
+sum VA_ind if substr(anzsic,1,1)=="`x'" & uncertain_flag==1
+replace VA_ind = r(sum) if anzsic=="`x'"
+sum rev_ind if substr(anzsic,1,1)=="`x'" & uncertain_flag==1
+replace rev_ind = r(sum) if anzsic=="`x'"
+sum profit if substr(anzsic,1,1)=="`x'" & uncertain_flag==1
+replace profit = r(sum) if anzsic=="`x'"
+sum equity_ind if substr(anzsic,1,1)=="`x'" & uncertain_flag==1
+replace equity_ind = r(sum) if anzsic=="`x'"
+sum ROE if substr(anzsic,1,1)=="`x'" & uncertain_flag==1 [w=equity]
+replace ROE = r(mean) if anzsic=="`x'"
+sum ROE_ra if substr(anzsic,1,1)=="`x'" & uncertain_flag==1 [w=equity]
+replace ROE_ra = r(mean) if anzsic=="`x'"
+sum MS_4firm if substr(anzsic,1,1)=="`x'" & uncertain_flag==1 [w=equity]
+replace MS_4firm = r(mean) if anzsic=="`x'"
+sum barriers_count if substr(anzsic,1,1)=="`x'" & uncertain_flag==1 [w=equity]
+replace barriers_count = round(r(mean),1) if anzsic=="`x'"
+sum switching_costs if substr(anzsic,1,1)=="`x'" & uncertain_flag==1 [w=equity]
+replace switching_costs = round(r(mean),1) if anzsic=="`x'"
+sum essential_service if substr(anzsic,1,1)=="`x'" & uncertain_flag==1 [w=equity]
+replace essential_service = round(r(mean),1) if anzsic=="`x'"
+sum network_effects if substr(anzsic,1,1)=="`x'" & uncertain_flag==1 [w=equity]
+replace network_effects = round(r(mean),1) if anzsic=="`x'"
+sum regulatory_barriers if substr(anzsic,1,1)=="`x'" & uncertain_flag==1 [w=equity]
+replace regulatory_barriers = round(r(mean),1) if anzsic=="`x'"
+replace ind_name = "Other " + ind_name if anzsic=="`x'"
+}
+
+replace uncertain_flag=0 if length(anzsic)==1
+
+* avg. ROE by concentration group
+matrix cut = (25,50,75)
+gen conc = 0
+replace conc = 1 if MS_4firm>cut[1,1] & MS_4firm<=cut[1,2]
+replace conc = 2 if MS_4firm>cut[1,2] & MS_4firm<=cut[1,3]
+replace conc = 3 if MS_4firm>cut[1,3]
+
+reg ROE i.conc if  uncertain_flag==0 & length(anzsic)>1 [w=equity]
+matrix R = _b[_cons] \ _b[_cons] + _b[1.conc] \ _b[_cons] + _b[2.conc] ///
+\ _b[_cons] + _b[3.conc] 
+reg ROE_ra i.conc if uncertain_flag==0 & length(anzsic)>1 [w=equity]
+matrix R_ra = _b[_cons] \ _b[_cons] + _b[1.conc] \ _b[_cons] + _b[2.conc] ///
+\ _b[_cons] + _b[3.conc] 
+matrix SNR = R_ra - J(4,1,8.5)
+
+matrix P = J(4,1,0)
+* avg. profit by concentration group
+sum profit if MS_4firm<=cut[1,1] & uncertain_flag==0
+matrix P[1,1] = r(sum)/1000
+sum profit if MS_4firm>cut[1,1] & MS_4firm<=cut[1,2] & uncertain_flag==0
+matrix P[2,1] = r(sum)/1000
+sum profit if MS_4firm>cut[1,2] & MS_4firm<=cut[1,3] & uncertain_flag==0
+matrix P[3,1] = r(sum)/1000
+sum profit if MS_4firm>cut[1,3] & uncertain_flag==0
+matrix P[4,1] = r(sum)/1000
+matrix list P
+matrix list R
+matrix list SNR
+
+replace barriers_count = 2 if barriers_count==3
+
+reg ROE i.barriers_count if traded==0 & public==0 & uncertain_flag==0 [w=equity]
+matrix R = _b[_cons] \ _b[_cons] + _b[1.barriers_count] \ _b[_cons] + _b[2.barriers_count] 
+reg ROE_ra i.barriers_count if uncertain_flag==0 & length(anzsic)>1 [w=equity]
+matrix R_ra = _b[_cons] \ _b[_cons] + _b[1.barriers_count] \ _b[_cons] + _b[2.barriers_count]
+matrix SNR = R_ra - J(3,1,8.5)
+
+reg MS_4firm i.barriers_count if traded==0 & public==0 & uncertain_flag==0  [w=equity]
+matrix M = _b[_cons] \ _b[_cons] + _b[1.barriers_count] \ _b[_cons] + _b[2.barriers_count]
+
+matrix P = J(3,1,0)
+* avg. profit by no. of barriers to entry
+sum profit if barriers_count==0 & uncertain_flag==0
+matrix P[1,1] = r(sum)/1000
+sum profit if barriers_count==1 & uncertain_flag==0
+matrix P[2,1] = r(sum)/1000
+sum profit if barriers_count==2 & uncertain_flag==0
+matrix P[3,1] = r(sum)/1000
+matrix list M
+matrix list R
+matrix list SNR
+matrix list P
+
+matrix R_bounds = J(3,4,0)
+matrix M_bounds = J(3,2,0)
+gen MS4 = MS_4firm/100
+* Bounds
+sum ROE if barriers_count==0 & traded==0 & public==0 [w=equity], detail
+matrix R_bounds[1,1] = R[1,1] - r(sd)
+matrix R_bounds[1,2] = R[1,1] + r(sd)
+sum ROE if barriers_count==1 & traded==0 & public==0 [w=equity], detail
+matrix R_bounds[2,1] = R[2,1] - r(sd)
+matrix R_bounds[2,2] = R[2,1] + r(sd)
+sum ROE if barriers_count==2 & traded==0 & public==0 [w=equity], detail
+matrix R_bounds[3,1] = R[3,1] - r(sd)
+matrix R_bounds[3,2] = R[3,1] + r(sd)
+sum ROE if barriers_count==3 & traded==0 & public==0 [w=equity], detail
+matrix R_bounds[4,1] = R[4,1] - r(sd)
+matrix R_bounds[4,2] = R[4,1] + r(sd)
+glm MS4 if barriers_count==0 & ROE~=. [aw=VA_ind], family(binomial) link(logit)
+matrix T = e(V)
+matrix M_bounds[1,1] = 1/(1+exp(-(_b[_cons]-sqrt(1+T[1,1]))))*100
+matrix M_bounds[1,2] = 1/(1+exp(-(_b[_cons]+sqrt(1+T[1,1]))))*100
+reg ROE MS_4firm [w=VA_ind] if public==0 & traded==0 & barriers_count==0
+matrix R_bounds[1,3] = _b[_cons] + _b[MS_4firm]*M_bounds[1,1]
+matrix R_bounds[1,4] = _b[_cons] + _b[MS_4firm]*M_bounds[1,2]
+glm MS4 if barriers_count==1 & ROE~=. [aw=VA_ind], family(binomial) link(logit)
+matrix T = e(V)
+matrix M_bounds[2,1] = 1/(1+exp(-(_b[_cons]-sqrt(1+T[1,1]))))*100
+matrix M_bounds[2,2] = 1/(1+exp(-(_b[_cons]+sqrt(1+T[1,1]))))*100
+reg ROE MS_4firm [w=VA_ind] if public==0 & traded==0 & barriers_count==1
+matrix R_bounds[2,3] = _b[_cons] + _b[MS_4firm]*M_bounds[2,1]
+matrix R_bounds[2,4] = _b[_cons] + _b[MS_4firm]*M_bounds[2,2]
+glm MS4 if barriers_count==2 & ROE~=. [aw=VA_ind], family(binomial) link(logit)
+matrix T = e(V)
+matrix M_bounds[3,1] = 1/(1+exp(-(_b[_cons]-sqrt(1+T[1,1]))))*100
+matrix M_bounds[3,2] = 1/(1+exp(-(_b[_cons]+sqrt(1+T[1,1]))))*100
+reg ROE MS_4firm [w=VA_ind] if public==0 & traded==0 & barriers_count==2
+matrix R_bounds[3,3] = _b[_cons] + _b[MS_4firm]*M_bounds[3,1]
+matrix R_bounds[3,4] = _b[_cons] + _b[MS_4firm]*M_bounds[3,2]
+
+matrix list M_bounds
+matrix list R_bounds
+
+
+
+gsort -VA_ind
+
+* Hit list of large industries
+edit anzsic ind_name VA_ind ROE MS_4firm if VA_ind>3000 & traded==0 & public==0 & MS_4firm>0 & N>=3
+
+* Hit list of medium industries
+edit anzsic ind_name VA_ind ROE MS_4firm if VA_ind<=3000 & VA_ind>1000 & traded==0 & public==0 & MS_4firm>0 & N>=3
+
+* For bubble plot of medium and large industry ROE by concentration
+edit anzsic ind_name VA_ind ROE MS_4firm barriers_count if VA_ind>1000 & traded==0 & public==0 & N>=3
+
+* Regression line to go with bubble plot
+reg ROE MS_4firm [w=VA_ind] if MS_4firm>0 & public==0 & traded==0
+reg ROE MS_4firm [w=VA_ind] if MS_4firm>0 & public==0 & traded==0 & anzsic~="K6221a"
+
+keep anzsic rev_ind VA_ind ROE ROE_ra profit traded public MS_4firm barriers_count
+
+save "Estimated industry ROE", replace
+
+merge 1:1 anzsic using AnzsicNames
+
+drop if _merge==2 & length(anzsic)>1
+drop _merge
+drop if traded==1 | public==1
+
+sort anzsic
+
+local IND "A B C D E F G I J K N R S"
+
+foreach x of local IND {
+sum VA_ind if substr(anzsic,1,1)=="`x'" & VA_ind<1000 & ROE~=.
+replace VA_ind = r(sum) if anzsic=="`x'"
+sum rev_ind if substr(anzsic,1,1)=="`x'" & VA_ind<1000 & ROE~=.
+replace rev_ind = r(sum) if anzsic=="`x'"
+sum profit if substr(anzsic,1,1)=="`x'" & VA_ind<1000 & ROE~=.
+replace profit = r(sum) if anzsic=="`x'"
+sum ROE if substr(anzsic,1,1)=="`x'" [w=VA_ind]
+replace ROE = r(mean) if anzsic=="`x'"
+sum ROE_ra if substr(anzsic,1,1)=="`x'" [w=VA_ind]
+replace ROE_ra = r(mean) if anzsic=="`x'"
+sum MS_4firm if substr(anzsic,1,1)=="`x'" [w=VA_ind]
+replace MS_4firm = r(mean) if anzsic=="`x'"
+sum barriers_count if substr(anzsic,1,1)=="`x'" [w=VA_ind]
+replace barriers_count = round(r(mean),1) if anzsic=="`x'"
+replace ind_name = "Other " + ind_name if anzsic=="`x'"
+}
+
+gen major_players = MS_4firm>0
+
+gsort major_players -VA_ind
+* For bubble plot of ROE by market share and barriers
+edit anzsic ind_name VA_ind ROE MS_4firm barriers_count if (VA_ind>1000 | length(anzsic)==1) & ROE~=.
+
+* Regression line to go with bubble plot
+reg ROE major_players [w=VA_ind] if (VA_ind>1000 | length(anzsic)==1)
+reg ROE MS_4firm [w=VA_ind] if MS_4firm>0 & (VA_ind>1000 | length(anzsic)==1)
+
+
+// Distribution of company ROEs //
+use "Estimated company ROE", clear
+
+rename equity4 equity
+replace ROE_C = ROE_C*100
+
+keep company anzsic equity revenue4 ROE_C type
+
+scalar avg_ROE = max(R[1,1],R[2,1])
+
+gen deviation = (max(0,ROE_C-avg_ROE))*equity
+
+gen ANZSIC4 = anzsic
+gen ANZSIC2 = substr(anzsic,1,3)
+gen ANZSIC1 = substr(anzsic,1,1)
+
+replace anzsic = ANZSIC1
 merge m:1 anzsic using AnzsicNames
+drop if _merge==2
+drop _merge
+rename ind_name anzsic1_name
 
-gsort -ROE_ME
-edit
+replace anzsic = ANZSIC2
+merge m:1 anzsic using AnzsicNames
+drop if _merge==2
+drop _merge
+rename ind_name anzsic2_name
+
+replace anzsic = ANZSIC4
+merge m:1 anzsic using AnzsicNames
+drop if _merge==2
+drop _merge
+rename ind_name anzsic4_name
+
+merge m:1 anzsic using "Estimated industry ROE"
+drop if _merge==2
+drop _merge
+
+gsort ANZSIC1 ANZSIC2 ANZSIC4 -ROE_C
+
+by ANZSIC1: egen EQ = sum(equity) if ROE_C~=.
+by ANZSIC1: egen DEV = sum(deviation) if ROE_C~=.
+gen deviation1 = DEV/EQ
+gen equity1 = EQ
+drop EQ DEV
+
+sort ANZSIC2
+
+by ANZSIC2: egen EQ = sum(equity) if ROE_C~=.
+by ANZSIC2: egen DEV = sum(deviation)  if ROE_C~=.
+gen deviation2 = DEV/EQ
+gen equity2 = EQ
+drop EQ DEV
+
+sort ANZSIC4
+
+by ANZSIC4: egen EQ = sum(equity) if ROE_C~=.
+by ANZSIC4: egen DEV = sum(deviation)  if ROE_C~=.
+gen deviation4 = DEV/EQ
+gen equity4 = EQ
+drop EQ DEV
+
+drop if ROE_C==.
+
+bysort ANZSIC4: gen N = _N
+bysort ANZSIC4: gen n = _n
+
+gsort -deviation4 -equity
+
+* display for large industries with at least 4 firms
+edit ANZSIC4 anzsic4_name company type ROE_C ROE deviation4 equity ANZSIC1 anzsic1_name equity1 deviation1 ///
+ANZSIC2 anzsic2_name equity2 deviation2  equity4 deviation4 ///
+if VA_ind>3000 & N>=4 & traded==0 & public==0
+
+edit anzsic4_name VA_ind deviation4 MS_4firm ROE  if VA_ind>3000 & N>=4 & traded==0 & public==0 & n==1
+
+* display for medium industries with at least 4 firms
+edit ANZSIC4 anzsic4_name company type ROE_C ROE deviation4 equity ANZSIC1 anzsic1_name equity1 deviation1 ///
+ANZSIC2 anzsic2_name equity2 deviation2  equity4 deviation4 ///
+if VA_ind<3000 & VA_ind>1000 & N>=4 & traded==0 & public==0
+
+edit anzsic4_name VA_ind deviation4 MS_4firm ROE if VA_ind<3000 & VA_ind>1000 & N>=4 & traded==0 & public==0 & n==1
+
+* one hit list to rule them all
+gen high_ROE = ROE> avg_ROE + 2
+gen high_deviation = deviation4>1
+gen high_concentration = MS_4firm>65
+
+gsort -MS_4firm -ROE -deviation4
+
+edit anzsic4_name VA_ind MS_4firm ROE deviation4 N if traded==0 & public==0 & n==1 & VA_ind>1000
+
+
+
+
