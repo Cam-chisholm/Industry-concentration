@@ -399,8 +399,6 @@ drop _merge
 save "IndustryIndicators", replace
 
 import delimited Barriers, clear
-drop v6-v11
-drop if anzsic==""
 
 save IndustryBarriers, replace
 
@@ -629,7 +627,7 @@ replace revenue = revenue*12/accountingperiod
 drop if accountingperiod<6
 rename yearsincecurrent ysc
 
-keep id company assets equity npat revenue ysc
+keep id company assets equity npat revenue ysc year
 
 gen roe = npat/equity
 replace roe=. if npat==0 | equity<=0
@@ -679,6 +677,24 @@ keep if _merge==3
 drop _merge
 
 save CompanyFinancials2016, replace
+
+import delimited Margins.csv, clear
+
+replace profitmargin=. if profitmargin==0
+rename totalsalesrevenue revenue
+replace revenue=. if revenue<=0
+encode company, gen(id_)
+gen margin = 0
+
+forvalues i=1(1)2000 {
+sum profit if id_==`i' [w=revenue]
+replace margin = r(mean) if id_==`i'
+}
+
+bysort id: keep if _n==1
+keep id company margin
+
+save "Margins", replace
 
 * Merge company data
 use CompanyInfo, clear
@@ -904,402 +920,22 @@ replace MS4_1=-99 if MS4_1==.
 
 save CompanyVAShares, replace
 
+/* Add goodwill from Morningstar */
+import delimited "C:\Users\chisholmc\Dropbox (Personal)\Grattan\GitHub\Industry-concentration\Morningstar\Goodwill.csv", clear
+
+destring goodwill, replace force
+destring equity, gen(equity_MS) force
+destring equity_star, replace force
+drop equity
+
+gen equity_ratio = equity_star/equity_MS
+
+save Goodwill, replace
+
 /* Set up for mixed effects regression */
 
-use CompanyVAShares, clear
-
-drop if id==5968 // Error
-
-forvalues i=1(1)12 {
-replace share_`i'=0 if share_`i'<.05
-}
-
-forvalues i=1(1)6 {
-replace share2_`i'=0 if share2_`i'<.05
-}
-
-forvalues i=1(1)3 {
-replace share1_`i'=0 if share1_`i'<.05
-}
-
-drop share3* MS4* VA* id anzsic3*
-
-sort company ysc
-
-tostring ysc, gen(Y)
-
-gen id=company+" "+Y
-
-reshape long share_ share2_ share1_ traded_ public_ anzsic_ anzsic2_ anzsic1_, i(id) j(A)
-
-replace anzsic2_ = substr(anzsic_,1,3)
-replace anzsic1_ = substr(anzsic_,1,1)
-
-drop if traded_==.
-drop if in_sample==0
-
-gen equity4 = equity*share_/10^6
-gen revenue4 = revenue*share_/10^6
-gen composite = equity4 + revenue4/2
-rename anzsic_ anzsic
-rename anzsic2_ anzsic2
-rename anzsic1_ anzsic1
-
-gen mining = substr(anzsic,1,1)=="B"
-
-mixed roe i.ysc i.mining#i.ysc [fw=equity4] if roe>-1.8 & roe<2 || anzsic1: || anzsic2: || anzsic: || company:
-
-predict ROE
-predict A1 A2 A4 C, reffects
-gen ROE_A4 = ROE + A1 + A2 + A4
-gen ROE_A2 = ROE + A1 + A2
-gen ROE_A1 = ROE + A1
-gen ROE_C = ROE_A4 + C
-
-sort anzsic
-
-encode anzsic, gen(A_4)
-encode anzsic2, gen(A_2)
-encode anzsic1, gen(A_1)
-drop id
-encode company, gen(id)
-gen CO_A = company+anzsic
-encode CO_A, gen(CA)
-drop CO_A
-
-gen ROE_A4a = 0
-gen ROE_A2a = 0
-gen ROE_A1a = 0
-gen ROE_co = 0
-gen equity_C = 0
-
-forvalues i=1(1)386 {
-sum ROE_C if A_4==`i' [w=equity4]
-replace ROE_A4a = r(mean) if A_4==`i'
-sum ROE_A4 if A_4==`i' [w=equity4]
-replace ROE_A4 = r(mean) if A_4==`i'
-}
-replace ROE_A4a = ROE_A4 if ROE_A4a==0
-
-forvalues i=1(1)78 {
-sum ROE_C if A_2==`i' [w=equity4]
-replace ROE_A2a = r(mean) if A_2==`i'
-sum ROE_A2 if A_2==`i' [w=equity4]
-replace ROE_A2 = r(mean) if A_2==`i'
-}
-replace ROE_A2a = ROE_A2 if ROE_A2a==0
-
-forvalues i=1(1)19 {
-sum ROE_C if A_1==`i' [w=equity4]
-replace ROE_A1a = r(mean) if A_1==`i'
-sum ROE_A1 if A_1==`i' [w=equity4]
-replace ROE_A1 = r(mean) if A_1==`i'
-}
-replace ROE_A1a = ROE_A1 if ROE_A1a==0
-
-forvalues i=1(1)1496 {
-sum ROE_C if id==`i' [w=equity4]
-replace ROE_co = r(mean) if id==`i'
-}
-
-forvalues i=1(1)1732 {
-sum ROE_C if CA==`i' [w=equity4]
-replace ROE_C = r(mean) if CA==`i'
-sum equity4 if CA==`i'
-replace equity4 = r(mean) if CA==`i'
-sum revenue4 if CA==`i'
-replace revenue4 = r(mean) if CA==`i'
-}
-
-keep company anzsic anzsic2 anzsic1 A_4 equity4 revenue4 ROE_A4-ROE_C ROE_A4a-ROE_A1a ROE_co type
-
-save "Estimated company ROE_", replace
-
-bysort company anzsic: keep if _n==1
-
-forvalues i=1(1)386 {
-sum equity4 if A_4==`i' 
-replace equity4 = r(sum) if A_4==`i'
-sum revenue4 if A_4==`i'
-replace revenue4 = r(sum) if A_4==`i'
-}
-
-gen missing = ROE_C==.
-bysort anzsic missing: gen N = _N
-replace N = . if missing==1
-drop missing
-
-bysort anzsic: egen equity_ind_ = max(equity4)
-bysort anzsic: egen rev_ind_ = max(revenue4)
-
-save "Estimated company ROE", replace
-
-bysort anzsic: keep if _n==1
-keep anzsic* ROE_A4-ROE_A1 ROE_A4a-ROE_A1a N
-
-save "Estimated industry ROE", replace
-
-bysort anzsic2: keep if _n==1
-keep anzsic2 anzsic1 ROE_A2 ROE_A1 ROE_A2a-ROE_A1a
-
-save "Estimated industry2 ROE", replace
-
-bysort anzsic1: keep if _n==1
-keep anzsic1 ROE_A1 ROE_A1a
-
-save "Estimated industry1 ROE", replace
-
-use "Estimated company ROE_", clear
-
-keep company ROE_co
-
-bysort company: keep if _n==1
-
-save "Estimated company ROE_", replace
-
-use Industry, clear
-
-merge 1:1 anzsic company using "Estimated company ROE"
-drop if _merge==2
-drop _merge ROE_A4-ROE_A1 ROE_A4a-ROE_A1a type
-
-merge m:1 anzsic using "Estimated industry ROE"
-drop if _merge==2
-drop _merge ROE_A2-ROE_A1 ROE_A2a-ROE_A1a
-
-replace anzsic2 = substr(anzsic,1,3)
-
-merge m:1 anzsic2 using "Estimated industry2 ROE"
-drop if _merge==2
-drop _merge ROE_A1 ROE_A1a
-
-replace anzsic1 = substr(anzsic,1,1)
-
-merge m:1 anzsic1 using "Estimated industry1 ROE"
-drop _merge ROE_co
-
-merge m:1 company using "Estimated company ROE_"
-drop if _merge==2
-drop _merge
-
-/*
-gen ROE = ROE_C
-replace ROE = ROE_co if ROE==.
-replace ROE = ROE_A4a if ROE==.
-replace ROE = ROE_A2a if ROE==.
-replace ROE = ROE_A1a if ROE==.
-gen ROE_other = ROE_A4
-replace ROE_other = ROE_A2 if ROE_other==.
-replace ROE_other = ROE_A1 if ROE_other==.
-*/
-
-gsort anzsic -marketshare
-by anzsic: gen n=_n
-by anzsic: egen MS = sum(marketshare) if N~=.
-replace N = 0 if N==.
-by anzsic: egen N_ = max(N)
-drop N
-
-gen ROE = ROE_A4a if N>=4 | (N>=3 & MS>60)
-replace ROE = ROE_A4a*MS/100 + ROE_A4*(100-MS)/100 if ROE==. | N<=2
-by anzsic: egen ROE_ = max(ROE)
-replace ROE = ROE_ if ROE==.
-drop ROE_
-replace ROE = ROE_A4 if ROE==.
-replace ROE = ROE_A2 if ROE==.
-replace ROE = ROE_A1 if ROE==.
-
-drop n
-gsort anzsic -marketshare
-by anzsic: gen n = _n
-drop if n>4
-
-by anzsic: egen MS_4firm = sum(marketshare)
-keep if n==1
-
-keep anzsic-profit_pc N_ ROE MS_4firm equity_ind_ rev_ind_ equity4
-
-merge 1:1 anzsic using AnzsicNames
-drop if _merge==2
-drop _merge
-
-merge 1:1 anzsic using IndustryTradability
-drop if _merge==2
-drop _merge
-
-gen profit = profit*rev_ind/100
-
-merge 1:1 anzsic using "Estimated industry ROE"
-drop if _merge==2
-replace N_=0 if N_==.
-gen uncertain_flag = 0
-replace uncertain_flag = 1 if N_==. | N==. | N<=1
-replace uncertain_flag = 1 if anzsic=="D2611" | anzsic=="D2612" | anzsic=="D2619" | anzsic=="D2640"
-
-drop ROE_A4-ROE_A1a _merge
-
-merge 1:1 anzsic using AnzsicBeta
-drop if _merge==2
-drop _merge
-replace ROE = ROE*100
-
-scalar R_rf = 3.7
-sum beta if public==0 & traded==0 [w=VA_ind]
-scalar beta_avg = r(mean)
-sum ROE if public==0 & traded==0 [w=VA_ind]
-scalar R_rp = (r(mean) - R_rf)/beta_avg
-
-gen ROE_ra = ROE + (1-beta)*R_rp
-gen equity_ind = min(profit/ROE,profit/max(6,ROE))*100
-replace equity_ind = profit/6 if equity_ind<0 & ROE~=.
-replace equity_ind = 0 if equity_ind<0
-gen equity_obs = equity_ind_
-replace equity_ind_ = equity_ind_*rev_ind/(rev_ind_)
-gen equity = min(equity_ind,equity_ind_)
-
-gsort -ROE
-
-merge 1:1 anzsic using IndustryBarriers
-drop if _merge==2
-drop _merge
-
-* avg. ROE by no. of barriers to entry
-gen barriers_count = switching_costs+ essential_service+ network_effects+ regulatory_barriers
-
-merge 1:1 anzsic using AnzsicNames
-
-drop if _merge==2 & length(anzsic)>1
-drop _merge
-drop if traded==1 | public==1
-replace uncertain_flag=1 if profit<250
-
-sort anzsic
-
-local IND "A B C D E F G I J K N R S"
-
-foreach x of local IND {
-sum VA_ind if substr(anzsic,1,1)=="`x'" & uncertain_flag==1
-replace VA_ind = r(sum) if anzsic=="`x'"
-sum rev_ind if substr(anzsic,1,1)=="`x'" & uncertain_flag==1
-replace rev_ind = r(sum) if anzsic=="`x'"
-sum profit if substr(anzsic,1,1)=="`x'" & uncertain_flag==1
-replace profit = r(sum) if anzsic=="`x'"
-sum equity_ind if substr(anzsic,1,1)=="`x'" & uncertain_flag==1
-replace equity_ind = r(sum) if anzsic=="`x'"
-sum ROE if substr(anzsic,1,1)=="`x'" & uncertain_flag==1 [w=equity]
-replace ROE = r(mean) if anzsic=="`x'"
-sum ROE_ra if substr(anzsic,1,1)=="`x'" & uncertain_flag==1 [w=equity]
-replace ROE_ra = r(mean) if anzsic=="`x'"
-sum MS_4firm if substr(anzsic,1,1)=="`x'" & uncertain_flag==1 [w=equity]
-replace MS_4firm = r(mean) if anzsic=="`x'"
-sum barriers_count if substr(anzsic,1,1)=="`x'" & uncertain_flag==1 [w=equity]
-replace barriers_count = round(r(mean),1) if anzsic=="`x'"
-sum switching_costs if substr(anzsic,1,1)=="`x'" & uncertain_flag==1 [w=equity]
-replace switching_costs = round(r(mean),1) if anzsic=="`x'"
-sum essential_service if substr(anzsic,1,1)=="`x'" & uncertain_flag==1 [w=equity]
-replace essential_service = round(r(mean),1) if anzsic=="`x'"
-sum network_effects if substr(anzsic,1,1)=="`x'" & uncertain_flag==1 [w=equity]
-replace network_effects = round(r(mean),1) if anzsic=="`x'"
-sum regulatory_barriers if substr(anzsic,1,1)=="`x'" & uncertain_flag==1 [w=equity]
-replace regulatory_barriers = round(r(mean),1) if anzsic=="`x'"
-replace ind_name = "Other " + ind_name if anzsic=="`x'"
-}
-
-replace uncertain_flag=0 if length(anzsic)==1
-
-* avg. ROE by concentration group
-matrix cut = (25,50,75)
-gen conc = 0
-replace conc = 1 if MS_4firm>cut[1,1] & MS_4firm<=cut[1,2]
-replace conc = 2 if MS_4firm>cut[1,2] & MS_4firm<=cut[1,3]
-replace conc = 3 if MS_4firm>cut[1,3]
-
-reg ROE i.conc if  uncertain_flag==0 & length(anzsic)>1 [w=equity]
-matrix R = _b[_cons] \ _b[_cons] + _b[1.conc] \ _b[_cons] + _b[2.conc] ///
-\ _b[_cons] + _b[3.conc] 
-reg ROE_ra i.conc if uncertain_flag==0 & length(anzsic)>1 [w=equity]
-matrix R_ra = _b[_cons] \ _b[_cons] + _b[1.conc] \ _b[_cons] + _b[2.conc] ///
-\ _b[_cons] + _b[3.conc] 
-matrix SNR = R_ra - J(4,1,8.5)
-
-matrix P = J(4,1,0)
-* avg. profit by concentration group
-sum profit if MS_4firm<=cut[1,1] & uncertain_flag==0
-matrix P[1,1] = r(sum)/1000
-sum profit if MS_4firm>cut[1,1] & MS_4firm<=cut[1,2] & uncertain_flag==0
-matrix P[2,1] = r(sum)/1000
-sum profit if MS_4firm>cut[1,2] & MS_4firm<=cut[1,3] & uncertain_flag==0
-matrix P[3,1] = r(sum)/1000
-sum profit if MS_4firm>cut[1,3] & uncertain_flag==0
-matrix P[4,1] = r(sum)/1000
-matrix list P
-matrix list R
-matrix list SNR
-
-replace barriers_count = 2 if barriers_count==3
-
-reg ROE i.barriers_count if traded==0 & public==0 & uncertain_flag==0 [w=equity]
-matrix R = _b[_cons] \ _b[_cons] + _b[1.barriers_count] \ _b[_cons] + _b[2.barriers_count] 
-reg ROE_ra i.barriers_count if uncertain_flag==0 & length(anzsic)>1 [w=equity]
-matrix R_ra = _b[_cons] \ _b[_cons] + _b[1.barriers_count] \ _b[_cons] + _b[2.barriers_count]
-matrix SNR = R_ra - J(3,1,8.5)
-
-reg MS_4firm i.barriers_count if traded==0 & public==0 & uncertain_flag==0  [w=equity]
-matrix M = _b[_cons] \ _b[_cons] + _b[1.barriers_count] \ _b[_cons] + _b[2.barriers_count]
-
-matrix P = J(3,1,0)
-* avg. profit by no. of barriers to entry
-sum profit if barriers_count==0 & uncertain_flag==0
-matrix P[1,1] = r(sum)/1000
-sum profit if barriers_count==1 & uncertain_flag==0
-matrix P[2,1] = r(sum)/1000
-sum profit if barriers_count==2 & uncertain_flag==0
-matrix P[3,1] = r(sum)/1000
-matrix list M
-matrix list R
-matrix list SNR
-matrix list P
-
-matrix R_bounds = J(3,4,0)
-matrix M_bounds = J(3,2,0)
-gen MS4 = MS_4firm/100
-* Bounds
-sum ROE if barriers_count==0 & traded==0 & public==0 [w=equity], detail
-matrix R_bounds[1,1] = R[1,1] - r(sd)
-matrix R_bounds[1,2] = R[1,1] + r(sd)
-sum ROE if barriers_count==1 & traded==0 & public==0 [w=equity], detail
-matrix R_bounds[2,1] = R[2,1] - r(sd)
-matrix R_bounds[2,2] = R[2,1] + r(sd)
-sum ROE if barriers_count==2 & traded==0 & public==0 [w=equity], detail
-matrix R_bounds[3,1] = R[3,1] - r(sd)
-matrix R_bounds[3,2] = R[3,1] + r(sd)
-sum ROE if barriers_count==3 & traded==0 & public==0 [w=equity], detail
-matrix R_bounds[4,1] = R[4,1] - r(sd)
-matrix R_bounds[4,2] = R[4,1] + r(sd)
-glm MS4 if barriers_count==0 & ROE~=. [aw=VA_ind], family(binomial) link(logit)
-matrix T = e(V)
-matrix M_bounds[1,1] = 1/(1+exp(-(_b[_cons]-sqrt(1+T[1,1]))))*100
-matrix M_bounds[1,2] = 1/(1+exp(-(_b[_cons]+sqrt(1+T[1,1]))))*100
-reg ROE MS_4firm [w=VA_ind] if public==0 & traded==0 & barriers_count==0
-matrix R_bounds[1,3] = _b[_cons] + _b[MS_4firm]*M_bounds[1,1]
-matrix R_bounds[1,4] = _b[_cons] + _b[MS_4firm]*M_bounds[1,2]
-glm MS4 if barriers_count==1 & ROE~=. [aw=VA_ind], family(binomial) link(logit)
-matrix T = e(V)
-matrix M_bounds[2,1] = 1/(1+exp(-(_b[_cons]-sqrt(1+T[1,1]))))*100
-matrix M_bounds[2,2] = 1/(1+exp(-(_b[_cons]+sqrt(1+T[1,1]))))*100
-reg ROE MS_4firm [w=VA_ind] if public==0 & traded==0 & barriers_count==1
-matrix R_bounds[2,3] = _b[_cons] + _b[MS_4firm]*M_bounds[2,1]
-matrix R_bounds[2,4] = _b[_cons] + _b[MS_4firm]*M_bounds[2,2]
-glm MS4 if barriers_count==2 & ROE~=. [aw=VA_ind], family(binomial) link(logit)
-matrix T = e(V)
-matrix M_bounds[3,1] = 1/(1+exp(-(_b[_cons]-sqrt(1+T[1,1]))))*100
-matrix M_bounds[3,2] = 1/(1+exp(-(_b[_cons]+sqrt(1+T[1,1]))))*100
-reg ROE MS_4firm [w=VA_ind] if public==0 & traded==0 & barriers_count==2
-matrix R_bounds[3,3] = _b[_cons] + _b[MS_4firm]*M_bounds[3,1]
-matrix R_bounds[3,4] = _b[_cons] + _b[MS_4firm]*M_bounds[3,2]
-
-matrix list M_bounds
-matrix list R_bounds
+do "C:\Users\chisholmc\Dropbox (Personal)\Grattan\GitHub\Industry-concentration\IndustryROE"
+do "C:\Users\chisholmc\Dropbox (Personal)\Grattan\GitHub\Industry-concentration\IndustryROEgoodwill"
 
 
 
@@ -1313,6 +949,8 @@ edit anzsic ind_name VA_ind ROE MS_4firm if VA_ind<=3000 & VA_ind>1000 & traded=
 
 * For bubble plot of medium and large industry ROE by concentration
 edit anzsic ind_name VA_ind ROE MS_4firm barriers_count if VA_ind>1000 & traded==0 & public==0 & N>=3
+
+sc ROE_ra MS_4firm [w=equity] if (equity>1000 | VA_ind>1000) & MS_4firm>0 & traded==0 & public==0, mcolor("246 159 31") mlcolor(white) mlw(.01)
 
 * Regression line to go with bubble plot
 reg ROE MS_4firm [w=VA_ind] if MS_4firm>0 & public==0 & traded==0
@@ -1363,6 +1001,10 @@ reg ROE MS_4firm [w=VA_ind] if MS_4firm>0 & (VA_ind>1000 | length(anzsic)==1)
 
 // Distribution of company ROEs //
 use "Estimated company ROE", clear
+
+
+
+
 
 rename equity4 equity
 replace ROE_C = ROE_C*100
