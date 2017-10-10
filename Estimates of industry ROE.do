@@ -50,7 +50,7 @@ replace ind_name = "Petroleum Prod. Whl." if ind_name=="Petroleum Product Whl."
 replace ind_name = "Sports Betting" if ind_name=="Horse and Sports Betting"
 replace ind_name = "Internet Publishing" if ind_name=="Internet Publishing and Broadcasting"
 replace ind_name = "Comp. & Software Rtl." if ind_name=="Computer and Software Retailing"
-replace ind_name = "Cust., Trustee & SX Serv." if ind_name=="Custody, Trustee and Stock Exchange Services"
+replace ind_name = "Credit Cards & SX Serv." if ind_name=="Custody, Trustee and Stock Exchange Services"
 replace ind_name = "Computer Whl." if ind_name=="Computer and Computer Peripheral Whl."
 replace ind_name = "Inv. & Security Serv." if ind_name=="Investigation and Security Services"
 replace ind_name = "Commercial Const." if ind_name=="Commercial and Industrial Building Construction"
@@ -74,6 +74,8 @@ replace ind_name = "Inst. Building Const." if ind_name=="Institutional Building 
 replace ind_name = "Sport & Camping Equip. Rtl." if ind_name=="Sport and Camping Equipment Retailing"
 replace ind_name = "Heavy Mach. Repair & Maint." if ind_name=="Heavy Machinery Repair and Maintenance"
 replace ind_name = "Cosmetics & Toiletry Whl." if ind_name=="Cosmetics and Toiletry Whl."
+replace ind_name = "Aged Care Residential" if ind_name=="Aged Care Residential Services"
+
 
 replace ind_name = substr(ind_name,1,1) + lower(substr(ind_name,2,.)) if length(anzsic)==1
 
@@ -936,6 +938,42 @@ save Goodwill, replace
 
 do "C:\Users\chisholmc\Dropbox (Personal)\Grattan\GitHub\Industry-concentration\IndustryROE"
 do "C:\Users\chisholmc\Dropbox (Personal)\Grattan\GitHub\Industry-concentration\IndustryROEgoodwill"
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

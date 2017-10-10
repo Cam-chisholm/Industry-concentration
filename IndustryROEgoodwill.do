@@ -268,9 +268,12 @@ merge 1:1 anzsic using IndustryBarriers
 drop if _merge==2
 drop _merge
 
+save "Anzsic4Results", replace
+
 * avg. ROE by no. of barriers to entry
 scalar baseline = 10
 gen supernormal_profit = max(0,ROE_ra-baseline)*equity/100
+replace profit = ROE*equity/100
 
 drop if public==1 | traded==1
 
@@ -491,6 +494,9 @@ replace MS_4firm = r(mean) if anzsic=="J5511"
 sum MS_4firm if anzsic=="R91" | anzsic=="R9114"
 replace MS_4firm = r(mean) if anzsic=="R9114"
 
+replace supernormal_profit = max(0,ROE_ra-baseline)*equity/100 if supernormal_profit==.
+
+
 drop if anzsic=="F35" | anzsic=="J55" | anzsic=="R91"
 drop if ROE==.
 
@@ -499,9 +505,43 @@ replace barriers = 1 if natural_monopoly==1
 replace barriers = 2 if network_effects==1
 replace barriers = 3 if regulatory_barriers==1
 
-gsort ROE_ra
+matrix SNP = J(3,1,0)
+sum supernormal_profit if barriers==1
+matrix SNP[1,1] = r(sum)
+sum supernormal_profit if barriers==2
+matrix SNP[2,1] = r(sum)
+sum supernormal_profit if barriers==3
+matrix SNP[3,1] = r(sum)
+matrix list SNP
 
-edit ind_name ROE_ra profit equity 
+matrix P = J(3,1,0)
+sum profit if barriers==1
+matrix P[1,1] = r(sum)
+sum profit if barriers==2
+matrix P[2,1] = r(sum)
+sum profit if barriers==3
+matrix P[3,1] = r(sum)
+matrix list P
+
+matrix NP = (P[1,1]-SNP[1,1]\P[2,1]-SNP[2,1]\P[3,1]-SNP[3,1])
+matrix list NP
+
+gen sort = 0
+replace sort = ROE_ra if ROE_ra>=10
+gsort sort ROE
+
+replace ind_name = "Liquor and Other Food Rtl." if ind_name=="Other Food Retailing"
+replace ind_name = "Other Broadcasting" if ind_name=="Other Broadcasting (except Internet)"
+
+edit ind_name ROE profit equity ROE_ra if barriers==1
+edit ind_name ROE profit equity ROE_ra if barriers==2
+edit ind_name ROE profit equity ROE_ra if barriers==3
+edit ind_name ROE profit equity ROE_ra if barriers==0
 
 gsort -equity
 edit anzsic ind_name ROE ROE_ra profit equity rev_ind VA_ind barriers conc MS_4firm
+
+sum ROE if MS_4firm==0 [aw=equity]
+
+lpoly ROE MS_4firm if MS_4firm>0 [aw=equity], bw(10) gen(X Y)
+lpoly ROE MS_4firm if MS_4firm>0 & anzsic~="K6221a" [aw=equity], bw(10) gen(Xb Yb) se(Y_se) ci
