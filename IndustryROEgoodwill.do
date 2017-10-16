@@ -273,6 +273,7 @@ save "Anzsic4Results", replace
 * avg. ROE by no. of barriers to entry
 scalar baseline = 10
 gen supernormal_profit = max(0,ROE_ra-baseline)*equity/100
+gen normal_profit_deviation = (ROE_ra-baseline)*equity/100
 replace profit = ROE*equity/100
 
 drop if public==1 | traded==1
@@ -530,8 +531,31 @@ gen sort = 0
 replace sort = ROE_ra if ROE_ra>=10
 gsort sort ROE
 
-replace ind_name = "Liquor and Other Food Rtl." if ind_name=="Other Food Retailing"
+replace ind_name = "Liquor & Other Food Rtl." if ind_name=="Other Food Retailing"
 replace ind_name = "Other Broadcasting" if ind_name=="Other Broadcasting (except Internet)"
+replace ind_name = "Other Medical" if ind_name=="Other Medical and Other Health Care Services"
+replace ind_name = "Other Grocery Whl." if ind_name=="Other Grocery, Liquor and Tobacco Product Wholesaling"
+replace ind_name = "Other Agri. Support Serv." if ind_name=="Other Agriculture, Forestry and Fishing Support Services"
+replace ind_name = "Other Store-Based Rtl." if ind_name=="Other Other Store-Based Retailing"
+replace ind_name = "Other Food & Bev. Serv." if ind_name=="Other Food and Beverage Services"
+replace ind_name = "Other Transport Support Serv." if ind_name=="Other Transport Support Services"
+replace ind_name = "Other MV Rtl." if ind_name=="Other Motor Vehicle and Motor Vehicle Parts Retailing"
+replace ind_name = "Other Gambling" if ind_name=="Other Gambling Activities"
+replace ind_name = "Other Waste Disposal" if ind_name=="Other Waste Collection, Treatment and Disposal Services"
+replace ind_name = "Other Rental & Hiring" if ind_name=="Other Rental and Hiring Services (except Real Estate)"
+replace ind_name = "Other Repair & Maint." if ind_name=="Other Repair and Maintenance"
+replace ind_name = "Other Admin. Serv." if ind_name=="Other Administrative Services"
+replace ind_name = "Other Paper Prod. Mfg." if ind_name=="Other Pulp, Paper and Converted Paper Product Manufacturing"
+replace ind_name = "Other Creative Arts" if ind_name=="Other Creative and Performing Arts Activities"
+replace ind_name = "Other Transport" if ind_name=="Other Transport, postal and warehousing"
+replace ind_name = "Other Goods Wholesaling" if ind_name=="Other Other Goods Wholesaling"
+replace ind_name = "Other Basic Material Whl." if ind_name=="Other Basic Material Wholesaling"
+replace ind_name = "Other Support Serv." if ind_name=="Other Building Cleaning, Pest Control and Other Support Services"
+replace ind_name = "Other Constr. Serv." if ind_name=="Other Construction Services"
+replace ind_name = "Other Personal Serv." if ind_name=="Other Personal and Other Services"
+replace ind_name = "Elect. Gen & Rtl." if ind_name=="Other Electricity Supply"
+replace ind_name = "Non-traded Agriculture" if ind_name=="Other Agriculture"
+
 
 edit ind_name ROE profit equity ROE_ra if barriers==1
 edit ind_name ROE profit equity ROE_ra if barriers==2
@@ -541,7 +565,21 @@ edit ind_name ROE profit equity ROE_ra if barriers==0
 gsort -equity
 edit anzsic ind_name ROE ROE_ra profit equity rev_ind VA_ind barriers conc MS_4firm
 
+gen sorting = ROE
+replace sorting = ROE_ra + 10 if ROE_ra>baseline
+gsort sorting
+
 sum ROE if MS_4firm==0 [aw=equity]
 
 lpoly ROE MS_4firm if MS_4firm>0 [aw=equity], bw(10) gen(X Y)
 lpoly ROE MS_4firm if MS_4firm>0 & anzsic~="K6221a" [aw=equity], bw(10) gen(Xb Yb) se(Y_se) ci
+
+* calculate additional amount paid by consumers
+replace profit_pc = profit/rev_ind*100/.75
+gen super_profit_pc = profit_pc*max(0,ROE_ra-baseline)/ROE
+gen rev_ind_noSP = rev_ind*(100-super_profit_pc)/100
+
+* calculate Harberger triangles
+scalar P_e = -3
+gen quantity_change = (rev_ind_noSP-rev_ind)/rev_ind*P_e
+gen Harberger = quantity_change*(rev_ind - rev_ind_noSP)/2
