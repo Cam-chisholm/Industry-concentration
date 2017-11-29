@@ -104,7 +104,6 @@ encode code, gen(id)
 xtset id year
 
 gen growth = (revenue/l.revenue-1)*100
-drop id
 
 save Revenue, replace
 
@@ -235,6 +234,12 @@ drop if roe==. | tobinQ==.
 
 bysort code: gen N = _N
 
+sort id year
+gen GROWTH = ((revenue/l5.revenue)^(1/5)-1)*100
+replace GROWTH = ((revenue/l4.revenue)^(1/4)-1)*100 if GROWTH==.
+replace GROWTH = ((revenue/l3.revenue)^(1/3)-1)*100 if GROWTH==.
+replace GROWTH = ((revenue/l2.revenue)^(1/2)-1)*100 if GROWTH==.
+
 gen roe_equity = roe*equity
 bysort code: egen equity_sum = sum(equity) if roe~=. & abs(roe)<200
 bysort code: egen roe_equity_sum = sum(roe_equity) if abs(roe)<200
@@ -242,6 +247,7 @@ gen ROE = roe_equity_sum/equity_sum
 gen ROE_ra = ROE + (1-beta)*R_rp*100
 replace ROE_ra = ROE + (1-.92)*R_rp*100 if ROE_ra==.
 drop roe_equity equity_sum roe_equity_sum
+
 
 bysort code: egen test = max(ROE)
 bysort code: egen test2 = max(ROE_ra)

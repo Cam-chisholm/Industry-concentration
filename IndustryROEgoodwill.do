@@ -37,6 +37,11 @@ gen composite = equity4 + revenue4/2
 rename anzsic_ anzsic
 rename anzsic2_ anzsic2
 rename anzsic1_ anzsic1
+replace equity_ratio = 0.75 if equity_ratio<0
+replace equity_ratio = max(equity_ratio,.2) if equity_ratio~=.
+replace equity_ratio = (equity - 0.8*intangibles)/equity if equity_ratio==.
+replace equity_ratio = 0.75 if 0.8*intangibles>equity & type<6
+replace equity_ratio = max(equity_ratio,.5) if equity_ratio~=. & type<6
 
 drop if traded_==.
 drop if in_sample==0
@@ -44,13 +49,13 @@ drop if in_sample==0
 gen mining = substr(anzsic,1,1)=="B"
 
 replace equity = equity*equity_ratio if equity_ratio>0 & equity_ratio<1
-replace roe = roe/equity_ratio if equity_ratio>0 & equity_ratio<1
-replace equity4 = equity4*equity_ratio if equity_ratio>0 & equity_ratio<1
-replace debtequity = debtequity/equity_ratio if equity_ratio>0 & equity_ratio<1
+replace roe = roe/equity_ratio  if equity_ratio>0 & equity_ratio<1
+replace equity4 = equity4*equity_ratio  if equity_ratio>0 & equity_ratio<1
+replace debtequity = debtequity/equity_ratio  if equity_ratio>0 & equity_ratio<1
 replace assetsrevenue = assetsrevenue*equity_ratio if equity_ratio>0 & equity_ratio<1
-drop if debtequity>20 | assetsrevenue<0.2 | equity_ratio<0
+drop if debtequity>20 | assetsrevenue<0.2 
 
-mixed roe i.ysc i.mining#i.ysc [fw=equity4] if roe>-1.9 & roe<2.1 || anzsic1: || anzsic2: || anzsic: || company:
+mixed roe i.ysc i.mining#i.ysc [fw=equity4] if roe>-2 & roe<2.2 || anzsic1: || anzsic2: || anzsic: || company:
 
 predict ROE
 predict A1 A2 A4 C, reffects
@@ -250,7 +255,7 @@ scalar R_rf = 3.7
 sum beta if public==0 & traded==0 [w=VA_ind]
 scalar beta_avg = r(mean)
 sum ROE if public==0 & traded==0 [w=VA_ind]
-scalar R_rp = 5.6
+scalar R_rp = 6
 
 gen ROE_ra = ROE + (1-beta)*R_rp
 gen equity_ind = min(profit/ROE,profit*.75/max(8,ROE))*100 // .75 accounts for the average tax rate
@@ -268,10 +273,30 @@ merge 1:1 anzsic using IndustryBarriers
 drop if _merge==2
 drop _merge
 
+* combine domestic and foreign banks
+replace anzsic = "K6221" if anzsic=="K6221a" | anzsic=="K6221b"
+replace ind_name = "Banks" if anzsic=="K6221"
+sum ROE if anzsic=="K6221" [w=equity]
+replace ROE = r(mean) if anzsic=="K6221"
+sum ROE_ra if anzsic=="K6221" [w=equity]
+replace ROE_ra = r(mean) if anzsic=="K6221"
+sum VA_ind if anzsic=="K6221"
+replace VA_ind = r(sum) if anzsic=="K6221"
+sum rev_ind if anzsic=="K6221"
+replace rev_ind = r(sum) if anzsic=="K6221"
+replace MS_4firm = MS_4firm*r(max)/r(sum)
+sum profit if anzsic=="K6221"
+replace profit = r(sum) if anzsic=="K6221"
+sum equity if anzsic=="K6221"
+replace equity = r(sum) if anzsic=="K6221"
+bysort anzsic: drop if _n==2
+
 save "Anzsic4Results", replace
 
+
+
 * avg. ROE by no. of barriers to entry
-scalar baseline = 10
+scalar baseline = R_rf + R_rp
 gen supernormal_profit = max(0,ROE_ra-baseline)*equity/100
 gen normal_profit_deviation = (ROE_ra-baseline)*equity/100
 replace profit = ROE*equity/100
@@ -331,53 +356,27 @@ matrix list R
 matrix list SNR
 matrix list E
 
-
-/*
-matrix R_bounds = J(3,4,0)
-matrix M_bounds = J(3,2,0)
-gen MS4 = MS_4firm/100
-* Bounds
-sum ROE if barriers_count==0 & traded==0 & public==0 [w=equity], detail
-matrix R_bounds[1,1] = R[1,1] - r(sd)
-matrix R_bounds[1,2] = R[1,1] + r(sd)
-sum ROE if barriers_count==1 & traded==0 & public==0 [w=equity], detail
-matrix R_bounds[2,1] = R[2,1] - r(sd)
-matrix R_bounds[2,2] = R[2,1] + r(sd)
-sum ROE if barriers_count==2 & traded==0 & public==0 [w=equity], detail
-matrix R_bounds[3,1] = R[3,1] - r(sd)
-matrix R_bounds[3,2] = R[3,1] + r(sd)
-glm MS4 if barriers_count==0 & ROE~=. [aw=VA_ind], family(binomial) link(logit)
-matrix T = e(V)
-matrix M_bounds[1,1] = 1/(1+exp(-(_b[_cons]-sqrt(1+T[1,1]))))*100
-matrix M_bounds[1,2] = 1/(1+exp(-(_b[_cons]+sqrt(1+T[1,1]))))*100
-reg ROE MS_4firm [w=VA_ind] if public==0 & traded==0 & barriers_count==0
-matrix R_bounds[1,3] = _b[_cons] + _b[MS_4firm]*M_bounds[1,1]
-matrix R_bounds[1,4] = _b[_cons] + _b[MS_4firm]*M_bounds[1,2]
-glm MS4 if barriers_count==1 & ROE~=. [aw=VA_ind], family(binomial) link(logit)
-matrix T = e(V)
-matrix M_bounds[2,1] = 1/(1+exp(-(_b[_cons]-sqrt(1+T[1,1]))))*100
-matrix M_bounds[2,2] = 1/(1+exp(-(_b[_cons]+sqrt(1+T[1,1]))))*100
-reg ROE MS_4firm [w=VA_ind] if public==0 & traded==0 & barriers_count==1
-matrix R_bounds[2,3] = _b[_cons] + _b[MS_4firm]*M_bounds[2,1]
-matrix R_bounds[2,4] = _b[_cons] + _b[MS_4firm]*M_bounds[2,2]
-glm MS4 if barriers_count==2 & ROE~=. [aw=VA_ind], family(binomial) link(logit)
-matrix T = e(V)
-matrix M_bounds[3,1] = 1/(1+exp(-(_b[_cons]-sqrt(1+T[1,1]))))*100
-matrix M_bounds[3,2] = 1/(1+exp(-(_b[_cons]+sqrt(1+T[1,1]))))*100
-reg ROE MS_4firm [w=VA_ind] if public==0 & traded==0 & barriers_count==2
-matrix R_bounds[3,3] = _b[_cons] + _b[MS_4firm]*M_bounds[3,1]
-matrix R_bounds[3,4] = _b[_cons] + _b[MS_4firm]*M_bounds[3,2]
-
-matrix list M_bounds
-matrix list R_bounds
-*/
+gen barriers = 0
+replace barriers = 1 if natural_monopoly==1
+replace barriers = 2 if network_effects==1
+replace barriers = 3 if regulatory_barriers==1
 
 * Aggregate to level 2 and level 1 ANZSICs
 merge 1:1 anzsic using AnzsicNames
 drop if _merge==2 & length(anzsic)>3
 drop if traded==1 | public==1
 gen aggregation = uncertain_flag==1 | equity<1000
-replace aggregation = 1 if anzsic=="D2611" | anzsic=="D2612" | anzsic=="D2619" | anzsic=="D2640"
+replace aggregation = 1 if barriers==0 & (anzsic=="D2611" | anzsic=="D2612" | ///
+anzsic=="D2619" | anzsic=="D2640" | anzsic=="F3312" | anzsic=="F3319" | ///
+anzsic=="H4513" | anzsic=="I5292b" | anzsic2=="F36" | anzsic2=="F35" | ///
+anzsic2=="D29" | anzsic2=="A01" | anzsic2=="A02" | anzsic2=="C11" | anzsic2=="D29" | ///
+anzsic2=="C20" | anzsic2=="C22" | anzsic2=="E31" | anzsic2=="E32" | anzsic2=="F37" | ///
+anzsic2=="G39" | (anzsic2=="G42" & anzsic~="G4231") | anzsic2=="H44" | ///
+anzsic2=="J54" | anzsic2=="J55" | anzsic2=="L66" | (anzsic2=="N72" & anzsic~="N7212") | ///
+anzsic2=="N73" | anzsic2=="S95")
+replace aggregation = 0 if barriers>0 & barriers~=.
+
+drop barriers 
 
 
 sort anzsic
@@ -414,9 +413,19 @@ drop if aggregation==1
 drop A
 replace anzsic1 = substr(anzsic,1,1)
 
-replace aggregation = equity<1000 & length(anzsic)==3
+gen barriers = 0
+replace barriers = 1 if natural_monopoly==1
+replace barriers = 2 if network_effects==1
+replace barriers = 3 if regulatory_barriers==1
 
-local IND "B C I"
+replace aggregation = equity<1000 & length(anzsic)==3
+replace aggregation = 1 if barriers==0 & (anzsic1=="B" | anzsic2=="A01" | anzsic2=="A02" | ///
+anzsic1=="R")
+replace aggregation = 0 if length(anzsic)==1 | (barriers>0 & barriers~=.)
+
+drop barriers
+
+local IND "A B C I R"
 
 foreach x of local IND {
 sum VA_ind if anzsic1=="`x'" & aggregation==1
@@ -442,7 +451,7 @@ replace regulatory_barriers = round(r(mean),1) if anzsic=="`x'"
 replace ind_name = "Other " + ind_name if anzsic=="`x'"
 }
 
-drop if aggregation==1 & length(anzsic)==3 & (substr(anzsic,1,1)=="B" | substr(anzsic,1,1)=="C" | substr(anzsic,1,1)=="I")
+drop if aggregation==1 | ROE==.
 drop aggregation _merge
 
 * three industries left - aggregate into a similar two-digit
@@ -534,27 +543,39 @@ gsort sort ROE
 replace ind_name = "Liquor & Other Food Rtl." if ind_name=="Other Food Retailing"
 replace ind_name = "Other Broadcasting" if ind_name=="Other Broadcasting (except Internet)"
 replace ind_name = "Other Medical" if ind_name=="Other Medical and Other Health Care Services"
-replace ind_name = "Other Grocery Whl." if ind_name=="Other Grocery, Liquor and Tobacco Product Wholesaling"
+replace ind_name = "Grocery Whl." if ind_name=="Other Grocery, Liquor and Tobacco Product Wholesaling"
 replace ind_name = "Other Agri. Support Serv." if ind_name=="Other Agriculture, Forestry and Fishing Support Services"
 replace ind_name = "Other Store-Based Rtl." if ind_name=="Other Other Store-Based Retailing"
 replace ind_name = "Other Food & Bev. Serv." if ind_name=="Other Food and Beverage Services"
 replace ind_name = "Other Transport Support Serv." if ind_name=="Other Transport Support Services"
-replace ind_name = "Other MV Rtl." if ind_name=="Other Motor Vehicle and Motor Vehicle Parts Retailing"
+replace ind_name = "Motor Vehicle Rtl." if ind_name=="Other Motor Vehicle and Motor Vehicle Parts Retailing"
 replace ind_name = "Other Gambling" if ind_name=="Other Gambling Activities"
 replace ind_name = "Other Waste Disposal" if ind_name=="Other Waste Collection, Treatment and Disposal Services"
 replace ind_name = "Other Rental & Hiring" if ind_name=="Other Rental and Hiring Services (except Real Estate)"
-replace ind_name = "Other Repair & Maint." if ind_name=="Other Repair and Maintenance"
+replace ind_name = "Repair & Maint." if ind_name=="Other Repair and Maintenance"
 replace ind_name = "Other Admin. Serv." if ind_name=="Other Administrative Services"
-replace ind_name = "Other Paper Prod. Mfg." if ind_name=="Other Pulp, Paper and Converted Paper Product Manufacturing"
+replace ind_name = "Paper Prod. Mfg." if ind_name=="Other Pulp, Paper and Converted Paper Product Manufacturing"
 replace ind_name = "Other Creative Arts" if ind_name=="Other Creative and Performing Arts Activities"
 replace ind_name = "Other Transport" if ind_name=="Other Transport, postal and warehousing"
 replace ind_name = "Other Goods Wholesaling" if ind_name=="Other Other Goods Wholesaling"
 replace ind_name = "Other Basic Material Whl." if ind_name=="Other Basic Material Wholesaling"
 replace ind_name = "Other Support Serv." if ind_name=="Other Building Cleaning, Pest Control and Other Support Services"
-replace ind_name = "Other Constr. Serv." if ind_name=="Other Construction Services"
-replace ind_name = "Other Personal Serv." if ind_name=="Other Personal and Other Services"
+replace ind_name = "Construction Serv." if ind_name=="Other Construction Services"
+replace ind_name = "Personal Serv." if ind_name=="Other Personal and Other Services"
 replace ind_name = "Elect. Gen & Rtl." if ind_name=="Other Electricity Supply"
-replace ind_name = "Non-traded Agriculture" if ind_name=="Other Agriculture"
+replace ind_name = "Agriculture (non-traded)" if ind_name=="Other Agriculture, forestry and fishing"
+replace ind_name = "Mining (non-traded)" if ind_name=="Other Mining"
+replace ind_name = "Other Mfg. (non-traded)" if ind_name=="Other Manufacturing"
+replace ind_name = "Food Prod. Mfg." if ind_name=="Other Food Product Manufacturing"
+replace ind_name = "Mineral Prod. Mfg." if ind_name=="Other Non-Metallic Mineral Product Manufacturing"
+replace ind_name = "Fabr. Metal Prod. Mfg." if ind_name=="Other Fabricated Metal Product Manufacturing"
+replace ind_name = "Heavy Construction" if ind_name=="Other Heavy and Civil Engineering Construction"
+replace ind_name = "Optometry" if ind_name=="Optometry and Optical Dispensing"
+replace ind_name = "Basic Material Whl." if ind_name=="Other Basic Material Whl."
+replace ind_name = "Other Goods Whl." if ind_name=="Other Goods Wholesaling"
+replace ind_name = "Accommodation" if ind_name=="Other Accommodation"
+replace ind_name = "Other Publishing" if ind_name=="Other Publishing (except Internet and Music Publishing)"
+replace ind_name = "Other Arts & Rec." if ind_name=="Other Arts and recreation services"
 
 
 edit ind_name ROE profit equity ROE_ra if barriers==1
@@ -571,15 +592,32 @@ gsort sorting
 
 sum ROE if MS_4firm==0 [aw=equity]
 
-lpoly ROE MS_4firm if MS_4firm>0 [aw=equity], bw(10) gen(X Y)
-lpoly ROE MS_4firm if MS_4firm>0 & anzsic~="K6221a" [aw=equity], bw(10) gen(Xb Yb) se(Y_se) ci
-
 * calculate additional amount paid by consumers
 replace profit_pc = profit/rev_ind*100/.75
 gen super_profit_pc = profit_pc*max(0,ROE_ra-baseline)/ROE
 gen rev_ind_noSP = rev_ind*(100-super_profit_pc)/100
 
 * calculate Harberger triangles
-scalar P_e = -3
+gen P_e = -.8
+replace P_e = -.4 if substr(anzsic,1,1)=="D"
+replace P_e = -.6 if substr(anzsic,1,1)=="G"
+replace P_e = -.5 if substr(anzsic,1,3)=="J58"
+replace P_e = -.43 if anzsic=="J5911"
+replace P_e = -1 if substr(anzsic,1,1)=="I"
+replace P_e = -1.1 if substr(anzsic,1,1)=="Q"
+replace P_e = -0.85 if substr(anzsic,1,1)=="P"
+replace P_e = -1.2 if substr(anzsic,1,1)=="R" | substr(anzsic,1,1)=="S"
+
 gen quantity_change = (rev_ind_noSP-rev_ind)/rev_ind*P_e
 gen Harberger = quantity_change*(rev_ind - rev_ind_noSP)/2
+
+* estimate ROE spread by four-firm market share
+egen X = fill(0 1 to 100)
+replace X = . if X>100
+
+lpoly ROE MS_4firm if MS_4firm>0 & barriers~=1 [aw=equity], bw(20) gen(Y) at(X)
+gen ROE_2 = ROE^2
+lpoly ROE_2 MS_4firm if MS_4firm>0 & barriers~=1 [aw=equity], bw(20) gen(Y2) at(X)
+gen Y_se = sqrt(Y2 - Y^2)
+
+edit X Y Y_se

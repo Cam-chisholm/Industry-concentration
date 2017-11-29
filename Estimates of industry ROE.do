@@ -31,7 +31,7 @@ rename v1 anzsic
 rename v2 ind_name
 
 * provide shorter names for certain industries
-replace ind_name = "Prof., Sci. and Tech." if ind_name=="Professional, Scientific and Technical Services (Except Computer System Design and Related Services)"
+replace ind_name = "Prof., Sci. & Tech." if ind_name=="Professional, Scientific and Technical Services (Except Computer System Design and Related Services)"
 replace ind_name = "Domestic Banks" if ind_name=="National and Regional Commercial Banks"
 replace ind_name = "Financial Planning" if ind_name=="Financial Planning and Investment Advice"
 replace ind_name = "Other Property Operators" if ind_name=="Industrial and Other Property Operators"
@@ -50,7 +50,7 @@ replace ind_name = "Petroleum Prod. Whl." if ind_name=="Petroleum Product Whl."
 replace ind_name = "Sports Betting" if ind_name=="Horse and Sports Betting"
 replace ind_name = "Internet Publishing" if ind_name=="Internet Publishing and Broadcasting"
 replace ind_name = "Comp. & Software Rtl." if ind_name=="Computer and Software Retailing"
-replace ind_name = "Credit Cards & SX Serv." if ind_name=="Custody, Trustee and Stock Exchange Services"
+replace ind_name = "Auxiliary Financial Serv." if ind_name=="Custody, Trustee and Stock Exchange Services"
 replace ind_name = "Computer Whl." if ind_name=="Computer and Computer Peripheral Whl."
 replace ind_name = "Inv. & Security Serv." if ind_name=="Investigation and Security Services"
 replace ind_name = "Commercial Const." if ind_name=="Commercial and Industrial Building Construction"
@@ -373,13 +373,6 @@ replace MS_`j'firm = MS_`i'firm if MS_`j'firm==.
 }
 
 
-replace MS_2firm = MS_2firm + 1.5 if MS_2firm==MS_1firm & MS_2firm<97
-replace MS_3firm = MS_3firm + 1.5 if MS_3firm==MS_2firm & MS_3firm<98
-replace MS_3firm = MS_3firm + 2.5 if MS_3firm==MS_1firm & MS_3firm<95
-replace MS_4firm = MS_4firm + 1.5 if MS_4firm==MS_3firm & MS_4firm<99
-replace MS_4firm = MS_4firm + 2.5 if MS_4firm==MS_2firm & MS_4firm<97
-replace MS_4firm = MS_4firm + 3.5 if MS_4firm==MS_1firm & MS_4firm<94
-
 save MarketShares, replace
 
 * calculate average 4-firm market share for each industry group
@@ -437,7 +430,9 @@ gen public = substr(anzsic,1,1)=="P" | anzsic=="Q8539" | anzsic=="R9113" | anzsi
 | anzsic=="S9551" | anzsic=="S9559" | anzsic=="R8910" | anzsic=="R8921" ///
 | anzsic=="R8922" | anzsic=="O7600" | anzsic=="K6222" | anzsic=="K6223" ///
 | anzsic=="D2812" | anzsic=="D2811" | anzsic=="R9112" | anzsic=="Q8609" ///
-| anzsic=="H4530" 
+| anzsic=="H4530"
+
+replace traded = 0 if public==1 
 
 save IndustryTradability, replace
 
@@ -706,8 +701,9 @@ replace npat = npat*12/accountingperiod
 replace revenue = revenue*12/accountingperiod
 drop if accountingperiod<6
 rename yearsincecurrent ysc
+rename totalintangibleassets intangibles
 
-keep id company assets equity npat revenue ysc year
+keep id company assets equity npat revenue ysc year intangibles
 
 gen roe = npat/equity
 replace roe=. if npat==0 | equity<=0
@@ -737,8 +733,9 @@ replace npat = npat*12/accountingperiod
 replace revenue = revenue*12/accountingperiod
 drop if accountingperiod<6
 rename yearsincecurrent ysc
+rename totalintangibleassets intangibles
 
-keep id assets equity npat revenue ysc
+keep id assets equity npat revenue ysc intangibles
 
 gen roe = npat/equity
 replace roe=. if npat==0 | equity<=0
@@ -1014,203 +1011,9 @@ save Goodwill, replace
 
 /* Set up for mixed effects regression */
 
-do "C:\Users\chisholmc\Dropbox (Personal)\Grattan\GitHub\Industry-concentration\IndustryROE"
 do "C:\Users\chisholmc\Dropbox (Personal)\Grattan\GitHub\Industry-concentration\IndustryROEgoodwill"
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-gsort -VA_ind
-
-* Hit list of large industries
-edit anzsic ind_name VA_ind ROE MS_4firm if VA_ind>3000 & traded==0 & public==0 & MS_4firm>0 & N>=3
-
-* Hit list of medium industries
-edit anzsic ind_name VA_ind ROE MS_4firm if VA_ind<=3000 & VA_ind>1000 & traded==0 & public==0 & MS_4firm>0 & N>=3
-
-* For bubble plot of medium and large industry ROE by concentration
-edit anzsic ind_name VA_ind ROE MS_4firm barriers_count if VA_ind>1000 & traded==0 & public==0 & N>=3
-
-sc ROE_ra MS_4firm [w=equity] if (equity>1000 | VA_ind>1000) & MS_4firm>0 & traded==0 & public==0, mcolor("246 159 31") mlcolor(white) mlw(.01)
-
-* Regression line to go with bubble plot
-reg ROE MS_4firm [w=VA_ind] if MS_4firm>0 & public==0 & traded==0
-reg ROE MS_4firm [w=VA_ind] if MS_4firm>0 & public==0 & traded==0 & anzsic~="K6221a"
-
-keep anzsic rev_ind VA_ind ROE ROE_ra profit traded public MS_4firm barriers_count
-
-save "Estimated industry ROE", replace
-
-merge 1:1 anzsic using AnzsicNames
-
-drop if _merge==2 & length(anzsic)>1
-drop _merge
-drop if traded==1 | public==1
-
-sort anzsic
-
-local IND "A B C D E F G I J K N R S"
-
-foreach x of local IND {
-sum VA_ind if substr(anzsic,1,1)=="`x'" & VA_ind<1000 & ROE~=.
-replace VA_ind = r(sum) if anzsic=="`x'"
-sum rev_ind if substr(anzsic,1,1)=="`x'" & VA_ind<1000 & ROE~=.
-replace rev_ind = r(sum) if anzsic=="`x'"
-sum profit if substr(anzsic,1,1)=="`x'" & VA_ind<1000 & ROE~=.
-replace profit = r(sum) if anzsic=="`x'"
-sum ROE if substr(anzsic,1,1)=="`x'" [w=VA_ind]
-replace ROE = r(mean) if anzsic=="`x'"
-sum ROE_ra if substr(anzsic,1,1)=="`x'" [w=VA_ind]
-replace ROE_ra = r(mean) if anzsic=="`x'"
-sum MS_4firm if substr(anzsic,1,1)=="`x'" [w=VA_ind]
-replace MS_4firm = r(mean) if anzsic=="`x'"
-sum barriers_count if substr(anzsic,1,1)=="`x'" [w=VA_ind]
-replace barriers_count = round(r(mean),1) if anzsic=="`x'"
-replace ind_name = "Other " + ind_name if anzsic=="`x'"
-}
-
-gen major_players = MS_4firm>0
-
-gsort major_players -VA_ind
-* For bubble plot of ROE by market share and barriers
-edit anzsic ind_name VA_ind ROE MS_4firm barriers_count if (VA_ind>1000 | length(anzsic)==1) & ROE~=.
-
-* Regression line to go with bubble plot
-reg ROE major_players [w=VA_ind] if (VA_ind>1000 | length(anzsic)==1)
-reg ROE MS_4firm [w=VA_ind] if MS_4firm>0 & (VA_ind>1000 | length(anzsic)==1)
-
-
-// Distribution of company ROEs //
-use "Estimated company ROE", clear
-
-
-
-
-
-rename equity4 equity
-replace ROE_C = ROE_C*100
-
-keep company anzsic equity revenue4 ROE_C type
-
-scalar avg_ROE = max(R[1,1],R[2,1])
-
-gen deviation = (max(0,ROE_C-avg_ROE))*equity
-
-gen ANZSIC4 = anzsic
-gen ANZSIC2 = substr(anzsic,1,3)
-gen ANZSIC1 = substr(anzsic,1,1)
-
-replace anzsic = ANZSIC1
-merge m:1 anzsic using AnzsicNames
-drop if _merge==2
-drop _merge
-rename ind_name anzsic1_name
-
-replace anzsic = ANZSIC2
-merge m:1 anzsic using AnzsicNames
-drop if _merge==2
-drop _merge
-rename ind_name anzsic2_name
-
-replace anzsic = ANZSIC4
-merge m:1 anzsic using AnzsicNames
-drop if _merge==2
-drop _merge
-rename ind_name anzsic4_name
-
-merge m:1 anzsic using "Estimated industry ROE"
-drop if _merge==2
-drop _merge
-
-gsort ANZSIC1 ANZSIC2 ANZSIC4 -ROE_C
-
-by ANZSIC1: egen EQ = sum(equity) if ROE_C~=.
-by ANZSIC1: egen DEV = sum(deviation) if ROE_C~=.
-gen deviation1 = DEV/EQ
-gen equity1 = EQ
-drop EQ DEV
-
-sort ANZSIC2
-
-by ANZSIC2: egen EQ = sum(equity) if ROE_C~=.
-by ANZSIC2: egen DEV = sum(deviation)  if ROE_C~=.
-gen deviation2 = DEV/EQ
-gen equity2 = EQ
-drop EQ DEV
-
-sort ANZSIC4
-
-by ANZSIC4: egen EQ = sum(equity) if ROE_C~=.
-by ANZSIC4: egen DEV = sum(deviation)  if ROE_C~=.
-gen deviation4 = DEV/EQ
-gen equity4 = EQ
-drop EQ DEV
-
-drop if ROE_C==.
-
-bysort ANZSIC4: gen N = _N
-bysort ANZSIC4: gen n = _n
-
-gsort -deviation4 -equity
-
-* display for large industries with at least 4 firms
-edit ANZSIC4 anzsic4_name company type ROE_C ROE deviation4 equity ANZSIC1 anzsic1_name equity1 deviation1 ///
-ANZSIC2 anzsic2_name equity2 deviation2  equity4 deviation4 ///
-if VA_ind>3000 & N>=4 & traded==0 & public==0
-
-edit anzsic4_name VA_ind deviation4 MS_4firm ROE  if VA_ind>3000 & N>=4 & traded==0 & public==0 & n==1
-
-* display for medium industries with at least 4 firms
-edit ANZSIC4 anzsic4_name company type ROE_C ROE deviation4 equity ANZSIC1 anzsic1_name equity1 deviation1 ///
-ANZSIC2 anzsic2_name equity2 deviation2  equity4 deviation4 ///
-if VA_ind<3000 & VA_ind>1000 & N>=4 & traded==0 & public==0
-
-edit anzsic4_name VA_ind deviation4 MS_4firm ROE if VA_ind<3000 & VA_ind>1000 & N>=4 & traded==0 & public==0 & n==1
-
-* one hit list to rule them all
-gen high_ROE = ROE> avg_ROE + 2
-gen high_deviation = deviation4>1
-gen high_concentration = MS_4firm>65
-
-gsort -MS_4firm -ROE -deviation4
-
-edit anzsic4_name VA_ind MS_4firm ROE deviation4 N if traded==0 & public==0 & n==1 & VA_ind>1000
-
-
-
-
+*do "C:\Users\chisholmc\Dropbox (Personal)\Grattan\GitHub\Industry-concentration\IndustryROE"
